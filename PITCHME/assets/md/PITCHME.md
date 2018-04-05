@@ -194,59 +194,131 @@ It helped. **A bit** It felt like they ruine everything around (Next slide)
 Note:
 Including the rating of the app and because they wanted more intellingent functionality
 
+So I took it serious and started to work really **really** hard (Next slide)
+
 ---
 
-<span class="menu-title" style="display: none">New method</span>
+<span class="menu-title" style="display: none">Hard working joke</span>
 
-After long studies a new method was ready!
+<img src="./assets/md/assets/lazy.jpg"  height="500" /> 
 
 Note:
+Ah, wrong picture... (Next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Hard working</span>
+
+<img src="./assets/md/assets/hardworker.png"  height="500" /> 
+
+Note:
+So, I workered really **really** hard!
+
+I was studying scintific papers, I followed different image processing online courses.
+
+It took time, but still I achieved my goal and created a library that allowed (Next slide)
+
+---
+
+<span class="menu-title" style="display: none">Simple inpaint code</span>
+
+```CSharp
+var inpainter = new Inpainter();
+var result = inpainter.Inpaint(imageArgb, markupArgb, donors);
+result
+    .FromArgbToBitmap()
+    .SaveTo(resultPath, ImageFormat.Png)
+    .ShowFile();
+```
+
+Note:
+
+To inpaint of to perform the content-aware fill
+
 What happened with the issues? (Next slide)
 
-+++
-<!-- .slide: data-transition="none" -->
+---
+
+<span class="menu-title" style="display: none">Wexler Bridge Sample. Original</span>
+
 ![Image](./assets/md/assets/bridge_orig.jpg)
 
-+++
+---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wexler Bridge Sample. Marked</span>
+
 ![Image](./assets/md/assets/bridge_marked.png)
 
-+++
+---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wexler Bridge Sample. Processed</span>
+
 ![Image](./assets/md/assets/bridge_wex.png)
 
-+++
+---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wexler Cheese Sample. Original</span>
+
 ![Image](./assets/md/assets/cheese_orig.jpg)
 
-+++
+---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wexler Cheese Sample. Marked</span>
+
 ![Image](./assets/md/assets/cheese_marked.png)
 
-+++
+---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wexler Cheese Sample. Processed</span>
+
 ![Image](./assets/md/assets/cheese_wex.png)
 
-+++
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wexler Temple Sample. Original</span>
 
 ![Image](./assets/md/assets/temple_orig.jpg)
 
-+++
+---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wexler Temple Sample. Marked</span>
+
 ![Image](./assets/md/assets/temple_marked.png)
 
-+++
+---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wexler Temple Sample. Processed</span>
+
 ![Image](./assets/md/assets/temple_wex.png)
 
+Note:
+The results were satisfying. I was anticipating how users of Smartest Eraser will be happy.
+
+The only thing I needed to do is to use my new library. **But** (Next slide)
+
+---
+<span class="menu-title" style="display: none">Slow mobiles</span>
+
+<img src="./assets/md/assets/slow_mobiles.gif"  height="500" /> 
+
+Note: 
+Mobiles are not capable of required computation power
 
 ---
 
-TODO: Simple Inpaint algorithm schema
+TODO: Explain New algorithm and show examples
 
 ---
 
-Mobiles are not capable of such computation power
+TODO: What are the possible solutions?
 
 ---
 
@@ -257,6 +329,7 @@ Mobiles are not capable of such computation power
 
 TODO: How difficult to use worker
 - one worker many users  <!-- .element: class="fragment" -->
+- new worker instance deploy time
 - reacts on message in a queue  <!-- .element: class="fragment" -->
 - difficult to scale  <!-- .element: class="fragment" -->
 
