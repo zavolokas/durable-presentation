@@ -59,7 +59,7 @@ Here is a demonstration video about the app (Move to the next slide)
 
 Video Demo
 
-#### Video Disabled
+<iframe width="840" height="472" src="https://www.youtube.com/embed/QMWHeGsVjFA?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 Note:
 1. Watch video
@@ -340,12 +340,17 @@ So we need to find the values of these pixels.
 
 Note:
 There are more, but for the sake of simplicity we imagine that these are only six these.
-In order to find the values we going to find similar patches on the images.
+In order to find the values we going to find similar patches at the image.
 
-Let's start with inpainting the pixel in the middle.
+Let's start with finding a value of the pixel in the middle.
 
-The pixel is contained in 9 patches surrounding it. We are going to find the similar patches to every out of these 9. So that we could find the value
+We will use patches of 3 by 3 size.
+
+The pixel is contained in 9 patches surrounding it.
+We are going to find the similar patches to every out of these 9. So that we could find the value
 based on the statistics.
+
+// TODO: may be it is better to show all these patches in a next slide using gif animation?
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -354,8 +359,8 @@ based on the statistics.
 <img src="./assets/md/assets/inpaint/process004.png"  height="500" /> 
 
 Note:
+We have found a similar patch for one of the 9.
 
-We have found a similar patch.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -405,11 +410,8 @@ We have found a similar patch.
 
 <img src="./assets/md/assets/inpaint/process012.png"  height="500" /> 
 
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
-
-// TODO: avg pix value calculation
+Note:
+We have now patches that suggest us the value of the pixel
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -418,11 +420,30 @@ We have found a similar patch.
 <img src="./assets/md/assets/inpaint/process013.png"  height="500" /> 
 
 Note:
-Like this, but we will get pixels from all the 9 patches that are related to all 9 pixels of the patch.
+These are the values.
 
-This we need to perform for every pixel of the marked area.
+And if we will take an average of their value(Next slide)
 
-So we basically see two main operations (Next slide)
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process014.png"  height="500" /> 
+
+Note:
+We will get the more or less reliable value of the pixel
+
+Lets set this value(Next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process015.png"  height="500" /> 
+
+Note:
+The process is repeated for the each pixel in the area until all the values are not calculated
+
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -431,179 +452,81 @@ So we basically see two main operations (Next slide)
 <img src="./assets/md/assets/inpaint/process_rest.gif"  height="500" /> 
 
 Note:
-The process is repeated for the each pixel in the area until all the values are not calculated
+In the reality the image is bigger and pixels are smaller. That is why the whole process is done on an image pyramid.
 
 ---
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Image Pyramids</span>
 
-// TODO: 
+<img src="./assets/md/assets/inpaint/process016.png"  height="500" /> 
 
 Note:
-The most difficult in that process is to find similar patch. You can imagine that we need to analyse the whole image for the best match and that we need to do for all the patches. We need to have some sort of mapping and that mapping is called Near Neighbour Field or NNF for short.
-
-N - image pix
-M - markup pixels
-
-comparisons M * (N-M)
-
-800x600 = 480 000
-100x100 = 10 000
-
-10 000 * 470 000 = 4 700 000 000
-naive approach would require
+Image pyramid is built by scaling down the original image by factor 2. After that we run the algorithm at the lowest scale and after that propagate results to the upper level and perform processing.
 
 ---
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Patch Match</span>
 
-// TODO: Patch Match
-
-Note:
-We use PatchMatch algorithm that allows to build NNF in 5 runs
-
-M * (2 + 5)
-
-70 000 comparisons
-
----
-
-<span class="menu-title" style="display: none">Inpainting alg</span>
-
-- Build NNF
-- Inpaint  <!-- .element: class="fragment" -->
+### Critical part
+- Amount of Patches = Image Width * Image Height <!-- .element: class="fragment" -->
+  - 800 * 600 = 480 000
+- Nearest Neighbour Field (NNF) <!-- .element: class="fragment" -->
+- Use PatchMatch <!-- .element: class="fragment" -->
+  - Requires only about 5 runs through image
 
 Note:
+The most time consuming part of this approach is to find best match for every patch at the entire image.
+For every patch we need to go thru entire image and find the best match. Image contains Patches = Width * Height 
 
-One is to build a Near Neighbour Field to be able to find similar patches (Next bullet)
+We need to build a mapping between patches.
 
-And calculate value of the each pixel in the area based on the similar patches. It is Inpainting.
+I use PatchMatch algorithm that allows to speed up his process significantly. More iterations we perform the precisier NNF becomes.
 
-This is an iterative optimization process that is performed on different levels of detalization starting from the lowest one and improve it.
-
+Now we should be able to outline the entire process (Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
 
 <span class="menu-title" style="display: none">Wex algorithm</span>
 
-```
-
-
-
-      // Build nnf
-.
-.
-.
-.
-.
-.
-.
-```
-
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wex algorithm</span>
-
-```
-
-
-
-      // Build nnf
-.
-.
-.
-.
-.
-.
-.
-```
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wex algorithm</span>
-
-```
+<pre>
 
 
     for j < nnfBuildIterations
-      // Build nnf
+      // build nnf
     end
-.
-.
-.
-.
-.
-.
-```
+
+
+
+
+
+
+</pre>
 
 ---
 <!-- .slide: data-transition="none" -->
 
 <span class="menu-title" style="display: none">Wex algorithm</span>
 
-```
+<pre>
 
 
     for j < nnfBuildIterations
-      // Build nnf
+      // build nnf
     end
     foreach pixel in removeArea
       // Calc pixel value - inpainting
     end
-.
-.
-.
-```
+
+
+
+</pre>
 
 ---
 <!-- .slide: data-transition="none" -->
 
 <span class="menu-title" style="display: none">Wex algorithm</span>
 
-```
+<pre>
 
-
-    for j < nnfBuildIterations
-      // Build nnf
-    end
-    foreach pixel in removeArea
-      // Calc pixel value - inpainting
-    end
-.
-.
-.
-```
-
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wex algorithm</span>
-
-```
-
-  for i < inpaintIterations
-    for j < nnfBuildIterations
-      // Build nnf
-    end
-    foreach pixel in removeArea
-      // Calc pixel value - inpainting
-    end
-    // scale up NNF
-  end
-.
-```
-
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wex algorithm</span>
-
-```
-for level in levels
   for i < inpaintIterations
     for j < nnfBuildIterations
       // build nnf
@@ -611,10 +534,30 @@ for level in levels
     foreach pixel in removeArea
       // Calc pixel value - inpainting
     end
-    // scale up NNF
   end
+
+
+</pre>
+
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wex algorithm</span>
+
+<pre>
+foreach level in levels
+  for i < inpaintIterations
+    for j < nnfBuildIterations
+      // build nnf
+    end
+    foreach pixel in removeArea
+      // Calc pixel value - inpainting
+    end
+  end
+  // scale up NNF
 end
-```
+</pre>
 
 ---
 
