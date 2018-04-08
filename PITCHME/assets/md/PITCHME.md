@@ -312,9 +312,309 @@ The only thing I needed to do is to use my new library. **But** (Next slide)
 Note: 
 Mobiles are not capable of required computation power
 
+The reason is the complexity of the new method. Let me explain it shortly.
+Suppose we have following image (Next slide)
+
+---
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process001.png"  height="500" /> 
+
+Note:
+And we want to remove this gear
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process002.png"  height="500" /> 
+
+Note:
+So we need to find the values of these pixels. 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process003.png"  height="500" /> 
+
+Note:
+There are more, but for the sake of simplicity we imagine that these are only six these.
+In order to find the values we going to find similar patches on the images.
+
+Let's start with inpainting the pixel in the middle.
+
+The pixel is contained in 9 patches surrounding it. We are going to find the similar patches to every out of these 9. So that we could find the value
+based on the statistics.
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process004.png"  height="500" /> 
+
+Note:
+
+We have found a similar patch.
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process005.png"  height="500" /> 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process006.png"  height="500" /> 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process007.png"  height="500" /> 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process008.png"  height="500" /> 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process009.png"  height="500" /> 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process010.png"  height="500" /> 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process011.png"  height="500" /> 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process012.png"  height="500" /> 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+// TODO: avg pix value calculation
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process013.png"  height="500" /> 
+
+Note:
+Like this, but we will get pixels from all the 9 patches that are related to all 9 pixels of the patch.
+
+This we need to perform for every pixel of the marked area.
+
+So we basically see two main operations (Next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process_rest.gif"  height="500" /> 
+
+Note:
+The process is repeated for the each pixel in the area until all the values are not calculated
+
+---
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+// TODO: 
+
+Note:
+The most difficult in that process is to find similar patch. You can imagine that we need to analyse the whole image for the best match and that we need to do for all the patches. We need to have some sort of mapping and that mapping is called Near Neighbour Field or NNF for short.
+
+N - image pix
+M - markup pixels
+
+comparisons M * (N-M)
+
+800x600 = 480 000
+100x100 = 10 000
+
+10 000 * 470 000 = 4 700 000 000
+naive approach would require
+
+---
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+// TODO: Patch Match
+
+Note:
+We use PatchMatch algorithm that allows to build NNF in 5 runs
+
+M * (2 + 5)
+
+70 000 comparisons
+
 ---
 
-TODO: Explain New algorithm and show examples
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+- Build NNF
+- Inpaint  <!-- .element: class="fragment" -->
+
+Note:
+
+One is to build a Near Neighbour Field to be able to find similar patches (Next bullet)
+
+And calculate value of the each pixel in the area based on the similar patches. It is Inpainting.
+
+This is an iterative optimization process that is performed on different levels of detalization starting from the lowest one and improve it.
+
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wex algorithm</span>
+
+```
+
+
+
+      // Build nnf
+.
+.
+.
+.
+.
+.
+.
+```
+
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wex algorithm</span>
+
+```
+
+
+
+      // Build nnf
+.
+.
+.
+.
+.
+.
+.
+```
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wex algorithm</span>
+
+```
+
+
+    for j < nnfBuildIterations
+      // Build nnf
+    end
+.
+.
+.
+.
+.
+.
+```
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wex algorithm</span>
+
+```
+
+
+    for j < nnfBuildIterations
+      // Build nnf
+    end
+    foreach pixel in removeArea
+      // Calc pixel value - inpainting
+    end
+.
+.
+.
+```
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wex algorithm</span>
+
+```
+
+
+    for j < nnfBuildIterations
+      // Build nnf
+    end
+    foreach pixel in removeArea
+      // Calc pixel value - inpainting
+    end
+.
+.
+.
+```
+
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wex algorithm</span>
+
+```
+
+  for i < inpaintIterations
+    for j < nnfBuildIterations
+      // Build nnf
+    end
+    foreach pixel in removeArea
+      // Calc pixel value - inpainting
+    end
+    // scale up NNF
+  end
+.
+```
+
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Wex algorithm</span>
+
+```
+for level in levels
+  for i < inpaintIterations
+    for j < nnfBuildIterations
+      // build nnf
+    end
+    foreach pixel in removeArea
+      // Calc pixel value - inpainting
+    end
+    // scale up NNF
+  end
+end
+```
 
 ---
 
