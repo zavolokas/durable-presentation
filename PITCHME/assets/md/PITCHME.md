@@ -340,17 +340,10 @@ So we need to find the values of these pixels.
 
 Note:
 There are more, but for the sake of simplicity we imagine that these are only six these.
-In order to find the values we going to find similar patches at the image.
 
-Let's start with finding a value of the pixel in the middle.
+How do we do that?
 
-We will use patches of 3 by 3 size.
-
-The pixel is contained in 9 patches surrounding it.
-We are going to find the similar patches to every out of these 9. So that we could find the value
-based on the statistics.
-
-// TODO: may be it is better to show all these patches in a next slide using gif animation?
+Let's start with finding a value of the pixel in the middle.(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -359,20 +352,28 @@ based on the statistics.
 <img src="./assets/md/assets/inpaint/process004.png"  height="500" /> 
 
 Note:
-We have found a similar patch for one of the 9.
+In order to do that we will analize patches that contain this pixel. 
 
+For the simplicity we will use patches of size 3x3  (Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
 <span class="menu-title" style="display: none">Inpainting alg</span>
 
-<img src="./assets/md/assets/inpaint/process005.png"  height="500" /> 
+<img src="./assets/md/assets/inpaint/process005.gif"  height="500" /> 
+
+Note:
+The pixel is a part of 9 different patches. And what we going to do now. We will find a similar patch for each of these 9 at the picture and reconstruct the value based on statistics of the 9 patches. (Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
 <span class="menu-title" style="display: none">Inpainting alg</span>
 
 <img src="./assets/md/assets/inpaint/process006.png"  height="500" /> 
+
+Note:
+We have found a similar patch for one of the 9.
+
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -410,25 +411,37 @@ We have found a similar patch for one of the 9.
 
 <img src="./assets/md/assets/inpaint/process012.png"  height="500" /> 
 
-Note:
-We have now patches that suggest us the value of the pixel
-
 ---
 <!-- .slide: data-transition="none" -->
 <span class="menu-title" style="display: none">Inpainting alg</span>
 
 <img src="./assets/md/assets/inpaint/process013.png"  height="500" /> 
 
-Note:
-These are the values.
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
 
+<img src="./assets/md/assets/inpaint/process014.png"  height="500" /> 
+
+Note:
+We have now patches that suggest us the value of the pixel
+
+These are the values.(Next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+<img src="./assets/md/assets/inpaint/process015.png"  height="500" /> 
+
+Note:
 And if we will take an average of their value(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
 <span class="menu-title" style="display: none">Inpainting alg</span>
 
-<img src="./assets/md/assets/inpaint/process014.png"  height="500" /> 
+<img src="./assets/md/assets/inpaint/process016.png"  height="500" /> 
 
 Note:
 We will get the more or less reliable value of the pixel
@@ -439,10 +452,10 @@ Lets set this value(Next slide)
 <!-- .slide: data-transition="none" -->
 <span class="menu-title" style="display: none">Inpainting alg</span>
 
-<img src="./assets/md/assets/inpaint/process015.png"  height="500" /> 
+<img src="./assets/md/assets/inpaint/process017.png"  height="500" /> 
 
 Note:
-The process is repeated for the each pixel in the area until all the values are not calculated
+The process is repeated (Next slide)
 
 
 ---
@@ -452,12 +465,13 @@ The process is repeated for the each pixel in the area until all the values are 
 <img src="./assets/md/assets/inpaint/process_rest.gif"  height="500" /> 
 
 Note:
+for the each pixel in the area until all the values are not calculated
 In the reality the image is bigger and pixels are smaller. That is why the whole process is done on an image pyramid.
 
 ---
 <span class="menu-title" style="display: none">Image Pyramids</span>
 
-<img src="./assets/md/assets/inpaint/process016.png"  height="500" /> 
+<img src="./assets/md/assets/inpaint/pyramids.png"  height="500" /> 
 
 Note:
 Image pyramid is built by scaling down the original image by factor 2. After that we run the algorithm at the lowest scale and after that propagate results to the upper level and perform processing.
@@ -466,19 +480,20 @@ Image pyramid is built by scaling down the original image by factor 2. After tha
 <span class="menu-title" style="display: none">Patch Match</span>
 
 ### Critical part
-- Amount of Patches = Image Width * Image Height <!-- .element: class="fragment" -->
-  - 800 * 600 = 480 000
 - Nearest Neighbour Field (NNF) <!-- .element: class="fragment" -->
+- Amount of Patches = Amount of pixels <!-- .element: class="fragment" -->
+  - 800 * 600 = 480 000
 - Use PatchMatch <!-- .element: class="fragment" -->
-  - Requires only about 5 runs through image
+  - Requires ~ 5 iterations
 
 Note:
-The most time consuming part of this approach is to find best match for every patch at the entire image.
-For every patch we need to go thru entire image and find the best match. Image contains Patches = Width * Height 
+The most time consuming part of this approach is to find best match for every patch at the entire image. To build a mapping of a patch to its best match. This mapping is called (Show first bullet) 
 
-We need to build a mapping between patches.
+Nearest Neighbour Field. In order to build this mapping we need to go thru the enentire image **for each patch** and find its best match. Image contains (Next bullet) 
 
-I use PatchMatch algorithm that allows to speed up his process significantly. More iterations we perform the precisier NNF becomes.
+A plenty of patches. It could be a quadratic complexity. But (Next bullet)
+
+There is a nice PatchMatch algorithm that allows to speed up his process significantly. More iterations we perform the precisier NNF becomes.
 
 Now we should be able to outline the entire process (Next slide)
 
@@ -490,12 +505,16 @@ Now we should be able to outline the entire process (Next slide)
 <pre>
 
 
+
+
+
+
+
     for j < nnfBuildIterations
-      // build nnf
-    end
+      nnf = ImproveNnf(nnf, image ..);
 
 
-
+    
 
 
 
@@ -509,12 +528,16 @@ Now we should be able to outline the entire process (Next slide)
 <pre>
 
 
+
+
+
+
+
     for j < nnfBuildIterations
-      // build nnf
-    end
-    foreach pixel in removeArea
-      // Calc pixel value - inpainting
-    end
+      nnf = ImproveNnf(nnf, image ..);
+
+    image = Inpaint(image, removeArea, nnf, ..);
+    
 
 
 
@@ -526,15 +549,19 @@ Now we should be able to outline the entire process (Next slide)
 <span class="menu-title" style="display: none">Wex algorithm</span>
 
 <pre>
+
+
+
 
   for i < inpaintIterations
+  {
+
     for j < nnfBuildIterations
-      // build nnf
-    end
-    foreach pixel in removeArea
-      // Calc pixel value - inpainting
-    end
-  end
+      nnf = ImproveNnf(nnf, image ..);
+
+    image = Inpaint(image, removeArea, nnf, ..);
+    
+  }
 
 
 </pre>
@@ -546,17 +573,21 @@ Now we should be able to outline the entire process (Next slide)
 <span class="menu-title" style="display: none">Wex algorithm</span>
 
 <pre>
-foreach level in levels
+foreach level in pyramid.Levels
+{
+  image = level.GetImage();
+
   for i < inpaintIterations
+  {
+
     for j < nnfBuildIterations
-      // build nnf
-    end
-    foreach pixel in removeArea
-      // Calc pixel value - inpainting
-    end
-  end
-  // scale up NNF
-end
+      nnf = ImproveNnf(nnf, image ..);
+
+    image = Inpaint(image, removeArea, nnf, ..);
+    
+  }
+  nnf = nnf.ScaleUp(..);
+}
 </pre>
 
 ---
