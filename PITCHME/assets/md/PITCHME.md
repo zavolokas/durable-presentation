@@ -590,6 +590,60 @@ foreach level in pyramid.Levels
 }
 </pre>
 
+Note:
+I think now it should be obvious that the method is to expensive to be ran on a mobile device.
+
+---
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/use_cloud.png"  height="500" /> 
+
+Note:
+It worth to make a service and host it somewhere in a cloud. 
+
+---
+
+Note:
+
+I wanted to pay only for what I used and to be able to scale the service when the load increases.
+
+It would be possible with the following archetecture - 
+
+TODO: make picture with worker role
+
+So that client uploads image and markup to the blob storage and calls a WebAPI that puts a message into a queue. Worker role processes the image puts it back to the blob and sends updates via SignalR.
+
+The problem is that when there are multiple requests and only one worker role other users have to wait. We can configure scaling so that additional worker roles are deployed but it takes minutes for new Worker Role to be deployed.
+
+What would be possible is to split the whole processing into smaller jobs like this 
+
+TODO: make computation graph picture
+
+And process jobs from different requests. That would simulate some multitasking.
+
+In that case I would spend a lot of time inventing orchestration and ballancing logic instead of concentrating on important things.
+
+Moreover you pay for the time when the Worker Role is deployed. So it can do nothing but you still will pay for that.
+
+---
+
+Note:
+Later Microsoft turned their web jobs into Azure Functions.  Azure Function in my case is a really good alternative to worker roles.
+
+New instance of a function will immidiately react on a message in the queue, but 
+- function is not powerfull enough to handel the whole process
+- it is limited in time
+- in case of failure the whole process needs to be started from the beggining
+
+We can build pipeline, but then we still have an issue that we need to implement quite complicated orchestration logic.
+
+---
+
+Note:
+
+Luckly we have now a new Durable Functions!
+
+
 ---
 
 TODO: What are the possible solutions?
