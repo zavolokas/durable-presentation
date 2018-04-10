@@ -602,6 +602,14 @@ Note:
 It worth to make a service and host it somewhere in a cloud. 
 
 ---
+<span class="menu-title" style="display: none">Service Arhitecture</span>
+
+<img src="./assets/md/assets/inpaint/pyramids.png"  height="500" /> 
+
+Note:
+
+
+---
 
 Note:
 
