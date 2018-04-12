@@ -593,23 +593,171 @@ foreach level in pyramid.Levels
 Note:
 I think now it should be obvious that the method is to expensive to be ran on a mobile device.
 
+It worth to make a service and host it somewhere in a cloud. (Next slide)
+
 ---
 <span class="menu-title" style="display: none">Move to Cloud</span>
 
 <img src="./assets/md/assets/use_cloud.png"  height="500" /> 
 
 Note:
-It worth to make a service and host it somewhere in a cloud. 
+So the app just uses a WebApi and sends a request to process an image.
+
+I choose a Azure since I was familiar with it and it sounded kind of natural to choose this cloud for the .NET application.
+
+The architecture for the service should be as following
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution001.png"  height="500" /> 
+
+Note:
+We have a WebRole that is also a SignalR server so that service can update the client easyly
+
+So when the client requests to process an image. The web role (Next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution002.png"  height="500" /> 
+
+Note:
+Puts the images into the Blob storage and after that (Next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution003.png"  height="500" /> 
+
+Note:
+It pushes a message into the queue that an image in the blob container needs to be processed
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution004.png"  height="500" /> 
+
+Note:
+We have a worker role that listens to the queue and once it gets a message (Next Slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution005.png"  height="500" /> 
+
+Note:
+It downloads the images from the blob storage and starts to process it
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution006.gif"  height="500" /> 
+
+Note:
+Is saves intermidiate results to the blob storage and notifies client via SignalR about the update
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution007.png"  height="500" /> 
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution008.png"  height="500" /> 
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution009.png"  height="500" /> 
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution010.png"  height="500" /> 
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution011.png"  height="500" /> 
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution012.png"  height="500" /> 
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution013.png"  height="500" /> 
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution014.gif"  height="500" /> 
+
+Note:
 
 ---
 <span class="menu-title" style="display: none">Service Arhitecture</span>
 
-<img src="./assets/md/assets/inpaint/pyramids.png"  height="500" /> 
+Disadvantages
+- Same time requests will be processed in turn
+- We can setup scaling based on amount of messages in the queue
+- But it takes minutes to deploy a new worker role
+- That is too long for the inpassionate users
+
+We need to emulate the multitasking.
 
 Note:
 
+---
+<span class="menu-title" style="display: none">Service Arhitecture</span>
+
+Multitasking emulation
+- We split the whole processing into a small chuncks
+  - Parallelize NNF building since it will grow towards the top levels
+  - Build a processing pipeline (picture)
+- 
+- Try to process chunks from different request - ballancing them
+- Put processing request for each chunk into the queue
+- 
+
+Note:
+We want to be able to process multiple requests simultaniously and make 
 
 ---
+
+
 
 Note:
 
