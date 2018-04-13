@@ -663,37 +663,7 @@ It downloads the images from the blob storage and starts to process it
 Note:
 Is saves intermidiate results to the blob storage and notifies client via SignalR about the update
 
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution007.png"  height="500" /> 
-
-Note:
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution008.png"  height="500" /> 
-
-Note:
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution009.png"  height="500" /> 
-
-Note:
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution010.png"  height="500" /> 
-
-Note:
+But what will happen if at the same time (Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -702,6 +672,9 @@ Note:
 <img src="./assets/md/assets/WorkerRole/worker_role_solution011.png"  height="500" /> 
 
 Note:
+another client will send the request?
+
+The same (Next slide) 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -710,6 +683,7 @@ Note:
 <img src="./assets/md/assets/WorkerRole/worker_role_solution012.png"  height="500" /> 
 
 Note:
+Web Role will put the data into the blob storage
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -718,6 +692,7 @@ Note:
 <img src="./assets/md/assets/WorkerRole/worker_role_solution013.png"  height="500" /> 
 
 Note:
+And send a message into the queue
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -726,60 +701,68 @@ Note:
 <img src="./assets/md/assets/WorkerRole/worker_role_solution014.gif"  height="500" /> 
 
 Note:
+But the worker role is still busy with processing the first request. So another user have to wait.
+
+We can scale and deploy another worker role when there are certain amount of messages in the queue, but it takes a lot of time to deploy a new worker role.
+
+It is quite difficult because we deploy the whole application. However we need at least to emulate multitasking and process all the requests simultaniously. 
+
+How can we do it?
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution020.png"  height="500" /> 
+
+Note:
+We can buld a complete processing pipeline based on the input. Where we will have separate steps of: 
+
+- building an NNF in parallel for a different part of image
+- merging NNFs into one
+- inpaint etc
+
+After that we can tear appart this pipeline into small pieces
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution021.png"  height="500" /> 
+
+Note:
+After that we siply register them in a storage and 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution022.png"  height="500" /> 
+
+Note:
+push a message for each one to the queue. It will only trigger a Worker Role to check the registry which job should be done next from which user etc. 
+
+So it should ballance them.
 
 ---
 <span class="menu-title" style="display: none">Service Arhitecture</span>
 
-Disadvantages
-- Same time requests will be processed in turn
-- We can setup scaling based on amount of messages in the queue
-- But it takes minutes to deploy a new worker role
-- That is too long for the inpassionate users
-
-We need to emulate the multitasking.
+### Disadvantages
+- Difficult to scale <!-- .element: class="fragment" -->
+- Complicated workflow <!-- .element: class="fragment" -->
+- Pricing <!-- .element: class="fragment" -->
 
 Note:
+It is difficult to scale. We need to 
+- build a pipeline, 
+- store individual pieces
+- keep track of inputs and outputs
+- decide whick pice of work to take next
+Lots of supporting code that doesn't relate to the actual problem
 
----
-<span class="menu-title" style="display: none">Service Arhitecture</span>
+That all leads to complicated workflow
 
-Multitasking emulation
-- We split the whole processing into a small chuncks
-  - Parallelize NNF building since it will grow towards the top levels
-  - Build a processing pipeline (picture)
-- 
-- Try to process chunks from different request - ballancing them
-- Put processing request for each chunk into the queue
-- 
-
-Note:
-We want to be able to process multiple requests simultaniously and make 
-
----
-
-
-
-Note:
-
-I wanted to pay only for what I used and to be able to scale the service when the load increases.
-
-It would be possible with the following archetecture - 
-
-TODO: make picture with worker role
-
-So that client uploads image and markup to the blob storage and calls a WebAPI that puts a message into a queue. Worker role processes the image puts it back to the blob and sends updates via SignalR.
-
-The problem is that when there are multiple requests and only one worker role other users have to wait. We can configure scaling so that additional worker roles are deployed but it takes minutes for new Worker Role to be deployed.
-
-What would be possible is to split the whole processing into smaller jobs like this 
-
-TODO: make computation graph picture
-
-And process jobs from different requests. That would simulate some multitasking.
-
-In that case I would spend a lot of time inventing orchestration and ballancing logic instead of concentrating on important things.
-
-Moreover you pay for the time when the Worker Role is deployed. So it can do nothing but you still will pay for that.
+The pricing model is also disadvantage since you pay for worker role for the whole time it is deployed. No matter was it doing something or not. And we have to keep one continue running to react imedeatelly on the incoming request.
 
 ---
 
@@ -798,42 +781,6 @@ We can build pipeline, but then we still have an issue that we need to implement
 Note:
 
 Luckly we have now a new Durable Functions!
-
-
----
-
-TODO: What are the possible solutions?
-
----
-
-- Azure Cloud Services
-  - Worker roles
-
----
-
-TODO: How difficult to use worker
-- one worker many users  <!-- .element: class="fragment" -->
-- new worker instance deploy time
-- reacts on message in a queue  <!-- .element: class="fragment" -->
-- difficult to scale  <!-- .element: class="fragment" -->
-
----
-
-| INSTANCE	| CORES |	RAM	| PRICE |
-| ---|---|---|---|
-| A0 | 1 | 0.75 GB | $0.02/hour |
-| A1 | 1 | 1.75 GB | $0.08/hour |
-| A2 | 2 | 3.50 GB | $0.16/hour |
-| A3 | 4 | 7.00 GB | $0.32/hour |
-| A4 | 8 | 14.00 GB | $0.64/hour |
-
----
-
-| instance | price per month|
-| --- | ---|
-| A0 | 24 &ast; 30 &ast; $0.02 = $14.4|
-| A1 | 24 &ast; 30 &ast; $0.08 = $57.6|
-| A2 | 24 &ast; 30 &ast; $0.16 = $115.2|
 
 ---
 
