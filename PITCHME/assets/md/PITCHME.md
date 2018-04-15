@@ -695,7 +695,6 @@ Note:
 And send a message into the queue
 
 ---
-<!-- .slide: data-transition="none" -->
 <span class="menu-title" style="display: none">Move to Cloud</span>
 
 <img src="./assets/md/assets/WorkerRole/worker_role_solution014.gif"  height="500" /> 
@@ -740,9 +739,18 @@ After that we siply register them in a storage and
 <img src="./assets/md/assets/WorkerRole/worker_role_solution022.png"  height="500" /> 
 
 Note:
-push a message for each one to the queue. It will only trigger a Worker Role to check the registry which job should be done next from which user etc. 
+push a message for each one to the queue. Messages will only trigger a Worker Role to check the registry which job should be done next, from which user etc. 
 
 So it should ballance them.
+
+---
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/WorkerRole/worker_role_solution023.gif"  height="500" /> 
+
+Note:
+Process a piece of work for one user then for another then agan for the first etc.
+
 
 ---
 <span class="menu-title" style="display: none">Service Arhitecture</span>
@@ -758,23 +766,109 @@ It is difficult to scale. We need to
 - store individual pieces
 - keep track of inputs and outputs
 - decide whick pice of work to take next
+
 Lots of supporting code that doesn't relate to the actual problem
 
 That all leads to complicated workflow
 
 The pricing model is also disadvantage since you pay for worker role for the whole time it is deployed. No matter was it doing something or not. And we have to keep one continue running to react imedeatelly on the incoming request.
 
+Another possible solution can be based on Docker containers.
+
 ---
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/docker_solution.png"  height="500" /> 
 
 Note:
-Later Microsoft turned their web jobs into Azure Functions.  Azure Function in my case is a really good alternative to worker roles.
+Truelly saying I didn't try it yet. We could simply pack pure processing app in a container and spinup more instances when needed.
 
-New instance of a function will immidiately react on a message in the queue, but 
-- function is not powerfull enough to handel the whole process
-- it is limited in time
-- in case of failure the whole process needs to be started from the beggining
+Might be a good solution. I don't know yet.
 
-We can build pipeline, but then we still have an issue that we need to implement quite complicated orchestration logic.
+What happend later is that Microsoft turned their web jobs into 
+
+---
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/azure_function_solution001.png"  height="500" /> 
+
+Note:
+Azure Functions.
+- They are really good for scalability
+- Can be triggered by an HTTP request
+
+I could put the whole processing logic into a function (Next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/azure_function_solution002.png"  height="500" /> 
+
+Note:
+Then for each user a separate instance of function will be ran almost immedatelly.
+
+Pricing model is also nice - you pay for what you use.
+
+But(Next slide)
+
+---
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+### Disadvantages
+- Failure => lost results <!-- .element: class="fragment" -->
+- No SignalR Hub<!-- .element: class="fragment" -->
+- Not powerful <!-- .element: class="fragment" -->
+- 5 min limit <!-- .element: class="fragment" -->
+
+Note:
+In any case of failure a user will get no response. - we still want to put requests into a queue
+
+We need a SignalR hub to update the client - we still want to have a WebRole
+
+Functions are not powerful as Worker Role can be and processing will take more time.
+
+The problem is that the functions are limeted by 5 minutes of time, after 5 minutes they are killed.
+
+---
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/azure_function_solution003.png"  height="500" />
+
+Note:
+It will solve the issue with failure, function will try to process image again and it will update the client. Another users don't have to wait.
+
+---
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+### Disadvantages
+- Not powerful <!-- .element: class="fragment" -->
+- 5 min limit <!-- .element: class="fragment" -->
+- Failure => lost progress <!-- .element: class="fragment" -->
+
+Note:
+But still the functions are not powerfull enough and the processing will be slow and after 5 minutes processing will be stopped and after that function will start to process a request again, from the very begining.
+
+What we could do, is to split the inpainting process into separate functions. Do you remember the pipeline?
+
+---
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/azure_function_solution004.png"  height="500" />
+
+Note:
+We can build create functions for each type of steps in this pipeline
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Move to Cloud</span>
+
+<img src="./assets/md/assets/azure_function_solution005.png"  height="500" />
+
+Note:
+Then the Build will be scaled automatically. And NNF will be built in parallel. Nice!
+
+But then we still have an issue that we need to implement quite complicated orchestration of these functions and there can be more.
 
 ---
 
