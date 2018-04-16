@@ -847,7 +847,7 @@ It will solve the issue with failure, function will try to process image again a
 - Failure => lost progress <!-- .element: class="fragment" -->
 
 Note:
-But still the functions are not powerfull enough and the processing will be slow and after 5 minutes processing will be stopped and after that function will start to process a request again, from the very begining.
+But still the functions are not powerfull enough and the processing will be slow and after 5 minutes processing will be stopped and after that function will start to process a request again, from the very begining - because the functions are stateless
 
 What we could do, is to split the inpainting process into separate functions. Do you remember the pipeline?
 
@@ -866,53 +866,186 @@ We can build create functions for each type of steps in this pipeline
 <img src="./assets/md/assets/azure_function_solution005.png"  height="500" />
 
 Note:
-Then the Build will be scaled automatically. And NNF will be built in parallel. Nice!
+Then the Build will be scaled automatically. And NNF will be built in parallel. Sounds Nice!
 
-But then we still have an issue that we need to implement quite complicated orchestration of these functions and there can be more.
+Output from one function needs to be sent as an input to another function - and making sure that all the parts play nicely together in a synchronized and consistent way.
+
+In other words we need to build some sofisticated orchestration of these functions.
+
+// TODO: place to show ARGGGGHHHHH
 
 ---
+
+## Durable Functions
+- Simplify orchestration <!-- .element: class="fragment" -->
+- Code your workflow  <!-- .element: class="fragment" -->
+  - Save output to local variables
+- Stateful functions  <!-- .element: class="fragment" -->
+  - State is never lost
 
 Note:
 
-Luckly we have now a new Durable Functions!
+Luckly now we have Durable Functions! (Next bullet)
+
+The main use case for Durable Functions is simplifying complex orchestration problems in serverless applications. (Next bullet)
+
+Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
+
+They are statefull. The progress is not lost when VM is restarting.
 
 ---
 
-- Azure functions
-  - Pay for usage (real)  <!-- .element: class="fragment" -->
-  - Scale  <!-- .element: class="fragment" -->
+### How to orchestrate?
+
+- `OrchestrationTrigger` <!-- .element: class="fragment" -->
+- `ActivityTrigger` <!-- .element: class="fragment" -->
+
+Note:
+
+The Azure Durable Function library adds two function bindings that are used by the system to find which functions should be treated as Durable:
+
+- OrchestrationTrigger – All orchestrator functions must use this trigger type. This input binding is connected to the
+  - DurableOrchestrationContext class that is used by the orchestrator to call durable-activities and create durable control flow
+- ActivityTrigger – marks a function as activity, which allows it to be called by an orchestrator function. 
+This input binding is connected to the DurableActivityContext class which allows the activity function to get the input and set the output.
 
 ---
 
-TODO: How to orchestrate
+## Demo coding
+
++++
+
+### Http Trigger
+```CSharp
+[FunctionName("Inpaint")]
+public static async Task<HttpResponseMessage> Inpaint(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "inpaint")]
+    HttpRequestMessage request,
+    [OrchestrationClient]
+    DurableOrchestrationClient orchestrationClient,
+    TraceWriter log
+    )
+{
+    log.Info("Start inpainting");
+
+    // get input
+    var input = (Container: "009", Picture: "t009.png", RemoveMarkup: "m009.png");
+
+    var instanceId = await orchestrationClient.StartNewAsync("Process", input);
+
+    log.Info($"Orchestrator({instanceId}) - started to inpaint an input");
+
+    return orchestrationClient.CreateCheckStatusResponse(request, instanceId);
+}
+```
+
+Note:
+In this example, I created an HTTP triggered function and bound one of its parameters to the `DurableOrchestrationClient` by specifying the `OrchestrationClient` attribute.
+
+The function is invoked by sending an `HTTP GET` request to the address http://{host}/api/inpaint . 
+
+The Inpaint function starts a new instance of the `Process` orchestrator function by calling the `DurableOrchestrationClient.StartNewAsync()` method, and passing it the name of the function and an input, which is empty in this case.
+
++++
+
+### Orchestrator
+```CSharp
+[FunctionName("Process")]
+public static async Task<bool> Process(
+    [OrchestrationTrigger]
+    DurableOrchestrationContext ctx
+    )
+{
+    (string Container, string Picture, string RemoveMarkup) input = ctx.GetInput<(string, string, string)>();
+
+    string[] blobNames = new []{ input.Picture, input.RemoveMarkup};
+
+    var tasks = new Task<bool>[blobNames.Length];
+
+    for (var i = 0; i < blobNames.Length; i++)
+    {
+        tasks[i] = ctx.CallActivityAsync<bool>("Validate", blobNames[i]);
+    }
+
+    await Task.WhenAll(tasks);
+
+    return tasks.All(t => t.Result);
+}
+```
+
++++
+
+### Activity
+```CSharp
+[FunctionName("Validate")]
+public static async Task<bool> Validate(
+    [ActivityTrigger] string blobName)
+{
+    var task = Task.Delay(TimeSpan.FromSeconds(10));
+    await task;
+
+    return true;
+}
+```
+
++++
+
+<img src="./assets/md/assets/demo001.png"  height="500" />
+
++++
+
+<img src="./assets/md/assets/demo002.png"  height="500" />
+
++++
+
+<img src="./assets/md/assets/demo003.png"  height="500" />
+
++++
+
+<img src="./assets/md/assets/demo004.png"  height="500" />
 
 ---
 
-- Limited lifetime  <!-- .element: class="fragment" -->
-- Difficult to orchestrate  <!-- .element: class="fragment" -->
+# Easy!
+
+<img src="./assets/md/assets/wow.gif"  width="800" />
 
 ---
 
-TODO: Durable functions - what it is?
-
-- description
-- prerelease version
-- how to reference the NuGet
+<img src="./assets/md/assets/serialization_issue.png"  width="800" />
 
 ---
 
-TODO: How to orchestrate
+Should not be more than 60K!
 
 ---
 
-TODO: Converted app into Durable without Activities. 
+Because it maintains queues and input params goes in a message of the queue
+
+---
+`InvalidOperationException`
+
+```
+ac6fd5cdd07a4dc9b2577657d65c4f27: Function 'InpaintOrchestration (Or
+chestrator)', version '' failed with an error. Reason: System.Inval
+idOperationException: Multithreaded execution was detected. This ca
+n happen if the orchestrator function previously resumed from an un
+supported async callback.
+```
 
 ---
 
-TODO: Reasons to use Activities
+Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
 
-- Parallalization
-- Restores in case of failure
+---
+
+- the orchestrator function must be determenstic
+- avoid calling I/O operations
+
+Note:
+This means that function must avoid running code with side-effects (for example using DateTime.Now) except for using the functionality provided by the DurableOrchestrationContext (for example CurrentUtcDateTime that provides the current date/time in a safe and durable way
+
+The correct way to run this non-deterministic code or I/O bound code, is to put it inside a durable-activity function.
 
 ---
 
