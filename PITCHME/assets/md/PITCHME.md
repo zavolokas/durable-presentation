@@ -1037,34 +1037,151 @@ As I said - what we saw is the samples from Microsoft, but usuall your case is a
 ## Demo coding 2
 
 ---
-<!-- .slide: data-background-image="./assets/md/assets/confusion.gif" data-background-size="auto 45%" data-background-color=" " data-background-position="left" -->
+<!-- .slide: data-transition="none" -->
 
-### Questions
+### What?!
 
-- Storage account <!-- .element: class="fragment" -->
+<img src="./assets/md/assets/confusion.gif"  width="800" />
+
+Note:
+Don't know how about you, but I've got a lot of questions.
+
+---
+<!-- .slide: data-transition="none" -->
+
+### What?!
+
+<img src="./assets/md/assets/confusion.gif"  width="400" />
+
+- Storage account
 - Not supported async calls <!-- .element: class="fragment" -->
 - Serialization <!-- .element: class="fragment" -->
 - 60K limit <!-- .element: class="fragment" -->
 
+Note:
+Why does it requires storage account for orchestrator and activity functions? (next bullet)
+
+Why it complains about async calls that done withowt using context? (next bullet)
+
+Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
+
+But why is the limit for the payload is 60K?
+
+We need to learn how durable functions work under the hood.
+
 ---
-<!-- .slide: data-background-image="./assets/md/assets/confusion.gif" data-background-size="auto 45%" data-background-color=" " data-background-position="left" -->
+<!-- .slide: data-transition="none" -->
 
-| ### Questions ||
-|---|:--:|
-|  | Storage account|
-|  | Not supported async calls|
-|  | Serialization|
-|  | 60K limit|
+<img src="./assets/md/assets/durable/duarable-process01.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process02.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process03.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process04.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process05.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process06.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process07.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process08.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process09.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process10.png"  width="800" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/durable/duarable-process11.png"  width="800" />
+
+Note:
+The question now (Next slide)
 
 ---
 
-Should not be more than 60K!
+### How Orchestrator restores execution?
+- Checkpoint/Replay <!-- .element: class="fragment" -->
+
+Note:
+How the orchestrator function restores it's state and understands that it needs to proceed with execution from the point where it ended execution last time?
+
+It uses one of the Event Sources technique - Chckpoint/Replay
+
+There are checkpoints are created for the orchestration function during it's execution and after it awakes it Replays the checkpoints and restores the latest state.
+
+---
+
+#### History table
+
+<img src="./assets/md/assets/history_table.png" width="800" />
+
+Note:
+Here are a History table 
+
+---
+
+<!-- <img src="./assets/md/assets/clear_now.gif"  height="300" /> -->
+
+|Why?| Answer|
+|----|-------|
+| Storage account | to maintain queues and tables |
+| Not supported async calls | to make checkpoints |
+| Serialization | to send messages |
+| 60K limit | queue message size limit|
 
 ---
 
 Because it maintains queues and input params goes in a message of the queue
-
----
 
 Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
 
