@@ -893,12 +893,11 @@ Workflow is now can be defined in code. No JSON schemas or designers. (Next bull
 
 They are statefull. The progress is not lost when VM is restarting.
 
+Let's jump into coding and see how does it work in practice
+
 ---
 
-### How to orchestrate?
-
-- `OrchestrationTrigger` <!-- .element: class="fragment" -->
-- `ActivityTrigger` <!-- .element: class="fragment" -->
+## Demo coding
 
 Note:
 
@@ -908,10 +907,6 @@ The Azure Durable Function library adds two function bindings that are used by t
   - DurableOrchestrationContext class that is used by the orchestrator to call durable-activities and create durable control flow
 - ActivityTrigger – marks a function as activity, which allows it to be called by an orchestrator function. 
 This input binding is connected to the DurableActivityContext class which allows the activity function to get the input and set the output.
-
----
-
-## Demo coding
 
 +++
 
@@ -1010,9 +1005,56 @@ public static async Task<bool> Validate(
 
 <img src="./assets/md/assets/wow.gif"  width="800" />
 
+Note:
+That was pritty easy!
+
+These are samples that are provided by Microsoft (Next slide)
+
 ---
 
-<img src="./assets/md/assets/serialization_issue.png"  width="800" />
+### Function chaining
+
+<img src="./assets/md/assets/function-chaining.png"  width="800" />
+
+Note:
+call one function after another and it is allso possible to store results in a variable and pass results to a next function in the chain
+
+---
+
+### Fan-out/fan-in
+
+<img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
+
+Note:
+Call functions in parallel, gather result and do something else.
+
+There are 3 more patterns on official documentation.
+
+As I said - what we saw is the samples from Microsoft, but usuall your case is a bit different and when you go a bit different direction you experiance some issues. Let's do more coding
+
+---
+
+## Demo coding 2
+
+---
+<!-- .slide: data-background-image="./assets/md/assets/confusion.gif" data-background-size="auto 45%" data-background-color=" " data-background-position="left" -->
+
+### Questions
+
+- Storage account <!-- .element: class="fragment" -->
+- Not supported async calls <!-- .element: class="fragment" -->
+- Serialization <!-- .element: class="fragment" -->
+- 60K limit <!-- .element: class="fragment" -->
+
+---
+<!-- .slide: data-background-image="./assets/md/assets/confusion.gif" data-background-size="auto 45%" data-background-color=" " data-background-position="left" -->
+
+| ### Questions ||
+|---|:--:|
+|  | Storage account|
+|  | Not supported async calls|
+|  | Serialization|
+|  | 60K limit|
 
 ---
 
@@ -1021,17 +1063,6 @@ Should not be more than 60K!
 ---
 
 Because it maintains queues and input params goes in a message of the queue
-
----
-`InvalidOperationException`
-
-```
-ac6fd5cdd07a4dc9b2577657d65c4f27: Function 'InpaintOrchestration (Or
-chestrator)', version '' failed with an error. Reason: System.Inval
-idOperationException: Multithreaded execution was detected. This ca
-n happen if the orchestrator function previously resumed from an un
-supported async callback.
-```
 
 ---
 
@@ -1046,14 +1077,6 @@ Note:
 This means that function must avoid running code with side-effects (for example using DateTime.Now) except for using the functionality provided by the DurableOrchestrationContext (for example CurrentUtcDateTime that provides the current date/time in a safe and durable way
 
 The correct way to run this non-deterministic code or I/O bound code, is to put it inside a durable-activity function.
-
----
-
-TODO: How I failed to switch to Activities
-
-- No awaits within Orcestrate  <!-- .element: class="fragment" -->
-- Serializable inputs  <!-- .element: class="fragment" -->
-- 60KB payloads  <!-- .element: class="fragment" -->
 
 ---
 
