@@ -1180,6 +1180,162 @@ Here are a History table
 | 60K limit | queue message size limit|
 
 ---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-start.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step0.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step3.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step3.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+
+Note:
+
+
+
+---
 
 Because it maintains queues and input params goes in a message of the queue
 
