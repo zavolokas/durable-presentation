@@ -36,7 +36,7 @@ Note:
 
 Note:
 1.
-In 2012 I attended TechDays. 
+It started when in 2012 I attended TechDays. 
 Many talks were dedicated to Windows Phone 7 development and were to inspire people to develop applications.
 
 2.
@@ -64,7 +64,9 @@ Video Demo
 Note:
 1. Watch video
 
-2. After the release, the app had a success. Many downloads, top positions in its category. Microsoft organized a Next App Star competition. (Next slide)
+2. After the release, the app had a success. Many downloads, top positions in its category. 
+
+Later, Microsoft organized a Next App Star competition. (Next slide)
 
 ---
 <!-- .slide: data-background-image="./assets/md/assets/nextappstar.png" data-background-size="auto 45%" data-background-color=" " data-background-position="left" -->
@@ -91,7 +93,7 @@ Note:
 
 Note:
 People commented that the app ruins pictures, distorts them and not smart at all.
-And thay were absolutely right. Because the app used Seam Carving algorithm.(Next slide)
+And they were absolutely right. Because the app used Seam Carving algorithm.(Next slide)
 
 ---
 
@@ -103,7 +105,8 @@ And thay were absolutely right. Because the app used Seam Carving algorithm.(Nex
 
 Note:
 The algorithm simply searches a sequence of less important/noticeable pixels (in image processing terms - pixels with minimal energy) and removes them. After that to restore the size it searches for the sequence again and copies it.
- That leads to the distortions (Show examples)
+ 
+But That leads to the distortions, It works fine for pictures made at nature, but for others it might be a problem (Show examples)
 
 
 ---
@@ -192,7 +195,7 @@ It helped. **A bit** It felt like they ruine everything around (Next slide)
 ![Image](./assets/md/assets/riots.jpg)
 
 Note:
-Including the rating of the app and because they wanted more intellingent functionality
+Including the rating of the app because they wanted more intellingent functionality
 
 So I took it serious and started to work really **really** hard (Next slide)
 
@@ -233,7 +236,7 @@ result
 
 Note:
 
-To inpaint of to perform the content-aware fill
+To inpaint or to perform the content-aware fill
 
 What happened with the issues? (Next slide)
 
@@ -310,7 +313,7 @@ The only thing I needed to do is to use my new library. **But** (Next slide)
 <img src="./assets/md/assets/slow_mobiles.gif"  height="500" /> 
 
 Note: 
-Mobiles are not capable of required computation power
+Mobiles were not capable of required computation power (and it is still the case)
 
 The reason is the complexity of the new method. Let me explain it shortly.
 Suppose we have following image (Next slide)
@@ -374,12 +377,38 @@ The pixel is a part of 9 different patches. And what we going to do now. We will
 Note:
 We have found a similar patch for one of the 9.
 
+Here I'd like to make a small remark about how do we find patches (Next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Inpainting alg</span>
+
+### Patch search
+- Nearest Neighbour Field (NNF) <!-- .element: class="fragment" -->
+- Amount of Patches = Amount of pixels <!-- .element: class="fragment" -->
+  - 800 * 600 = 480 000
+- Use PatchMatch <!-- .element: class="fragment" -->
+  - Requires ~ 5 iterations
+
+Note:
+This part is basically the most time consuming in this method. We have to find a patch that is similar. We build a mapping that is called (Show first bullet) 
+
+Nearest Neighbour Field. In order to build this mapping we need to go thru the enentire image **for each patch** and find its best match. Image contains (Next bullet) 
+
+A plenty of patches. Naive approach suggests an algorithm that has a quadratic complexity. But (Next bullet)
+
+There is a nice PatchMatch algorithm that allows to speed up his process significantly. More iterations we perform the precisier NNF becomes. 
+
+Let's go back(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
 <span class="menu-title" style="display: none">Inpainting alg</span>
 
 <img src="./assets/md/assets/inpaint/process007.png"  height="500" /> 
+
+Note:
+We get another similar patch using our NNF
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -435,7 +464,7 @@ These are the values.(Next slide)
 <img src="./assets/md/assets/inpaint/process015.png"  height="500" /> 
 
 Note:
-And if we will take an average of their value(Next slide)
+And if we will take an average of the values(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -465,7 +494,8 @@ The process is repeated (Next slide)
 <img src="./assets/md/assets/inpaint/process_rest.gif"  height="500" /> 
 
 Note:
-for the each pixel in the area until all the values are not calculated
+for the each pixel in the area until all the values are not calculated (wait for it)
+
 In the reality the image is bigger and pixels are smaller. That is why the whole process is done on an image pyramid.
 
 ---
@@ -474,28 +504,7 @@ In the reality the image is bigger and pixels are smaller. That is why the whole
 <img src="./assets/md/assets/inpaint/pyramids.png"  height="500" /> 
 
 Note:
-Image pyramid is built by scaling down the original image by factor 2. After that we run the algorithm at the lowest scale and after that propagate results to the upper level and perform processing.
-
----
-<span class="menu-title" style="display: none">Patch Match</span>
-
-### Critical part
-- Nearest Neighbour Field (NNF) <!-- .element: class="fragment" -->
-- Amount of Patches = Amount of pixels <!-- .element: class="fragment" -->
-  - 800 * 600 = 480 000
-- Use PatchMatch <!-- .element: class="fragment" -->
-  - Requires ~ 5 iterations
-
-Note:
-The most time consuming part of this approach is to find best match for every patch at the entire image. To build a mapping of a patch to its best match. This mapping is called (Show first bullet) 
-
-Nearest Neighbour Field. In order to build this mapping we need to go thru the enentire image **for each patch** and find its best match. Image contains (Next bullet) 
-
-A plenty of patches. It could be a quadratic complexity. But (Next bullet)
-
-There is a nice PatchMatch algorithm that allows to speed up his process significantly. More iterations we perform the precisier NNF becomes.
-
-Now we should be able to outline the entire process (Next slide)
+It is built by scaling down the original image by factor 2. After that we run the algorithm starting from the lowest scale and propagate the results to the upper level and perform processing.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -591,213 +600,22 @@ foreach level in pyramid.Levels
 </pre>
 
 Note:
-I think now it should be obvious that the method is to expensive to be ran on a mobile device.
+I think now it should be obvious that the method is too expensive to be ran on a mobile device.
 
 It worth to make a service and host it somewhere in a cloud. (Next slide)
 
 ---
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/use_cloud.png"  height="500" /> 
-
-Note:
-So the app just uses a WebApi and sends a request to process an image.
-
-I choose a Azure since I was familiar with it and it sounded kind of natural to choose this cloud for the .NET application.
-
-The architecture for the service should be as following
-
----
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution001.png"  height="500" /> 
-
-Note:
-We have a WebRole that is also a SignalR server so that service can update the client easyly
-
-So when the client requests to process an image. The web role (Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution002.png"  height="500" /> 
-
-Note:
-Puts the images into the Blob storage and after that (Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution003.png"  height="500" /> 
-
-Note:
-It pushes a message into the queue that an image in the blob container needs to be processed
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution004.png"  height="500" /> 
-
-Note:
-We have a worker role that listens to the queue and once it gets a message (Next Slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution005.png"  height="500" /> 
-
-Note:
-It downloads the images from the blob storage and starts to process it
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution006.gif"  height="500" /> 
-
-Note:
-Is saves intermidiate results to the blob storage and notifies client via SignalR about the update
-
-But what will happen if at the same time (Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution011.png"  height="500" /> 
-
-Note:
-another client will send the request?
-
-The same (Next slide) 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution012.png"  height="500" /> 
-
-Note:
-Web Role will put the data into the blob storage
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution013.png"  height="500" /> 
-
-Note:
-And send a message into the queue
-
----
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution014.gif"  height="500" /> 
-
-Note:
-But the worker role is still busy with processing the first request. So another user have to wait.
-
-We can scale and deploy another worker role when there are certain amount of messages in the queue, but it takes a lot of time to deploy a new worker role.
-
-It is quite difficult because we deploy the whole application. However we need at least to emulate multitasking and process all the requests simultaniously. 
-
-How can we do it?
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution020.png"  height="500" /> 
-
-Note:
-We can buld a complete processing pipeline based on the input. Where we will have separate steps of: 
-
-- building an NNF in parallel for a different part of image
-- merging NNFs into one
-- inpaint etc
-
-After that we can tear appart this pipeline into small pieces
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution021.png"  height="500" /> 
-
-Note:
-After that we siply register them in a storage and 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution022.png"  height="500" /> 
-
-Note:
-push a message for each one to the queue. Messages will only trigger a Worker Role to check the registry which job should be done next, from which user etc. 
-
-So it should ballance them.
-
----
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/WorkerRole/worker_role_solution023.gif"  height="500" /> 
-
-Note:
-Process a piece of work for one user then for another then agan for the first etc.
-
-
----
-<span class="menu-title" style="display: none">Service Arhitecture</span>
-
-### Disadvantages
-- Difficult to scale <!-- .element: class="fragment" -->
-- Complicated workflow <!-- .element: class="fragment" -->
-- Pricing <!-- .element: class="fragment" -->
-
-Note:
-It is difficult to scale. We need to 
-- build a pipeline, 
-- store individual pieces
-- keep track of inputs and outputs
-- decide whick pice of work to take next
-
-Lots of supporting code that doesn't relate to the actual problem
-
-That all leads to complicated workflow
-
-The pricing model is also disadvantage since you pay for worker role for the whole time it is deployed. No matter was it doing something or not. And we have to keep one continue running to react imedeatelly on the incoming request.
-
-Another possible solution can be based on Docker containers.
-
----
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/docker_solution.png"  height="500" /> 
-
-Note:
-Truelly saying I didn't try it yet. We could simply pack pure processing app in a container and spinup more instances when needed.
-
-Might be a good solution. I don't know yet.
-
-What happend later is that Microsoft turned their web jobs into 
-
----
 <span class="menu-title" style="display: none">Move to Cloud</span>
 
 <img src="./assets/md/assets/azure_function_solution001.png"  height="500" /> 
 
 Note:
-Azure Functions.
-- They are really good for scalability
-- Can be triggered by an HTTP request
+So the app just uses a WebApi and sends a request to process an image.
 
-I could put the whole processing logic into a function (Next slide)
+Initially I choose Azure, experemented with WebRole, but for many reasons it didn't work out.
+
+With availability of serverless and Azure functions in particular I got back to this idea.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -806,73 +624,34 @@ I could put the whole processing logic into a function (Next slide)
 <img src="./assets/md/assets/azure_function_solution002.png"  height="500" /> 
 
 Note:
-Then for each user a separate instance of function will be ran almost immedatelly.
+Because Azure functions are triggered quite fast and at the same time you don't pay for the time it's deployed but only for the resources you use. 
 
-Pricing model is also nice - you pay for what you use.
+On the other hand functions are not very powerful and processing time can easily exceed the 5 minutes limit, after which the function is got killed basically.
 
-But(Next slide)
-
----
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-### Disadvantages
-- Failure => lost results <!-- .element: class="fragment" -->
-- No SignalR Hub<!-- .element: class="fragment" -->
-- Not powerful <!-- .element: class="fragment" -->
-- 5 min limit <!-- .element: class="fragment" -->
-
-Note:
-In any case of failure a user will get no response. - we still want to put requests into a queue
-
-We need a SignalR hub to update the client - we still want to have a WebRole
-
-Functions are not powerful as Worker Role can be and processing will take more time.
-
-The problem is that the functions are limeted by 5 minutes of time, after 5 minutes they are killed.
+What we could do, is to split the inpainting process into separate functions.
 
 ---
 <span class="menu-title" style="display: none">Move to Cloud</span>
 
-<img src="./assets/md/assets/azure_function_solution003.png"  height="500" />
+<img src="./assets/md/assets/function-split.png"  height="500" />
 
 Note:
-It will solve the issue with failure, function will try to process image again and it will update the client. Another users don't have to wait.
+It would also allow to scale individual steps of the inpainting process which is really nice.
 
----
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-### Disadvantages
-- Not powerful <!-- .element: class="fragment" -->
-- 5 min limit <!-- .element: class="fragment" -->
-- Failure => lost progress <!-- .element: class="fragment" -->
-
-Note:
-But still the functions are not powerfull enough and the processing will be slow and after 5 minutes processing will be stopped and after that function will start to process a request again, from the very begining - because the functions are stateless
-
-What we could do, is to split the inpainting process into separate functions. Do you remember the pipeline?
-
----
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/azure_function_solution004.png"  height="500" />
-
-Note:
-We can build create functions for each type of steps in this pipeline
+However the question is (next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
 <span class="menu-title" style="display: none">Move to Cloud</span>
 
-<img src="./assets/md/assets/azure_function_solution005.png"  height="500" />
+<img src="./assets/md/assets/function-split-issues.png"  height="500" />
 
 Note:
-Then the Build will be scaled automatically. And NNF will be built in parallel. Sounds Nice!
+How to orchestrate all these functions that all the parts play nicely together in a synchronized and consistent way.
 
-Output from one function needs to be sent as an input to another function - and making sure that all the parts play nicely together in a synchronized and consistent way.
+Output from one function needs to be sent as an input to another function, or some of them needs to be executed in a loop.
 
-In other words we need to build some sofisticated orchestration of these functions.
-
-// TODO: place to show ARGGGGHHHHH
+The answer is that we can use (Next slide)
 
 ---
 
@@ -885,13 +664,33 @@ In other words we need to build some sofisticated orchestration of these functio
 
 Note:
 
-Luckly now we have Durable Functions! (Next bullet)
+Durable Functions! (Next bullet)
 
 The main use case for Durable Functions is simplifying complex orchestration problems in serverless applications. (Next bullet)
 
 Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
 
 They are statefull. The progress is not lost when VM is restarting.
+
+---
+
+### Function chaining
+
+<img src="./assets/md/assets/function-chaining.png"  width="800" />
+
+Note:
+call one function after another and it is allso possible to store results in a variable and pass results to a next function in the chain
+
+---
+
+### Fan-out/fan-in
+
+<img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
+
+Note:
+Call functions in parallel, gather result and do something else.
+
+There are 3 more patterns on official documentation.
 
 Let's jump into coding and see how does it work in practice
 
@@ -1008,29 +807,9 @@ public static async Task<bool> Validate(
 Note:
 That was pritty easy!
 
-These are samples that are provided by Microsoft (Next slide)
+These are samples that are provided by Microsoft
 
----
-
-### Function chaining
-
-<img src="./assets/md/assets/function-chaining.png"  width="800" />
-
-Note:
-call one function after another and it is allso possible to store results in a variable and pass results to a next function in the chain
-
----
-
-### Fan-out/fan-in
-
-<img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
-
-Note:
-Call functions in parallel, gather result and do something else.
-
-There are 3 more patterns on official documentation.
-
-As I said - what we saw is the samples from Microsoft, but usuall your case is a bit different and when you go a bit different direction you experiance some issues. Let's do more coding
+As I said - what we saw is the samples from Microsoft, but usually your case is a bit different and when you go a bit different direction you experiance some issues. 
 
 ---
 
@@ -1056,16 +835,18 @@ Don't know how about you, but I've got a lot of questions.
 - Storage account
 - Not supported async calls <!-- .element: class="fragment" -->
 - Serialization <!-- .element: class="fragment" -->
-- 60K limit <!-- .element: class="fragment" -->
+- Starnge execution <!-- .element: class="fragment" -->
 
 Note:
 Why does it requires storage account for orchestrator and activity functions? (next bullet)
 
-Why it complains about async calls that done withowt using context? (next bullet)
+Why it complains about async calls that done without using context? (next bullet)
 
 Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
 
-But why is the limit for the payload is 60K?
+Why when we debug the orchestration it does everything from start?
+
+It used to have another issue - it didn't allow payload more than is 60K?
 
 We need to learn how durable functions work under the hood.
 
@@ -1149,7 +930,7 @@ The question now (Next slide)
 
 ---
 
-### How Orchestrator restores execution?
+**How Orchestrator restores execution?**
 - Checkpoint/Replay <!-- .element: class="fragment" -->
 
 Note:
@@ -1157,7 +938,7 @@ How the orchestrator function restores it's state and understands that it needs 
 
 It uses one of the Event Sources technique - Chckpoint/Replay
 
-There are checkpoints are created for the orchestration function during it's execution and after it awakes it Replays the checkpoints and restores the latest state.
+There are checkpoints are created for the orchestrator function during it's execution and after it awakes it Replays the checkpoints and restores the latest state.
 
 ---
 
@@ -1178,6 +959,29 @@ Here are a History table
 | Not supported async calls | to make checkpoints |
 | Serialization | to send messages |
 | 60K limit | queue message size limit|
+
+Note:
+Because it maintains queues and input params goes in a message of the queue.
+
+Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
+
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/pre_giphy.png"  width="540" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/giphy.gif"  width="540" />
+
+Note:
+
+
+---
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -1333,15 +1137,9 @@ Note:
 
 Note:
 
-
-
 ---
 
-Because it maintains queues and input params goes in a message of the queue
-
-Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
-
----
+Restrictions
 
 - the orchestrator function must be determenstic
 - avoid calling I/O operations
@@ -1353,38 +1151,10 @@ The correct way to run this non-deterministic code or I/O bound code, is to put 
 
 ---
 
-TODO: Replay functionality (strips)
-
- - how stupid is the orchestration
- 
----
-
-TODO: Demonstration of reply in Azure
-
----
-
-TODO: Explain how Durable works under the hood
-
----
-
-TODO: Use of sub orchestrations
-
----
-
 TODO: Possible optimizations
 - Sub Orchestrations  <!-- .element: class="fragment" -->
 - Minimize reads from storage  <!-- .element: class="fragment" -->
 - Use in-memory (REDIS)  <!-- .element: class="fragment" -->
-
----
-
-TODO: Diagnostics
-
----
-
-TODO: Deployments
-
-- I had issue referencing a project
 
 ---
 
