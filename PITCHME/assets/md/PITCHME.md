@@ -647,9 +647,9 @@ However the question is (next slide)
 <img src="./assets/md/assets/function-split-issues.png"  height="500" />
 
 Note:
-How to orchestrate all these functions that all the parts play nicely together in a synchronized and consistent way.
+How to orchestrate all these functions in a way that all the parts play nicely together in a synchronized and consistent way.
 
-Output from one function needs to be sent as an input to another function, or some of them needs to be executed in a loop.
+Output from one function needs to be sent as an input of another function, or some of them needs to be executed in a loop.
 
 The answer is that we can use (Next slide)
 
@@ -672,6 +672,8 @@ Workflow is now can be defined in code. No JSON schemas or designers. (Next bull
 
 They are statefull. The progress is not lost when VM is restarting.
 
+There are some patterns where Durable Functions fit well.
+
 ---
 
 ### Function chaining
@@ -679,7 +681,7 @@ They are statefull. The progress is not lost when VM is restarting.
 <img src="./assets/md/assets/function-chaining.png"  width="800" />
 
 Note:
-call one function after another and it is allso possible to store results in a variable and pass results to a next function in the chain
+call one function after another passing results into the next one
 
 ---
 
@@ -688,11 +690,11 @@ call one function after another and it is allso possible to store results in a v
 <img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
 
 Note:
-Call functions in parallel, gather result and do something else.
+We can call functions in parallel, gather result and do something else.
 
 There are 3 more patterns on official documentation.
 
-Let's jump into coding and see how does it work in practice
+Let's jump into coding trying to apply it to the problem and see how does it work in practice
 
 ---
 
@@ -807,9 +809,9 @@ public static async Task<bool> Validate(
 Note:
 That was pritty easy!
 
-These are samples that are provided by Microsoft
+This was an example almost identical to one that Microsoft provides - so it should work
 
-As I said - what we saw is the samples from Microsoft, but usually your case is a bit different and when you go a bit different direction you experiance some issues. 
+but usually your case is a bit different and when you go a bit different direction you experiance some issues. 
 
 ---
 
@@ -835,20 +837,15 @@ Don't know how about you, but I've got a lot of questions.
 - Storage account
 - Not supported async calls <!-- .element: class="fragment" -->
 - Serialization <!-- .element: class="fragment" -->
-- Starnge execution <!-- .element: class="fragment" -->
+- Execution flow <!-- .element: class="fragment" -->
 
 Note:
-Why does it requires storage account for orchestrator and activity functions? (next bullet)
-
-Why it complains about async calls that done without using context? (next bullet)
-
-Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
-
-Why when we debug the orchestration it does everything from start?
-
-It used to have another issue - it didn't allow payload more than is 60K?
-
-We need to learn how durable functions work under the hood.
+- Why does it requires storage account for orchestrator and activity functions? (next bullet)
+- Why it complains about async calls that done without using context? (next bullet)
+- Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
+- Why when we debug the orchestrator it does everything from start?
+- It used to have another issue - it didn't allow payload more than is 60K?
+- We need to learn how durable functions work under the hood. What makes them durable?
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -936,9 +933,11 @@ The question now (Next slide)
 Note:
 How the orchestrator function restores it's state and understands that it needs to proceed with execution from the point where it ended execution last time?
 
-It uses one of the Event Sources technique - Chckpoint/Replay
+It uses one of the Event Sourcing technique - Chckpoint/Replay
 
-There are checkpoints are created for the orchestrator function during it's execution and after it awakes it Replays the checkpoints and restores the latest state.
+There are checkpoints created for the orchestrator function during it's execution and after it awakes it Replays the checkpoints and restores the latest state.
+
+You can find all the checkpoints in your storage account (next slide)
 
 ---
 
@@ -947,24 +946,9 @@ There are checkpoints are created for the orchestrator function during it's exec
 <img src="./assets/md/assets/history_table.png" width="800" />
 
 Note:
-Here are a History table 
+in the DurableFunctionHubHistory table
 
----
-
-<!-- <img src="./assets/md/assets/clear_now.gif"  height="300" /> -->
-
-|Why?| Answer|
-|----|-------|
-| Storage account | to maintain queues and tables |
-| Not supported async calls | to make checkpoints |
-| Serialization | to send messages |
-| 60K limit | queue message size limit|
-
-Note:
-Because it maintains queues and input params goes in a message of the queue.
-
-Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
-
+Repay process leads to an interesting execution behaviour. Let me explain it(next excample)
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -972,6 +956,17 @@ Behind the scenes, Azure Durable Functions will create Queues and Tables on your
 <img src="./assets/md/assets/minions/pre_giphy.png"  width="540" />
 
 Note:
+with the help of this guys. Let them practice in origami and ask them to make a paper plane 
+
+one of the them will be orchestrator and another one activity
+
+---
+<!-- .slide: data-transition="none" -->
+
+<img src="./assets/md/assets/minions/pre_giphy02.png"  width="540" />
+
+Note:
+Like this
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -979,9 +974,7 @@ Note:
 <img src="./assets/md/assets/minions/giphy.gif"  width="540" />
 
 Note:
-
-
----
+The reaction is strange.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -1138,6 +1131,30 @@ Note:
 Note:
 
 ---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Clear Now</span>
+
+<img src="./assets/md/assets/confusion.gif"  width="500" />
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Clear Now</span>
+
+<img src="./assets/md/assets/confusion.gif"  width="400" />
+
+- Storage account
+- Not supported async calls <!-- .element: class="fragment" -->
+- Serialization <!-- .element: class="fragment" -->
+- Starnge execution <!-- .element: class="fragment" -->
+
+Note:
+Because it maintains queues and input params goes in a message of the queue.
+
+Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
+
+---
 
 Restrictions
 
@@ -1155,6 +1172,10 @@ TODO: Possible optimizations
 - Sub Orchestrations  <!-- .element: class="fragment" -->
 - Minimize reads from storage  <!-- .element: class="fragment" -->
 - Use in-memory (REDIS)  <!-- .element: class="fragment" -->
+
+---
+
+TODO: problem solving SO, twitter, clean Storage account
 
 ---
 
