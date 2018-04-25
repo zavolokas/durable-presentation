@@ -846,13 +846,13 @@ Don't know how about you, but I've got a lot of questions.
 <img src="./assets/md/assets/confusion.gif"  width="400" />
 
 - Storage account
-- Not supported async calls <!-- .element: class="fragment" -->
 - Serialization <!-- .element: class="fragment" -->
+- Not supported async calls <!-- .element: class="fragment" -->
 
 Note:
 - Why does it requires storage account for orchestrator and activity functions? (next bullet)
-- Why it complains about async calls that done without using context? (next bullet)
 - Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
+- Why it complains about async calls that done without using context? (next bullet)
 - It used to have another issue - it didn't allow payload more than is 60K?
 - We need to learn how durable functions work under the hood. What makes them durable?
 
@@ -954,14 +954,7 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process11.png"  width="800" />
 
 Note:
-Let's go to the code and (next slide)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Clear Now</span>
-
-<img src="./assets/md/assets/confusion.gif"  width="500" />
+Now we can answer some of our questions
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -971,22 +964,25 @@ Let's go to the code and (next slide)
 <img src="./assets/md/assets/confusion.gif"  width="400" />
 
 - Storage account
-- Not supported async calls <!-- .element: class="fragment" -->
 - Serialization <!-- .element: class="fragment" -->
+- Not supported async calls <!-- .element: class="fragment" -->
 
 Note:
-Because it maintains queues and input params goes in a message of the queue.
+As we saw Azure Durable Functions will create Queues under our storage account, that is why it is required(next bullet)
 
-Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
+It is indeed serializes/deserializes objects to send them between functions
+
+The last one is still not that clear. But we saw that function should somehow restore it's execution. 
+Let's run our code again(next slide)
 
 ---
 
 <span class="menu-title" style="display: none">Demo coding 3</span>
 
-CODING 3
+### Demo coding 3
 
 Note:
-check the flow, how it reconstructs the execution flow
+and check the execution flow, how it gets reconstructed after calling an activity?
 
 ---
 <span class="menu-title" style="display: none">Checkpoint replay</span>
@@ -995,13 +991,9 @@ check the flow, how it reconstructs the execution flow
 - Checkpoint/Replay <!-- .element: class="fragment" -->
 
 Note:
-How the orchestrator function restores it's state and understands that it needs to proceed with execution from the point where it ended execution last time?
+The thing is that orchestrator functions use one of the Event Sourcing technique - Chckpoint/Replay
 
-It uses one of the Event Sourcing technique - Chckpoint/Replay
-
-There are checkpoints created for the orchestrator function during it's execution and after it awakes it Replays the checkpoints and restores the latest state.
-
-That is why it is durable! (eloborate)
+That ensures reliable execution of orchestrations by checkpointing execution history into a storage table.
 
 You can find all the checkpoints in your storage account (next slide)
 
@@ -1015,7 +1007,11 @@ You can find all the checkpoints in your storage account (next slide)
 Note:
 in the DurableFunctionHubHistory table
 
-Repay process leads to an interesting execution behaviour. Let me explain it(next excample)
+That history is replayed to rebuild the state of orchestrator function.
+
+This is one of the key attributes of Durable Functions - reliable execution. Orchestrator and Activities may be run on different VMs in some environment that is not 100% reliable.
+
+This repay process leads to an interesting execution behaviour. Let me show it on an example(next excample)
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -1025,7 +1021,7 @@ Repay process leads to an interesting execution behaviour. Let me explain it(nex
 <img src="./assets/md/assets/minions/pre_giphy.png"  width="540" />
 
 Note:
-with the help of this guys. Let them practice in origami and ask them to make a paper plane 
+with the help of this guys. Let them practice in origami and ask them to make a plane 
 
 one of the them will be orchestrator and another one activity
 
@@ -1057,6 +1053,7 @@ The reaction is strange.
 <img src="./assets/md/assets/minions/checkpoint-replay-start.png"  height="600" />
 
 Note:
+This instructions are executed by the orchestrator and all the folding operations are done by the activity.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -1246,19 +1243,73 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
-That kind of behaviour can lead to poor performance - because of serializing/deserializing
+You should keep in mind that kind of behaviour because it really can lead to a poor performance. Simply because of serialization/deserialization.
+
+This example with 6 chained Fold actions can(next slide)
 
 ---
 
-TODO: Example of poor
-- Triangular number of execution
+```CSharp
+for (var stepIndex = 0; stepIndex< 6; stepIndex++)
+{
+  await ctx.CallActivityAsync("Fold", input);
+}
+```
+
+How many ctx.CallActivityAsync() calls? <!-- .element: class="fragment" -->
+
+Note:
+be respresented in code like this (next bullet)
+
+How many times the call activity async method will be called?
+
+This is a triangular number that(next slide)
 
 ---
 
-TODO: Possible optimizations
-- Sub Orchestrations  <!-- .element: class="fragment" -->
+(N \* (N-1)) / 2 = 6 \* 5 / 2 = 15
+
+Note:
+TODO: put propper formula
+
+can be calculated as follows.
+
+---
+
+### Calls to Activity
+<img src="./assets/md/assets/triangle_number.png"  height="200" />
+
+- 7 - 21
+- 10 - 45
+- 20 - 190
+- 100 - 4950
+
+Note:
+that means that if we have a loop with 20 iterations -  190
+
+It becomes really noticable when 
+---
+
+```CSharp
+for (var stepIndex = 0; stepIndex< 6; stepIndex++)
+{
+  DoSomethingHeavy();
+  await ctx.CallActivityAsync("Fold", input);
+}
+```
+
+Note:
+
+We have some code in the Orchestrator that is kind of heavy. This code will be executed 15 times while Fold only 6.
+
+That leads us to another topic - optimizations
+
+---
+
+Possible optimizations
+- Avoid heavy code in Orchestrator <!-- .element: class="fragment" -->
+- Use sub Orchestrations  <!-- .element: class="fragment" -->
 - Minimize reads from storage  <!-- .element: class="fragment" -->
-- Use in-memory (REDIS)  <!-- .element: class="fragment" -->
 
 ---
 
@@ -1292,6 +1343,9 @@ TODO: problem solving SO, twitter, clean Storage account
 
 ## Key take aways
 - item1 
+
+Note:
+Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
 
 ---
 
