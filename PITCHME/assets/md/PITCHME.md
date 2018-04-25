@@ -44,7 +44,7 @@ Like this guy(Rob Miles). Make Stuff and have fun! Bottom line was that when he 
 So, I did and developed (Move to next slide)
 
 ---
-<span class="menu-title" style="display: none">Smartest Eraser</span>
+<span class="menu-title" style="display: none">Smartest Eraser. Intro</span>
 
 ### Smartest Eraser
 
@@ -55,7 +55,7 @@ An app that allows you to remove somebody or something from a picture like it ne
 Here is a demonstration video about the app (Move to the next slide)
 
 ---
-<span class="menu-title" style="display: none">Smartest Eraser Video Demo</span>
+<span class="menu-title" style="display: none">Smartest Eraser. Video</span>
 
 Video Demo
 
@@ -112,63 +112,63 @@ But That leads to the distortions, It works fine for pictures made at nature, bu
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Bridge Sample. Original</span>
+<span class="menu-title" style="display: none">SeamCarving. Bridge - Original</span>
 
 ![Image](./assets/md/assets/bridge_orig.jpg)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Bridge Sample. Marked</span>
+<span class="menu-title" style="display: none">SeamCarving. Bridge - Marked</span>
 
 ![Image](./assets/md/assets/bridge_marked.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Bridge Sample. Processed</span>
+<span class="menu-title" style="display: none">SeamCarving. Bridge - Processed</span>
 
 ![Image](./assets/md/assets/bridge_sc.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Cheese Sample. Original</span>
+<span class="menu-title" style="display: none">SeamCarving. Asian guy - Original</span>
 
 ![Image](./assets/md/assets/cheese_orig.jpg)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Cheese Sample. Marked</span>
+<span class="menu-title" style="display: none">SeamCarving. Asian guy - Marked</span>
 
 ![Image](./assets/md/assets/cheese_marked.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Cheese Sample. Processed</span>
+<span class="menu-title" style="display: none">SeamCarving. Asian guy - Processed</span>
 
 ![Image](./assets/md/assets/cheese_sc.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Temple Sample. Original</span>
+<span class="menu-title" style="display: none">SeamCarving. Temple - Original</span>
 
 ![Image](./assets/md/assets/temple_orig.jpg)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Temple Sample. Marked</span>
+<span class="menu-title" style="display: none">SeamCarving. Temple - Marked</span>
 
 ![Image](./assets/md/assets/temple_marked.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">SeamCarving Temple Sample. Processed</span>
+<span class="menu-title" style="display: none">SeamCarving. Temple - Processed</span>
 
 ![Image](./assets/md/assets/temple_sc.png)
 
@@ -242,63 +242,63 @@ What happened with the issues? (Next slide)
 
 ---
 
-<span class="menu-title" style="display: none">Wexler Bridge Sample. Original</span>
+<span class="menu-title" style="display: none">Wexler. Bridge - Original</span>
 
 ![Image](./assets/md/assets/bridge_orig.jpg)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wexler Bridge Sample. Marked</span>
+<span class="menu-title" style="display: none">Wexler. Bridge - Marked</span>
 
 ![Image](./assets/md/assets/bridge_marked.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wexler Bridge Sample. Processed</span>
+<span class="menu-title" style="display: none">Wexler. Bridge - Processed</span>
 
 ![Image](./assets/md/assets/bridge_wex.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wexler Cheese Sample. Original</span>
+<span class="menu-title" style="display: none">Wexler. Asian guy - Original</span>
 
 ![Image](./assets/md/assets/cheese_orig.jpg)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wexler Cheese Sample. Marked</span>
+<span class="menu-title" style="display: none">Wexler. Asian guy - Marked</span>
 
 ![Image](./assets/md/assets/cheese_marked.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wexler Cheese Sample. Processed</span>
+<span class="menu-title" style="display: none">Wexler. Asian guy - Processed</span>
 
 ![Image](./assets/md/assets/cheese_wex.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wexler Temple Sample. Original</span>
+<span class="menu-title" style="display: none">Wexler. Temple - Original</span>
 
 ![Image](./assets/md/assets/temple_orig.jpg)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wexler Temple Sample. Marked</span>
+<span class="menu-title" style="display: none">Wexler. Temple - Marked</span>
 
 ![Image](./assets/md/assets/temple_marked.png)
 
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wexler Temple Sample. Processed</span>
+<span class="menu-title" style="display: none">Wexler. Temple - Processed</span>
 
 ![Image](./assets/md/assets/temple_wex.png)
 
@@ -319,7 +319,7 @@ The reason is the complexity of the new method. Let me explain it shortly.
 Suppose we have following image (Next slide)
 
 ---
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Original</span>
 
 <img src="./assets/md/assets/inpaint/process001.png"  height="500" /> 
 
@@ -328,7 +328,7 @@ And we want to remove this gear
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Marked</span>
 
 <img src="./assets/md/assets/inpaint/process002.png"  height="500" /> 
 
@@ -337,7 +337,7 @@ So we need to find the values of these pixels.
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Pixels</span>
 
 <img src="./assets/md/assets/inpaint/process003.png"  height="500" /> 
 
@@ -350,7 +350,7 @@ Let's start with finding a value of the pixel in the middle.(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Central pixel</span>
 
 <img src="./assets/md/assets/inpaint/process004.png"  height="500" /> 
 
@@ -361,7 +361,7 @@ For the simplicity we will use patches of size 3x3  (Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. 9 patches</span>
 
 <img src="./assets/md/assets/inpaint/process005.gif"  height="500" /> 
 
@@ -370,7 +370,7 @@ The pixel is a part of 9 different patches. And what we going to do now. We will
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 1</span>
 
 <img src="./assets/md/assets/inpaint/process006.png"  height="500" /> 
 
@@ -381,7 +381,7 @@ Here I'd like to make a small remark about how do we find patches (Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Patch Match</span>
 
 ### Patch search
 - Nearest Neighbour Field (NNF) <!-- .element: class="fragment" -->
@@ -403,7 +403,7 @@ Let's go back(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 2</span>
 
 <img src="./assets/md/assets/inpaint/process007.png"  height="500" /> 
 
@@ -412,43 +412,43 @@ We get another similar patch using our NNF
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 3</span>
 
 <img src="./assets/md/assets/inpaint/process008.png"  height="500" /> 
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 4</span>
 
 <img src="./assets/md/assets/inpaint/process009.png"  height="500" /> 
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 5</span>
 
 <img src="./assets/md/assets/inpaint/process010.png"  height="500" /> 
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 6</span>
 
 <img src="./assets/md/assets/inpaint/process011.png"  height="500" /> 
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 7</span>
 
 <img src="./assets/md/assets/inpaint/process012.png"  height="500" /> 
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 8</span>
 
 <img src="./assets/md/assets/inpaint/process013.png"  height="500" /> 
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Match 9</span>
 
 <img src="./assets/md/assets/inpaint/process014.png"  height="500" /> 
 
@@ -459,7 +459,7 @@ These are the values.(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Pixel Values</span>
 
 <img src="./assets/md/assets/inpaint/process015.png"  height="500" /> 
 
@@ -468,7 +468,7 @@ And if we will take an average of the values(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Avarage value</span>
 
 <img src="./assets/md/assets/inpaint/process016.png"  height="500" /> 
 
@@ -479,7 +479,7 @@ Lets set this value(Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Set pixel</span>
 
 <img src="./assets/md/assets/inpaint/process017.png"  height="500" /> 
 
@@ -489,7 +489,7 @@ The process is repeated (Next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting alg</span>
+<span class="menu-title" style="display: none">Inpainting. Process</span>
 
 <img src="./assets/md/assets/inpaint/process_rest.gif"  height="500" /> 
 
@@ -509,7 +509,7 @@ It is built by scaling down the original image by factor 2. After that we run th
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wex algorithm</span>
+<span class="menu-title" style="display: none">Wexler code. Nnf</span>
 
 <pre>
 
@@ -532,7 +532,7 @@ It is built by scaling down the original image by factor 2. After that we run th
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wex algorithm</span>
+<span class="menu-title" style="display: none">Wexler code. Inpaint</span>
 
 <pre>
 
@@ -555,7 +555,7 @@ It is built by scaling down the original image by factor 2. After that we run th
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wex algorithm</span>
+<span class="menu-title" style="display: none">Wexler code. Iterate</span>
 
 <pre>
 
@@ -579,7 +579,7 @@ It is built by scaling down the original image by factor 2. After that we run th
 ---
 <!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Wex algorithm</span>
+<span class="menu-title" style="display: none">Wexler code. Levels</span>
 
 <pre>
 foreach level in pyramid.Levels
@@ -619,7 +619,7 @@ With availability of serverless and Azure functions in particular I got back to 
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
+<span class="menu-title" style="display: none">Use Azure Functions</span>
 
 <img src="./assets/md/assets/azure_function_solution002.png"  height="500" /> 
 
@@ -631,7 +631,7 @@ On the other hand functions are not very powerful and processing time can easily
 What we could do, is to split the inpainting process into separate functions.
 
 ---
-<span class="menu-title" style="display: none">Move to Cloud</span>
+<span class="menu-title" style="display: none">Function for every step</span>
 
 <img src="./assets/md/assets/function-split.png"  height="500" />
 
@@ -642,7 +642,7 @@ However the question is (next slide)
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
+<span class="menu-title" style="display: none">Orchestration question</span>
 
 <img src="./assets/md/assets/function-split-issues.png"  height="500" />
 
@@ -654,6 +654,7 @@ Output from one function needs to be sent as an input of another function, or so
 The answer is that we can use (Next slide)
 
 ---
+<span class="menu-title" style="display: none">Durable functions intro</span>
 
 ## Durable Functions
 - Simplify orchestration <!-- .element: class="fragment" -->
@@ -675,6 +676,7 @@ They are statefull. The progress is not lost when VM is restarting.
 There are some patterns where Durable Functions fit well.
 
 ---
+<span class="menu-title" style="display: none">Patterns. Chaining</span>
 
 ### Function chaining
 
@@ -684,6 +686,7 @@ Note:
 call one function after another passing results into the next one
 
 ---
+<span class="menu-title" style="display: none">Patterns. Fan-out/fan-in</span>
 
 ### Fan-out/fan-in
 
@@ -697,6 +700,7 @@ There are 3 more patterns on official documentation.
 Let's jump into coding trying to apply it to the problem and see how does it work in practice
 
 ---
+<span class="menu-title" style="display: none">Demo coding 1</span>
 
 ## Demo coding
 
@@ -801,6 +805,7 @@ public static async Task<bool> Validate(
 <img src="./assets/md/assets/demo004.png"  height="500" />
 
 ---
+<span class="menu-title" style="display: none">Easy</span>
 
 # Easy!
 
@@ -815,10 +820,14 @@ but usually your case is a bit different and when you go a bit different directi
 
 ---
 
+<span class="menu-title" style="display: none">Demo coding 2</span>
+
 ## Demo coding 2
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">What?!</span>
 
 ### What?!
 
@@ -830,6 +839,8 @@ Don't know how about you, but I've got a lot of questions.
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Unclear moments</span>
+
 ### What?!
 
 <img src="./assets/md/assets/confusion.gif"  width="400" />
@@ -837,18 +848,18 @@ Don't know how about you, but I've got a lot of questions.
 - Storage account
 - Not supported async calls <!-- .element: class="fragment" -->
 - Serialization <!-- .element: class="fragment" -->
-- Execution flow <!-- .element: class="fragment" -->
 
 Note:
 - Why does it requires storage account for orchestrator and activity functions? (next bullet)
 - Why it complains about async calls that done without using context? (next bullet)
 - Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
-- Why when we debug the orchestrator it does everything from start?
 - It used to have another issue - it didn't allow payload more than is 60K?
 - We need to learn how durable functions work under the hood. What makes them durable?
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">How it works. 1</span>
 
 <img src="./assets/md/assets/durable/duarable-process01.png"  width="800" />
 
@@ -857,12 +868,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">How it works. 2</span>
+
 <img src="./assets/md/assets/durable/duarable-process02.png"  width="800" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">How it works. 3</span>
 
 <img src="./assets/md/assets/durable/duarable-process03.png"  width="800" />
 
@@ -871,12 +886,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">How it works. 4</span>
+
 <img src="./assets/md/assets/durable/duarable-process04.png"  width="800" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">How it works. 5</span>
 
 <img src="./assets/md/assets/durable/duarable-process05.png"  width="800" />
 
@@ -885,12 +904,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">How it works. 6</span>
+
 <img src="./assets/md/assets/durable/duarable-process06.png"  width="800" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">How it works. 7</span>
 
 <img src="./assets/md/assets/durable/duarable-process07.png"  width="800" />
 
@@ -899,12 +922,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">How it works. 8</span>
+
 <img src="./assets/md/assets/durable/duarable-process08.png"  width="800" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">How it works. 9</span>
 
 <img src="./assets/md/assets/durable/duarable-process09.png"  width="800" />
 
@@ -913,6 +940,8 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">How it works. 10</span>
+
 <img src="./assets/md/assets/durable/duarable-process10.png"  width="800" />
 
 Note:
@@ -920,14 +949,49 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">How it works. 11</span>
+
 <img src="./assets/md/assets/durable/duarable-process11.png"  width="800" />
 
 Note:
-The question now (Next slide)
+Let's go to the code and (next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Clear Now</span>
+
+<img src="./assets/md/assets/confusion.gif"  width="500" />
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Clarifications</span>
+
+<img src="./assets/md/assets/confusion.gif"  width="400" />
+
+- Storage account
+- Not supported async calls <!-- .element: class="fragment" -->
+- Serialization <!-- .element: class="fragment" -->
+
+Note:
+Because it maintains queues and input params goes in a message of the queue.
+
+Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
 
 ---
 
-**How Orchestrator restores execution?**
+<span class="menu-title" style="display: none">Demo coding 3</span>
+
+CODING 3
+
+Note:
+check the flow, how it reconstructs the execution flow
+
+---
+<span class="menu-title" style="display: none">Checkpoint replay</span>
+
+### Execution flow
 - Checkpoint/Replay <!-- .element: class="fragment" -->
 
 Note:
@@ -937,9 +1001,12 @@ It uses one of the Event Sourcing technique - Chckpoint/Replay
 
 There are checkpoints created for the orchestrator function during it's execution and after it awakes it Replays the checkpoints and restores the latest state.
 
+That is why it is durable! (eloborate)
+
 You can find all the checkpoints in your storage account (next slide)
 
 ---
+<span class="menu-title" style="display: none">History table</span>
 
 #### History table
 
@@ -953,6 +1020,8 @@ Repay process leads to an interesting execution behaviour. Let me explain it(nex
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Minions intro</span>
+
 <img src="./assets/md/assets/minions/pre_giphy.png"  width="540" />
 
 Note:
@@ -963,6 +1032,8 @@ one of the them will be orchestrator and another one activity
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Who Orchestrate?</span>
+
 <img src="./assets/md/assets/minions/pre_giphy02.png"  width="540" />
 
 Note:
@@ -970,6 +1041,8 @@ Like this
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Minions reaction</span>
 
 <img src="./assets/md/assets/minions/giphy.gif"  width="540" />
 
@@ -979,12 +1052,16 @@ The reaction is strange.
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Plan</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-start.png"  height="600" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 1</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step0.png"  height="600" />
 
@@ -993,40 +1070,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-<img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
-
-Note:
-
----
-<!-- .slide: data-transition="none" -->
-
-<img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
-
-Note:
-
----
-<!-- .slide: data-transition="none" -->
-
-<img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
-
-Note:
-
----
-<!-- .slide: data-transition="none" -->
-
-<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
-
-Note:
-
----
-<!-- .slide: data-transition="none" -->
-
-<img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
-
-Note:
-
----
-<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Replay. Step 1. Ok</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
 
@@ -1035,12 +1079,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Step 1. Done</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 1</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
 
@@ -1049,12 +1097,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Step 1. Done</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 2</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
 
@@ -1063,12 +1115,61 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Step 2. Ok</span>
+
+<img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 2. Done</span>
+
+<img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 1</span>
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 1. Done</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 2</span>
+
+<img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 2. Done</span>
+
+<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 3</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step3.png"  height="600" />
 
@@ -1077,12 +1178,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Step 3. Ok</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 3. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
 
@@ -1091,6 +1196,8 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Step 1</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
 
 Note:
@@ -1098,12 +1205,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Step 1. Done</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 2</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
 
@@ -1112,12 +1223,16 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Step 2. Done</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 
 ---
 <!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">Replay. Step 3</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step3.png"  height="600" />
 
@@ -1126,33 +1241,24 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
+<span class="menu-title" style="display: none">Replay. Step 3. Done</span>
+
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
+That kind of behaviour can lead to poor performance - because of serializing/deserializing
 
 ---
-<!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Clear Now</span>
-
-<img src="./assets/md/assets/confusion.gif"  width="500" />
+TODO: Example of poor
+- Triangular number of execution
 
 ---
-<!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Clear Now</span>
-
-<img src="./assets/md/assets/confusion.gif"  width="400" />
-
-- Storage account
-- Not supported async calls <!-- .element: class="fragment" -->
-- Serialization <!-- .element: class="fragment" -->
-- Starnge execution <!-- .element: class="fragment" -->
-
-Note:
-Because it maintains queues and input params goes in a message of the queue.
-
-Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
+TODO: Possible optimizations
+- Sub Orchestrations  <!-- .element: class="fragment" -->
+- Minimize reads from storage  <!-- .element: class="fragment" -->
+- Use in-memory (REDIS)  <!-- .element: class="fragment" -->
 
 ---
 
@@ -1165,13 +1271,6 @@ Note:
 This means that function must avoid running code with side-effects (for example using DateTime.Now) except for using the functionality provided by the DurableOrchestrationContext (for example CurrentUtcDateTime that provides the current date/time in a safe and durable way
 
 The correct way to run this non-deterministic code or I/O bound code, is to put it inside a durable-activity function.
-
----
-
-TODO: Possible optimizations
-- Sub Orchestrations  <!-- .element: class="fragment" -->
-- Minimize reads from storage  <!-- .element: class="fragment" -->
-- Use in-memory (REDIS)  <!-- .element: class="fragment" -->
 
 ---
 
