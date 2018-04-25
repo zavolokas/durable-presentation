@@ -1248,6 +1248,7 @@ You should keep in mind that kind of behaviour because it really can lead to a p
 This example with 6 chained Fold actions can(next slide)
 
 ---
+<span class="menu-title" style="display: none">Folding code</span>
 
 ```CSharp
 for (var stepIndex = 0; stepIndex< 6; stepIndex++)
@@ -1266,6 +1267,7 @@ How many times the call activity async method will be called?
 This is a triangular number that(next slide)
 
 ---
+<span class="menu-title" style="display: none">Triangular Number</span>
 
 (N \* (N-1)) / 2 = 6 \* 5 / 2 = 15
 
@@ -1275,6 +1277,7 @@ TODO: put propper formula
 can be calculated as follows.
 
 ---
+<span class="menu-title" style="display: none">Amount of calls</span>
 
 ### Calls to Activity
 <img src="./assets/md/assets/triangle_number.png"  height="200" />
@@ -1289,6 +1292,7 @@ that means that if we have a loop with 20 iterations -  190
 
 It becomes really noticable when 
 ---
+<span class="menu-title" style="display: none">Heavy code</span>
 
 ```CSharp
 for (var stepIndex = 0; stepIndex< 6; stepIndex++)
@@ -1305,23 +1309,33 @@ We have some code in the Orchestrator that is kind of heavy. This code will be e
 That leads us to another topic - optimizations
 
 ---
+<span class="menu-title" style="display: none">Optimizations</span>
 
-Possible optimizations
+### Possible optimizations
 - Avoid heavy code in Orchestrator <!-- .element: class="fragment" -->
 - Use sub Orchestrations  <!-- .element: class="fragment" -->
 - Minimize reads from storage  <!-- .element: class="fragment" -->
 
 ---
+<span class="menu-title" style="display: none">Restrictions</span>
 
-Restrictions
+### Restrictions
 
-- the orchestrator function must be determenstic
-- avoid calling I/O operations
+- Avoid non-determenstic <!-- .element: class="fragment" -->
+- Avoid blocking code <!-- .element: class="fragment" -->
+- Avoid async calls <!-- .element: class="fragment" -->
+- Avoid infinite loops <!-- .element: class="fragment" -->
 
 Note:
-This means that function must avoid running code with side-effects (for example using DateTime.Now) except for using the functionality provided by the DurableOrchestrationContext (for example CurrentUtcDateTime that provides the current date/time in a safe and durable way
+It will be replayed multiple times and must produce the same result each time. For example, no direct calls to get the current date/time, get random numbers, generate random GUIDs, or call into remote endpoints. (next bullet)
 
-The correct way to run this non-deterministic code or I/O bound code, is to put it inside a durable-activity function.
+For example, that means no I/O and no calls to Thread.Sleep or equivalent APIs. (next bullet)
+
+The Durable Task Framework executes orchestrator code on a single thread and cannot interact with any other threads that could be scheduled by other async APIs. (next bullet)
+
+saves execution history as the orchestration function progresses, an infinite loop could cause an orchestrator instance to run out of memory.
+
+But still problems can happen and you might be stuck (next slide)
 
 ---
 
