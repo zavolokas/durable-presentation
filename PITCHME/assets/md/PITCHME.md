@@ -2,30 +2,33 @@
 
 # Azure Durable Functions
 
-Sergey Zavoloka
-
-// TODO: update the title according to finished content, insert contacts, picture etc
-
 Note:
 Thank you for comming.
 
+---
+<span class="menu-title" style="display: none">About</span>
+
+### About
+
+Note:
 My name is Sergey. 
 
-I'll tell you about Azure Durable functions.
+I ... bla bla bla
 
 ---
 <span class="menu-title" style="display: none">Agenda</span>
 
-//TODO: update agenda according to finished content
-
 ## Agenda
-- Domain
-- Durable functions
+- Intro
 - Application
-- Tips
+- Durable functinos
 
 Note:
+Why and what I try to solve
 
+Then I'll tell about the method
+
+Dive into durable
 
 ---
 <span class="menu-title" style="display: none">Tech Days 2012</span>
@@ -40,7 +43,7 @@ It started when in 2012 I attended TechDays.
 Many talks were dedicated to Windows Phone 7 development and were to inspire people to develop applications.
 
 2.
-Like this guy(Rob Miles). Make Stuff and have fun! Bottom line was that when he was young it was difficult to build something and reach a big audence. Now it is simple. 
+Like this guy(Rob Miles). Make Stuff and have fun! Bottom line was that when he was young it was difficult to build something and reach a big audence. Now it is simple. He said basically - why don't you go home and implement something?
 So, I did and developed (Move to next slide)
 
 ---
@@ -613,7 +616,7 @@ It worth to make a service and host it somewhere in a cloud. (Next slide)
 Note:
 So the app just uses a WebApi and sends a request to process an image.
 
-Initially I choose Azure, experemented with WebRole, but for many reasons it didn't work out.
+Initially I choose Azure, experemented with WorkerRole, but for many reasons it didn't work out.
 
 With availability of serverless and Azure functions in particular I got back to this idea.
 
@@ -712,97 +715,6 @@ The Azure Durable Function library adds two function bindings that are used by t
   - DurableOrchestrationContext class that is used by the orchestrator to call durable-activities and create durable control flow
 - ActivityTrigger – marks a function as activity, which allows it to be called by an orchestrator function. 
 This input binding is connected to the DurableActivityContext class which allows the activity function to get the input and set the output.
-
-+++
-
-### Http Trigger
-```CSharp
-[FunctionName("Inpaint")]
-public static async Task<HttpResponseMessage> Inpaint(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "inpaint")]
-    HttpRequestMessage request,
-    [OrchestrationClient]
-    DurableOrchestrationClient orchestrationClient,
-    TraceWriter log
-    )
-{
-    log.Info("Start inpainting");
-
-    // get input
-    var input = (Container: "009", Picture: "t009.png", RemoveMarkup: "m009.png");
-
-    var instanceId = await orchestrationClient.StartNewAsync("Process", input);
-
-    log.Info($"Orchestrator({instanceId}) - started to inpaint an input");
-
-    return orchestrationClient.CreateCheckStatusResponse(request, instanceId);
-}
-```
-
-Note:
-In this example, I created an HTTP triggered function and bound one of its parameters to the `DurableOrchestrationClient` by specifying the `OrchestrationClient` attribute.
-
-The function is invoked by sending an `HTTP GET` request to the address http://{host}/api/inpaint . 
-
-The Inpaint function starts a new instance of the `Process` orchestrator function by calling the `DurableOrchestrationClient.StartNewAsync()` method, and passing it the name of the function and an input, which is empty in this case.
-
-+++
-
-### Orchestrator
-```CSharp
-[FunctionName("Process")]
-public static async Task<bool> Process(
-    [OrchestrationTrigger]
-    DurableOrchestrationContext ctx
-    )
-{
-    (string Container, string Picture, string RemoveMarkup) input = ctx.GetInput<(string, string, string)>();
-
-    string[] blobNames = new []{ input.Picture, input.RemoveMarkup};
-
-    var tasks = new Task<bool>[blobNames.Length];
-
-    for (var i = 0; i < blobNames.Length; i++)
-    {
-        tasks[i] = ctx.CallActivityAsync<bool>("Validate", blobNames[i]);
-    }
-
-    await Task.WhenAll(tasks);
-
-    return tasks.All(t => t.Result);
-}
-```
-
-+++
-
-### Activity
-```CSharp
-[FunctionName("Validate")]
-public static async Task<bool> Validate(
-    [ActivityTrigger] string blobName)
-{
-    var task = Task.Delay(TimeSpan.FromSeconds(10));
-    await task;
-
-    return true;
-}
-```
-
-+++
-
-<img src="./assets/md/assets/demo001.png"  height="500" />
-
-+++
-
-<img src="./assets/md/assets/demo002.png"  height="500" />
-
-+++
-
-<img src="./assets/md/assets/demo003.png"  height="500" />
-
-+++
-
-<img src="./assets/md/assets/demo004.png"  height="500" />
 
 ---
 <span class="menu-title" style="display: none">Easy</span>
@@ -1338,22 +1250,17 @@ saves execution history as the orchestration function progresses, an infinite lo
 But still problems can happen and you might be stuck (next slide)
 
 ---
+<span class="menu-title" style="display: none">Support</span>
 
-TODO: problem solving SO, twitter, clean Storage account
+### Support
+- StackOverflow
+- Twitter
 
----
-
-|||
-|---|--|
-| Cost of one minute | 0.128GB * 60000ms = 7680 Gs|
-| Free GB-s per month | 400,000 free ~ 52 min |
-| Free executions | 1,000,000 |
-| Avg Time of one erase| 2 min |
-| One erase cost | $0.000016 * 120,000ms ~ $0.2|
-| Cost of one hour | $7.3 |
-| Cost of one mln exec | $0.20|
+Note:
+then Post the issue on stack overflow also tweet about it, put hash tag Azure, Azure Functions and usually you get help quite fast
 
 ---
+<span class="menu-title" style="display: none">Summary</span>
 
 ## Key take aways
 - item1 
@@ -1362,8 +1269,14 @@ Note:
 Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
 
 ---
+<span class="menu-title" style="display: none">Questions</span>
 
-# Q&A
-Thank you!
+# Questions
 
-// TODO: insert contacts, picture etc
+Note:
+- Pricing
+  - GB-s $0.000016
+  - Cost of one mln exec $0.20
+  - Cost of one minute => 0.128GB * 60000ms = 7680 Gs
+  - Free GB-s per month => 400,000 free ~ 52 min 
+  - Free executions => 1,000,000 
