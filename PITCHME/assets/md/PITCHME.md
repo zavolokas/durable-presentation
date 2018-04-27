@@ -1272,6 +1272,7 @@ then Post the issue on stack overflow also tweet about it, put hash tag Azure, A
 - Orchestrator restrictions <!-- .element: class="fragment" -->
 - Checkpoint/Replay <!-- .element: class="fragment" -->
 - Sub Orchestrators <!-- .element: class="fragment" -->
+- Prerelease <!-- .element: class="fragment" -->
 - Heavy computations? <!-- .element: class="fragment" -->
 
 Note:
@@ -1281,6 +1282,7 @@ Note:
 - about the restrictions, that the orchestrator code should be detemenistic, you cannot use async calls other than via durable context (next bullet)
 - Keep in mind the Checkpoint/Replay technique that is used by Orchestrator and use (next bullet)
 - sub orchestors in order to improve performance
+- It is still pre release, many things can go wrong, many things can change. Don't hesitate to ask for advice on SO etc.
 - If you want to port some performance critical computations think twice as you'll spend a lot of time to serialization and desirialization
 
 ---
