@@ -6,9 +6,15 @@ Note:
 Thank you for comming.
 
 ---
+<!-- .slide: data-background-image="./assets/md/assets/SergeyZavoloka.jpg" data-background-size="auto 45%" data-background-color=" " data-background-position="left" -->
+
 <span class="menu-title" style="display: none">About</span>
 
 ### About
+- More than 10 years in Software
+- From Siberia
+- Worked for Aspose, Parkmobile, ParkNow
+- @zavolokas_eng, zavolokas
 
 Note:
 My name is Sergey. 
@@ -1234,14 +1240,11 @@ That leads us to another topic - optimizations
 ### Restrictions
 
 - Avoid non-determenstic <!-- .element: class="fragment" -->
-- Avoid blocking code <!-- .element: class="fragment" -->
 - Avoid async calls <!-- .element: class="fragment" -->
 - Avoid infinite loops <!-- .element: class="fragment" -->
 
 Note:
 It will be replayed multiple times and must produce the same result each time. For example, no direct calls to get the current date/time, get random numbers, generate random GUIDs, or call into remote endpoints. (next bullet)
-
-For example, that means no I/O and no calls to Thread.Sleep or equivalent APIs. (next bullet)
 
 The Durable Task Framework executes orchestrator code on a single thread and cannot interact with any other threads that could be scheduled by other async APIs. (next bullet)
 
@@ -1253,6 +1256,7 @@ But still problems can happen and you might be stuck (next slide)
 <span class="menu-title" style="display: none">Support</span>
 
 ### Support
+- GitHub
 - StackOverflow
 - Twitter
 
@@ -1263,10 +1267,21 @@ then Post the issue on stack overflow also tweet about it, put hash tag Azure, A
 <span class="menu-title" style="display: none">Summary</span>
 
 ## Key take aways
-- item1 
+- Statefull orchestration <!-- .element: class="fragment" -->
+- 100% reliable <!-- .element: class="fragment" -->
+- Orchestrator restrictions <!-- .element: class="fragment" -->
+- Checkpoint/Replay <!-- .element: class="fragment" -->
+- Sub Orchestrators <!-- .element: class="fragment" -->
+- Heavy computations? <!-- .element: class="fragment" -->
 
 Note:
-Behind the scenes, Azure Durable Functions will create Queues and Tables on your behalf and hide the complexity from your code so you can concentrate on the real problem you’re trying to solve.
+- What are the key take aways? (next bullet)
+- Durable extension allows to orchestrate azure functions (next bullet)
+- It is 100% reliable. You need to remember (next bullet)
+- about the restrictions, that the orchestrator code should be detemenistic, you cannot use async calls other than via durable context (next bullet)
+- Keep in mind the Checkpoint/Replay technique that is used by Orchestrator and use (next bullet)
+- sub orchestors in order to improve performance
+- If you want to port some performance critical computations think twice as you'll spend a lot of time to serialization and desirialization
 
 ---
 <span class="menu-title" style="display: none">Questions</span>
