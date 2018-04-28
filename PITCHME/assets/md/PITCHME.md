@@ -26,15 +26,19 @@ I ... bla bla bla
 
 ## Agenda
 - Intro
-- Application
+- Challenge
 - Durable functinos
 
 Note:
+What I'm going to do today, is to tell you a story of one application.
+
 Why and what I try to solve
 
-Then I'll tell about the method
+Then I'll tell about the challenge
 
 Dive into durable
+
+The story began in 2012 (next slide)
 
 ---
 <span class="menu-title" style="display: none">Tech Days 2012</span>
@@ -45,7 +49,7 @@ Dive into durable
 
 Note:
 1.
-It started when in 2012 I attended TechDays. 
+when I attended TechDays. 
 Many talks were dedicated to Windows Phone 7 development and were to inspire people to develop applications.
 
 2.
@@ -680,7 +684,7 @@ The main use case for Durable Functions is simplifying complex orchestration pro
 
 Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
 
-They are statefull. The progress is not lost when VM is restarting.
+They are statefull. The progress is not lost when VM is restarting. It is one of the key features of Durable functions that they are 100% reliable.
 
 There are some patterns where Durable Functions fit well.
 
