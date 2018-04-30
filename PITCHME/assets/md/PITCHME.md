@@ -6,39 +6,45 @@ Note:
 Thank you for comming.
 
 ---
-<!-- .slide: data-background-image="./assets/md/assets/SergeyZavoloka.jpg" data-background-size="auto 45%" data-background-color=" " data-background-position="left" -->
+<span class="menu-title" style="display: none">Motivation</span>
 
-<span class="menu-title" style="display: none">About</span>
-
-### About
-- More than 10 years in Software
-- From Siberia
-- Worked for Aspose, Parkmobile, ParkNow
-- @zavolokas_eng, zavolokas
 
 Note:
-My name is Sergey. 
+Many of you already used Azure Functions, right? I'm sure you like the simplicity of working
+with them:
 
-I ... bla bla bla
+- There is an HTTP request - function processes it and put results into (let's say) Data Base
+- Something came into Blob Storage - that triggers a function that sends a message to Slack
+
+Nice!
+
+However it becomes really painful when it comes to more complex workflows. Where the functions
+should interact with each other:
+
+- Do some processing sending the results as an input to another function
+- Call functions in a loop
+- Call them in parallel and act on the results
+
+Today we will talk about Durable extensions that will help you to simplify the orchestration of
+the functions.
+
+I'll also share my expeciance so that you don't spend dozens of hours hitting walls (like I did) 
+when solving issues that turn out to be a result of misunderstanding of how durable extensions work.
+
+You'll leave this meetup with one more tool at your disposal that you are comfortable with 
+and that will help you to takle challanges.
 
 ---
-<span class="menu-title" style="display: none">Agenda</span>
+<span class="menu-title" style="display: none">Tech Days 2012</span>
 
-## Agenda
-- Intro
-- Challenge
-- Durable functinos
+<img src="./assets/md/assets/function_use_case.png"  width="800" /> 
 
 Note:
-What I'm going to do today, is to tell you a story of one application.
+With the emerging of serverless technologies, we all want to take an advantage of it
+It allows you as a developer to concentrate on what really matters - on solving real problems.
+And it is ridiculously cheap
 
-Why and what I try to solve
-
-Then I'll tell about the challenge
-
-Dive into durable
-
-The story began in 2012 (next slide)
+Nobody likes to spend time on writing boilerplate code or configuring infrastructure.
 
 ---
 <span class="menu-title" style="display: none">Tech Days 2012</span>
