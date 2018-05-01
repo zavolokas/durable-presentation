@@ -37,6 +37,9 @@ and that will help you to takle challanges.
 ---
 <span class="menu-title" style="display: none">Easy to use function</span>
 
+Note:
+Functions are easy to use.
+
 ---
 <span class="menu-title" style="display: none">Problems</span>
 
@@ -50,7 +53,73 @@ Note:
 Boiler plate + infra
 
 ---
-<span class="menu-title" style="display: none">Durable Functions Intro</span>
+<span class="menu-title" style="display: none">Function for every step</span>
+
+<img src="./assets/md/assets/function-split.png"  height="500" />
+
+Note:
+It would also allow to scale individual steps of the inpainting process which is really nice.
+
+However the question is (next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Orchestration question</span>
+
+<img src="./assets/md/assets/function-split-issues.png"  height="500" />
+
+Note:
+How to orchestrate all these functions in a way that all the parts play nicely together in a synchronized and consistent way.
+
+Output from one function needs to be sent as an input of another function, or some of them needs to be executed in a loop.
+
+The answer is that we can use (Next slide)
+
+---
+<span class="menu-title" style="display: none">Durable functions intro</span>
+
+## Durable Functions
+- Simplify orchestration <!-- .element: class="fragment" -->
+- Code your workflow  <!-- .element: class="fragment" -->
+  - Save output to local variables
+- Stateful functions  <!-- .element: class="fragment" -->
+  - State is never lost
+
+Note:
+
+Durable Functions! (Next bullet)
+
+The main use case for Durable Functions is simplifying complex orchestration problems in serverless applications. (Next bullet)
+
+Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
+
+They are statefull. The progress is not lost when VM is restarting. It is one of the key features of Durable functions that they are 100% reliable.
+
+There are some patterns where Durable Functions fit well.
+
+---
+<span class="menu-title" style="display: none">Patterns. Chaining</span>
+
+### Function chaining
+
+<img src="./assets/md/assets/function-chaining.png"  width="800" />
+
+Note:
+call one function after another passing results into the next one
+
+---
+<span class="menu-title" style="display: none">Patterns. Fan-out/fan-in</span>
+
+### Fan-out/fan-in
+
+<img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
+
+Note:
+We can call functions in parallel, gather result and do something else.
+
+There are 3 more patterns on official documentation.
+
+Let's jump into coding trying to apply it to the problem and see how does it work in practice
 
 ---
 <span class="menu-title" style="display: none">Demo coding I</span>
@@ -643,89 +712,3 @@ Note:
   - Cost of one minute => 0.128GB * 60000ms = 7680 Gs
   - Free GB-s per month => 400,000 free ~ 52 min 
   - Free executions => 1,000,000 
-
-PRESENTATIONEND
-
----
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Use Azure Functions</span>
-
-<img src="./assets/md/assets/azure_function_solution002.png"  height="500" /> 
-
-Note:
-Because Azure functions are triggered quite fast and at the same time you don't pay for the time it's deployed but only for the resources you use. 
-
-On the other hand functions are not very powerful and processing time can easily exceed the 5 minutes limit, after which the function is got killed basically.
-
-What we could do, is to split the inpainting process into separate functions.
-
----
-<span class="menu-title" style="display: none">Function for every step</span>
-
-<img src="./assets/md/assets/function-split.png"  height="500" />
-
-Note:
-It would also allow to scale individual steps of the inpainting process which is really nice.
-
-However the question is (next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Orchestration question</span>
-
-<img src="./assets/md/assets/function-split-issues.png"  height="500" />
-
-Note:
-How to orchestrate all these functions in a way that all the parts play nicely together in a synchronized and consistent way.
-
-Output from one function needs to be sent as an input of another function, or some of them needs to be executed in a loop.
-
-The answer is that we can use (Next slide)
-
----
-<span class="menu-title" style="display: none">Durable functions intro</span>
-
-## Durable Functions
-- Simplify orchestration <!-- .element: class="fragment" -->
-- Code your workflow  <!-- .element: class="fragment" -->
-  - Save output to local variables
-- Stateful functions  <!-- .element: class="fragment" -->
-  - State is never lost
-
-Note:
-
-Durable Functions! (Next bullet)
-
-The main use case for Durable Functions is simplifying complex orchestration problems in serverless applications. (Next bullet)
-
-Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
-
-They are statefull. The progress is not lost when VM is restarting. It is one of the key features of Durable functions that they are 100% reliable.
-
-There are some patterns where Durable Functions fit well.
-
----
-<span class="menu-title" style="display: none">Patterns. Chaining</span>
-
-### Function chaining
-
-<img src="./assets/md/assets/function-chaining.png"  width="800" />
-
-Note:
-call one function after another passing results into the next one
-
----
-<span class="menu-title" style="display: none">Patterns. Fan-out/fan-in</span>
-
-### Fan-out/fan-in
-
-<img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
-
-Note:
-We can call functions in parallel, gather result and do something else.
-
-There are 3 more patterns on official documentation.
-
-Let's jump into coding trying to apply it to the problem and see how does it work in practice
