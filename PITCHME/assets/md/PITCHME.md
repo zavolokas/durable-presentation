@@ -28,698 +28,32 @@ should interact with each other:
 Today we will talk about Durable extensions that will help you to simplify the orchestration of
 the functions.
 
-I'll also share my expeciance so that you don't spend dozens of hours hitting walls (like I did) 
-when solving issues that turn out to be a result of misunderstanding of how durable extensions work.
+I'll also share my expeciance so that you don't spend dozens of hours hitting walls (like I did)
+because it is a pre release and there is not that much documentation is available yet.
 
 You'll leave this meetup with one more tool at your disposal that you are comfortable with 
 and that will help you to takle challanges.
 
 ---
-<span class="menu-title" style="display: none">Tech Days 2012</span>
+<span class="menu-title" style="display: none">Easy to use function</span>
 
-<img src="./assets/md/assets/function_use_case.png"  width="800" /> 
+---
+<span class="menu-title" style="display: none">Problems</span>
 
 Note:
-With the emerging of serverless technologies, we all want to take an advantage of it
-It allows you as a developer to concentrate on what really matters - on solving real problems.
-And it is ridiculously cheap
-
-Nobody likes to spend time on writing boilerplate code or configuring infrastructure.
+Problem when call function from another or looping
 
 ---
-<span class="menu-title" style="display: none">Tech Days 2012</span>
-
-### TechDays 2012
-
-![Image](./assets/md/assets/techDays2012.png) <!-- .element: class="fragment" -->
+<span class="menu-title" style="display: none">Possible solution</span>
 
 Note:
-1.
-when I attended TechDays. 
-Many talks were dedicated to Windows Phone 7 development and were to inspire people to develop applications.
-
-2.
-Like this guy(Rob Miles). Make Stuff and have fun! Bottom line was that when he was young it was difficult to build something and reach a big audence. Now it is simple. He said basically - why don't you go home and implement something?
-So, I did and developed (Move to next slide)
+Boiler plate + infra
 
 ---
-<span class="menu-title" style="display: none">Smartest Eraser. Intro</span>
-
-### Smartest Eraser
-
-![Image](./assets/md/assets/smartest_eraser.png)
-
-Note:
-An app that allows you to remove somebody or something from a picture like it never was there.
-Here is a demonstration video about the app (Move to the next slide)
+<span class="menu-title" style="display: none">Durable Functions Intro</span>
 
 ---
-<span class="menu-title" style="display: none">Smartest Eraser. Video</span>
-
-Video Demo
-
-<iframe width="840" height="472" src="https://www.youtube.com/embed/QMWHeGsVjFA?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-Note:
-1. Watch video
-
-2. After the release, the app had a success. Many downloads, top positions in its category. 
-
-Later, Microsoft organized a Next App Star competition. (Next slide)
-
----
-<!-- .slide: data-background-image="./assets/md/assets/nextappstar.png" data-background-size="auto 45%" data-background-color=" " data-background-position="left" -->
-
-<span class="menu-title" style="display: none">NextAppStar</span>
-
-- Next App Star Competition
-- 9000 apps participated  <!-- .element: class="fragment" -->
-- only 128 in final  <!-- .element: class="fragment" -->
-- Smartest Eraser in top 32  <!-- .element: class="fragment" -->
-
-Note:
-1. [Comment the bullets]
-
-2. The result was good I was almost happy. **But** since the audence became bigger and many people used app just out of curiosity I got (Next slide)
-
----
-
-<span class="menu-title" style="display: none">Bad reviews</span>
-
-### Bad reviews!
-
-![Image](./assets/md/assets/bad_reviews.png)
-
-Note:
-People commented that the app ruins pictures, distorts them and not smart at all.
-And they were absolutely right. Because the app used Seam Carving algorithm.(Next slide)
-
----
-
-<span class="menu-title" style="display: none">Seam carving</span>
-
-### Seam Carving
-
-![Image](./assets/md/assets/seams.jpeg)
-
-Note:
-The algorithm simply searches a sequence of less important/noticeable pixels (in image processing terms - pixels with minimal energy) and removes them. After that to restore the size it searches for the sequence again and copies it.
- 
-But That leads to the distortions, It works fine for pictures made at nature, but for others it might be a problem (Show examples)
-
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Bridge - Original</span>
-
-![Image](./assets/md/assets/bridge_orig.jpg)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Bridge - Marked</span>
-
-![Image](./assets/md/assets/bridge_marked.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Bridge - Processed</span>
-
-![Image](./assets/md/assets/bridge_sc.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Asian guy - Original</span>
-
-![Image](./assets/md/assets/cheese_orig.jpg)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Asian guy - Marked</span>
-
-![Image](./assets/md/assets/cheese_marked.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Asian guy - Processed</span>
-
-![Image](./assets/md/assets/cheese_sc.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Temple - Original</span>
-
-![Image](./assets/md/assets/temple_orig.jpg)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Temple - Marked</span>
-
-![Image](./assets/md/assets/temple_marked.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">SeamCarving. Temple - Processed</span>
-
-![Image](./assets/md/assets/temple_sc.png)
-
-Note: 
-
-Simplest way at this point was to explain the constraints. 
-
----
-
-<span class="menu-title" style="display: none">App constraints</span>
-
-### App constraints
-
-<img src="./assets/md/assets/se_restrictions.png"  height="500" /> 
-
-Note:
-I started to present the constraints to users before they open a picture.
-It helped. **A bit** It felt like they ruine everything around (Next slide)
-
-
----
-<span class="menu-title" style="display: none">User riots</span>
-
-![Image](./assets/md/assets/riots.jpg)
-
-Note:
-Including the rating of the app because they wanted more intellingent functionality
-
-So I took it serious and started to work really **really** hard (Next slide)
-
----
-
-<span class="menu-title" style="display: none">Hard working joke</span>
-
-<img src="./assets/md/assets/lazy.jpg"  height="500" /> 
-
-Note:
-Ah, wrong picture... (Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Hard working</span>
-
-<img src="./assets/md/assets/hardworker.png"  height="500" /> 
-
-Note:
-So, I workered really **really** hard!
-
-I was studying scintific papers, I followed different image processing online courses.
-
-It took time, but still I achieved my goal and created a library that allowed (Next slide)
-
----
-
-<span class="menu-title" style="display: none">Simple inpaint code</span>
-
-```CSharp
-var inpainter = new Inpainter();
-var result = inpainter.Inpaint(imageArgb, markupArgb, donors);
-result
-    .FromArgbToBitmap()
-    .SaveTo(resultPath, ImageFormat.Png)
-    .ShowFile();
-```
-
-Note:
-
-To inpaint or to perform the content-aware fill
-
-What happened with the issues? (Next slide)
-
----
-
-<span class="menu-title" style="display: none">Wexler. Bridge - Original</span>
-
-![Image](./assets/md/assets/bridge_orig.jpg)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler. Bridge - Marked</span>
-
-![Image](./assets/md/assets/bridge_marked.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler. Bridge - Processed</span>
-
-![Image](./assets/md/assets/bridge_wex.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler. Asian guy - Original</span>
-
-![Image](./assets/md/assets/cheese_orig.jpg)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler. Asian guy - Marked</span>
-
-![Image](./assets/md/assets/cheese_marked.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler. Asian guy - Processed</span>
-
-![Image](./assets/md/assets/cheese_wex.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler. Temple - Original</span>
-
-![Image](./assets/md/assets/temple_orig.jpg)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler. Temple - Marked</span>
-
-![Image](./assets/md/assets/temple_marked.png)
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler. Temple - Processed</span>
-
-![Image](./assets/md/assets/temple_wex.png)
-
-Note:
-The results were satisfying. I was anticipating how users of Smartest Eraser will be happy.
-
-The only thing I needed to do is to use my new library. **But** (Next slide)
-
----
-<span class="menu-title" style="display: none">Slow mobiles</span>
-
-<img src="./assets/md/assets/slow_mobiles.gif"  height="500" /> 
-
-Note: 
-Mobiles were not capable of required computation power (and it is still the case)
-
-The reason is the complexity of the new method. Let me explain it shortly.
-Suppose we have following image (Next slide)
-
----
-<span class="menu-title" style="display: none">Inpainting. Original</span>
-
-<img src="./assets/md/assets/inpaint/process001.png"  height="500" /> 
-
-Note:
-And we want to remove this gear
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Marked</span>
-
-<img src="./assets/md/assets/inpaint/process002.png"  height="500" /> 
-
-Note:
-So we need to find the values of these pixels. 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Pixels</span>
-
-<img src="./assets/md/assets/inpaint/process003.png"  height="500" /> 
-
-Note:
-There are more, but for the sake of simplicity we imagine that these are only six these.
-
-How do we do that?
-
-Let's start with finding a value of the pixel in the middle.(Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Central pixel</span>
-
-<img src="./assets/md/assets/inpaint/process004.png"  height="500" /> 
-
-Note:
-In order to do that we will analize patches that contain this pixel. 
-
-For the simplicity we will use patches of size 3x3  (Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. 9 patches</span>
-
-<img src="./assets/md/assets/inpaint/process005.gif"  height="500" /> 
-
-Note:
-The pixel is a part of 9 different patches. And what we going to do now. We will find a similar patch for each of these 9 at the picture and reconstruct the value based on statistics of the 9 patches. (Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 1</span>
-
-<img src="./assets/md/assets/inpaint/process006.png"  height="500" /> 
-
-Note:
-We have found a similar patch for one of the 9.
-
-Here I'd like to make a small remark about how do we find patches (Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Patch Match</span>
-
-### Patch search
-- Nearest Neighbour Field (NNF) <!-- .element: class="fragment" -->
-- Amount of Patches = Amount of pixels <!-- .element: class="fragment" -->
-  - 800 * 600 = 480 000
-- Use PatchMatch <!-- .element: class="fragment" -->
-  - Requires ~ 5 iterations
-
-Note:
-This part is basically the most time consuming in this method. We have to find a patch that is similar. We build a mapping that is called (Show first bullet) 
-
-Nearest Neighbour Field. In order to build this mapping we need to go thru the enentire image **for each patch** and find its best match. Image contains (Next bullet) 
-
-A plenty of patches. Naive approach suggests an algorithm that has a quadratic complexity. But (Next bullet)
-
-There is a nice PatchMatch algorithm that allows to speed up his process significantly. More iterations we perform the precisier NNF becomes. 
-
-Let's go back(Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 2</span>
-
-<img src="./assets/md/assets/inpaint/process007.png"  height="500" /> 
-
-Note:
-We get another similar patch using our NNF
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 3</span>
-
-<img src="./assets/md/assets/inpaint/process008.png"  height="500" /> 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 4</span>
-
-<img src="./assets/md/assets/inpaint/process009.png"  height="500" /> 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 5</span>
-
-<img src="./assets/md/assets/inpaint/process010.png"  height="500" /> 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 6</span>
-
-<img src="./assets/md/assets/inpaint/process011.png"  height="500" /> 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 7</span>
-
-<img src="./assets/md/assets/inpaint/process012.png"  height="500" /> 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 8</span>
-
-<img src="./assets/md/assets/inpaint/process013.png"  height="500" /> 
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Match 9</span>
-
-<img src="./assets/md/assets/inpaint/process014.png"  height="500" /> 
-
-Note:
-We have now patches that suggest us the value of the pixel
-
-These are the values.(Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Pixel Values</span>
-
-<img src="./assets/md/assets/inpaint/process015.png"  height="500" /> 
-
-Note:
-And if we will take an average of the values(Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Avarage value</span>
-
-<img src="./assets/md/assets/inpaint/process016.png"  height="500" /> 
-
-Note:
-We will get the more or less reliable value of the pixel
-
-Lets set this value(Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Set pixel</span>
-
-<img src="./assets/md/assets/inpaint/process017.png"  height="500" /> 
-
-Note:
-The process is repeated (Next slide)
-
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Inpainting. Process</span>
-
-<img src="./assets/md/assets/inpaint/process_rest.gif"  height="500" /> 
-
-Note:
-for the each pixel in the area until all the values are not calculated (wait for it)
-
-In the reality the image is bigger and pixels are smaller. That is why the whole process is done on an image pyramid.
-
----
-<span class="menu-title" style="display: none">Image Pyramids</span>
-
-<img src="./assets/md/assets/inpaint/pyramids.png"  height="500" /> 
-
-Note:
-It is built by scaling down the original image by factor 2. After that we run the algorithm starting from the lowest scale and propagate the results to the upper level and perform processing.
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler code. Nnf</span>
-
-<pre>
-
-
-
-
-
-
-
-    for j < nnfBuildIterations
-      nnf = ImproveNnf(nnf, image ..);
-
-
-    
-
-
-
-</pre>
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler code. Inpaint</span>
-
-<pre>
-
-
-
-
-
-
-
-    for j < nnfBuildIterations
-      nnf = ImproveNnf(nnf, image ..);
-
-    image = Inpaint(image, removeArea, nnf, ..);
-    
-
-
-
-</pre>
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler code. Iterate</span>
-
-<pre>
-
-
-
-
-  for i < inpaintIterations
-  {
-
-    for j < nnfBuildIterations
-      nnf = ImproveNnf(nnf, image ..);
-
-    image = Inpaint(image, removeArea, nnf, ..);
-    
-  }
-
-
-</pre>
-
-
----
-<!-- .slide: data-transition="none" -->
-
-<span class="menu-title" style="display: none">Wexler code. Levels</span>
-
-<pre>
-foreach level in pyramid.Levels
-{
-  image = level.GetImage();
-
-  for i < inpaintIterations
-  {
-
-    for j < nnfBuildIterations
-      nnf = ImproveNnf(nnf, image ..);
-
-    image = Inpaint(image, removeArea, nnf, ..);
-    
-  }
-  nnf = nnf.ScaleUp(..);
-}
-</pre>
-
-Note:
-I think now it should be obvious that the method is too expensive to be ran on a mobile device.
-
-It worth to make a service and host it somewhere in a cloud. (Next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Move to Cloud</span>
-
-<img src="./assets/md/assets/azure_function_solution001.png"  height="500" /> 
-
-Note:
-So the app just uses a WebApi and sends a request to process an image.
-
-Initially I choose Azure, experemented with WorkerRole, but for many reasons it didn't work out.
-
-With availability of serverless and Azure functions in particular I got back to this idea.
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Use Azure Functions</span>
-
-<img src="./assets/md/assets/azure_function_solution002.png"  height="500" /> 
-
-Note:
-Because Azure functions are triggered quite fast and at the same time you don't pay for the time it's deployed but only for the resources you use. 
-
-On the other hand functions are not very powerful and processing time can easily exceed the 5 minutes limit, after which the function is got killed basically.
-
-What we could do, is to split the inpainting process into separate functions.
-
----
-<span class="menu-title" style="display: none">Function for every step</span>
-
-<img src="./assets/md/assets/function-split.png"  height="500" />
-
-Note:
-It would also allow to scale individual steps of the inpainting process which is really nice.
-
-However the question is (next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Orchestration question</span>
-
-<img src="./assets/md/assets/function-split-issues.png"  height="500" />
-
-Note:
-How to orchestrate all these functions in a way that all the parts play nicely together in a synchronized and consistent way.
-
-Output from one function needs to be sent as an input of another function, or some of them needs to be executed in a loop.
-
-The answer is that we can use (Next slide)
-
----
-<span class="menu-title" style="display: none">Durable functions intro</span>
-
-## Durable Functions
-- Simplify orchestration <!-- .element: class="fragment" -->
-- Code your workflow  <!-- .element: class="fragment" -->
-  - Save output to local variables
-- Stateful functions  <!-- .element: class="fragment" -->
-  - State is never lost
-
-Note:
-
-Durable Functions! (Next bullet)
-
-The main use case for Durable Functions is simplifying complex orchestration problems in serverless applications. (Next bullet)
-
-Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
-
-They are statefull. The progress is not lost when VM is restarting. It is one of the key features of Durable functions that they are 100% reliable.
-
-There are some patterns where Durable Functions fit well.
-
----
-<span class="menu-title" style="display: none">Patterns. Chaining</span>
-
-### Function chaining
-
-<img src="./assets/md/assets/function-chaining.png"  width="800" />
-
-Note:
-call one function after another passing results into the next one
-
----
-<span class="menu-title" style="display: none">Patterns. Fan-out/fan-in</span>
-
-### Fan-out/fan-in
-
-<img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
-
-Note:
-We can call functions in parallel, gather result and do something else.
-
-There are 3 more patterns on official documentation.
-
-Let's jump into coding trying to apply it to the problem and see how does it work in practice
-
----
-<span class="menu-title" style="display: none">Demo coding 1</span>
+<span class="menu-title" style="display: none">Demo coding I</span>
 
 ## Demo coding
 
@@ -747,8 +81,10 @@ This was an example almost identical to one that Microsoft provides - so it shou
 but usually your case is a bit different and when you go a bit different direction you experiance some issues. 
 
 ---
+<span class="menu-title" style="display: none">Patterns</span>
 
-<span class="menu-title" style="display: none">Demo coding 2</span>
+---
+<span class="menu-title" style="display: none">Demo coding II</span>
 
 ## Demo coding 2
 
@@ -1307,3 +643,89 @@ Note:
   - Cost of one minute => 0.128GB * 60000ms = 7680 Gs
   - Free GB-s per month => 400,000 free ~ 52 min 
   - Free executions => 1,000,000 
+
+PRESENTATIONEND
+
+---
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Use Azure Functions</span>
+
+<img src="./assets/md/assets/azure_function_solution002.png"  height="500" /> 
+
+Note:
+Because Azure functions are triggered quite fast and at the same time you don't pay for the time it's deployed but only for the resources you use. 
+
+On the other hand functions are not very powerful and processing time can easily exceed the 5 minutes limit, after which the function is got killed basically.
+
+What we could do, is to split the inpainting process into separate functions.
+
+---
+<span class="menu-title" style="display: none">Function for every step</span>
+
+<img src="./assets/md/assets/function-split.png"  height="500" />
+
+Note:
+It would also allow to scale individual steps of the inpainting process which is really nice.
+
+However the question is (next slide)
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Orchestration question</span>
+
+<img src="./assets/md/assets/function-split-issues.png"  height="500" />
+
+Note:
+How to orchestrate all these functions in a way that all the parts play nicely together in a synchronized and consistent way.
+
+Output from one function needs to be sent as an input of another function, or some of them needs to be executed in a loop.
+
+The answer is that we can use (Next slide)
+
+---
+<span class="menu-title" style="display: none">Durable functions intro</span>
+
+## Durable Functions
+- Simplify orchestration <!-- .element: class="fragment" -->
+- Code your workflow  <!-- .element: class="fragment" -->
+  - Save output to local variables
+- Stateful functions  <!-- .element: class="fragment" -->
+  - State is never lost
+
+Note:
+
+Durable Functions! (Next bullet)
+
+The main use case for Durable Functions is simplifying complex orchestration problems in serverless applications. (Next bullet)
+
+Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
+
+They are statefull. The progress is not lost when VM is restarting. It is one of the key features of Durable functions that they are 100% reliable.
+
+There are some patterns where Durable Functions fit well.
+
+---
+<span class="menu-title" style="display: none">Patterns. Chaining</span>
+
+### Function chaining
+
+<img src="./assets/md/assets/function-chaining.png"  width="800" />
+
+Note:
+call one function after another passing results into the next one
+
+---
+<span class="menu-title" style="display: none">Patterns. Fan-out/fan-in</span>
+
+### Fan-out/fan-in
+
+<img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
+
+Note:
+We can call functions in parallel, gather result and do something else.
+
+There are 3 more patterns on official documentation.
+
+Let's jump into coding trying to apply it to the problem and see how does it work in practice
