@@ -5,75 +5,115 @@
 Note:
 Thank you for comming.
 
+Many of you already used Azure Functions, right?
+
 ---
 <span class="menu-title" style="display: none">Motivation</span>
 
+- Simple to use
+- Difficult to orchestrate <!-- .element: class="fragment" -->
 
 Note:
-Many of you already used Azure Functions, right? I'm sure you like the simplicity of working
-with them:
+I'm sure you like the simplicity they provide.
+They are really nice!
 
-- There is an HTTP request - function processes it and put results into (let's say) Data Base
-- Something came into Blob Storage - that triggers a function that sends a message to Slack
+However it becomes painful (next bullet)
+when you want function to interact with each other:
 
-Nice!
-
-However it becomes really painful when it comes to more complex workflows. Where the functions
-should interact with each other:
-
-- Do some processing sending the results as an input to another function
+- Do some processing and send the results as an input to another function
 - Call functions in a loop
 - Call them in parallel and act on the results
 
-Today we will talk about Durable extensions that will help you to simplify the orchestration of
-the functions.
+Today we will talk about Durable functions that will help you to simplify the orchestration.
 
 I'll also share my expeciance so that you don't spend dozens of hours hitting walls (like I did)
-because it is a pre release and there is not that much documentation is available yet.
+because it is a pre release and there is not that much information is available yet.
 
 You'll leave this meetup with one more tool at your disposal that you are comfortable with 
-and that will help you to takle challanges.
+and that will help you to takle your challanges.
+
 
 ---
-<span class="menu-title" style="display: none">Easy to use function</span>
+<img src="./assets/md/assets/scenarios/function_use_case.png"  width="900" />
 
 Note:
-Functions are easy to use.
+
+As I already mentioned the functions are easy to use. 
+If we take a look at the Azure functions website we will see that 
+in the examples it provides functions don't call another function.
+
++++
+<img src="./assets/md/assets/scenarios/file-processing_scenario.png"  width="900" />
+
+Note:
+
+
+
++++
+<img src="./assets/md/assets/scenarios/stream-processing_scenario.png"  width="900" />
+
+Note:
+
+
+
++++
+<img src="./assets/md/assets/scenarios/web-app_scenario.png"  width="900" />
+
+Note:
+
+
 
 ---
-<span class="menu-title" style="display: none">Problems</span>
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Function for every step</span>
+
+<img src="./assets/md/assets/image-processing_scenario00.png"  width="900" />
 
 Note:
-Problem when call function from another or looping
+What should we do for the following scenario? When for instance function takes 
+an image from BlobStorage, extract some features, Then process them
 
 ---
-<span class="menu-title" style="display: none">Possible solution</span>
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Function for every step</span>
+
+<img src="./assets/md/assets/image-processing_scenario01.png"  width="900" />
 
 Note:
-Boiler plate + infra
+Then process features in parallel
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Function for every step</span>
+
+<img src="./assets/md/assets/image-processing_scenario02.png"  width="900" />
+
+Note:
+Then accumulates the results and takes some decision them 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Function for every step</span>
+
+<img src="./assets/md/assets/image-processing_scenario03.png"  width="900" />
+
+Note:
+You can achieve it by putting a queue in between, so that when one function puts the results
+into the queue what triggers another function that uses the message in the queue as an input.
+
+That is a valid solution, but what if you need to chain many functions? How many additional 
+queues you have to maintain? 
+
+Or what if you want to process results in parallel and then act on them?
+You end up 
 
 ---
 <span class="menu-title" style="display: none">Function for every step</span>
 
-<img src="./assets/md/assets/function-split.png"  height="500" />
+<img src="./assets/md/assets/write_code.gif"  height="500" />
 
 Note:
-It would also allow to scale individual steps of the inpainting process which is really nice.
-
-However the question is (next slide)
-
----
-<!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Orchestration question</span>
-
-<img src="./assets/md/assets/function-split-issues.png"  height="500" />
-
-Note:
-How to orchestrate all these functions in a way that all the parts play nicely together in a synchronized and consistent way.
-
-Output from one function needs to be sent as an input of another function, or some of them needs to be executed in a loop.
-
-The answer is that we can use (Next slide)
+writing some boilerplate code 
 
 ---
 <span class="menu-title" style="display: none">Durable functions intro</span>
@@ -89,6 +129,7 @@ Note:
 
 Durable Functions! (Next bullet)
 
+How to orchestrate all these functions in a way that all the parts play nicely together in a synchronized and consistent way.
 The main use case for Durable Functions is simplifying complex orchestration problems in serverless applications. (Next bullet)
 
 Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
