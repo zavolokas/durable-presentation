@@ -18,28 +18,27 @@ I'm sure you like the simplicity they provide.
 They are really nice!
 
 However it becomes painful (next bullet)
-when you want function to interact with each other:
 
-- Do some processing and send the results as an input to another function
+when you want functions to interact with each other:
+- Pass results as an input to another function, 
 - Call functions in a loop
-- Call them in parallel and act on the results
+- Call them in parallel, accumulate the resultsand act on them
 
 Today we will talk about Durable functions that will help you to simplify the orchestration.
 
-I'll also share my expeciance so that you don't spend dozens of hours hitting walls (like I did)
-because it is a pre release and there is not that much information is available yet.
+I'll also share my expeciance so that you don't spend many hours hitting walls (like I did)
+because there is not that much information is available yet.
 
 You'll leave this meetup with one more tool at your disposal that you are comfortable with 
 and that will help you to takle your challanges.
 
+As I already mentioned the functions are easy to use. If we take a look at the Azure functions 
+website we will see that (next slide)
 
 ---
 <img src="./assets/md/assets/scenarios/function_use_case.png"  width="900" />
 
 Note:
-
-As I already mentioned the functions are easy to use. 
-If we take a look at the Azure functions website we will see that 
 in the examples it provides functions don't call another function.
 
 +++
@@ -70,8 +69,9 @@ Note:
 <img src="./assets/md/assets/image-processing_scenario00.png"  width="900" />
 
 Note:
-What should we do for the following scenario? When for instance function takes 
-an image from BlobStorage, extract some features, Then process them
+What should we do in the following scenario? 
+
+Suppose our function takes an image from BlobStorage, extract some features 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -80,7 +80,7 @@ an image from BlobStorage, extract some features, Then process them
 <img src="./assets/md/assets/image-processing_scenario01.png"  width="900" />
 
 Note:
-Then process features in parallel
+Then process them
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -89,7 +89,7 @@ Then process features in parallel
 <img src="./assets/md/assets/image-processing_scenario02.png"  width="900" />
 
 Note:
-Then accumulates the results and takes some decision them 
+Then process features in parallel
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -98,8 +98,10 @@ Then accumulates the results and takes some decision them
 <img src="./assets/md/assets/image-processing_scenario03.png"  width="900" />
 
 Note:
-You can achieve it by putting a queue in between, so that when one function puts the results
-into the queue what triggers another function that uses the message in the queue as an input.
+Then accumulates the results and perform something
+
+You can achieve it by putting a queues in between, so that one function puts results there
+another gets them and process.
 
 That is a valid solution, but what if you need to chain many functions? How many additional 
 queues you have to maintain? 
@@ -113,7 +115,9 @@ You end up
 <img src="./assets/md/assets/write_code.gif"  height="500" />
 
 Note:
-writing some boilerplate code 
+writing some boilerplate code and maintain lots of queues
+
+How could we simplify such complex orchestration problems? The answer is (Next slide)
 
 ---
 <span class="menu-title" style="display: none">Durable functions intro</span>
@@ -121,22 +125,20 @@ writing some boilerplate code
 ## Durable Functions
 - Simplify orchestration <!-- .element: class="fragment" -->
 - Code your workflow  <!-- .element: class="fragment" -->
-  - Save output to local variables
-- Stateful functions  <!-- .element: class="fragment" -->
-  - State is never lost
+- 100% reliability  <!-- .element: class="fragment" -->
 
 Note:
 
 Durable Functions! (Next bullet)
 
-How to orchestrate all these functions in a way that all the parts play nicely together in a synchronized and consistent way.
-The main use case for Durable Functions is simplifying complex orchestration problems in serverless applications. (Next bullet)
+They help to orchestrate functions in a way that all the parts play nicely together in a synchronized and consistent way.
+ (Next bullet)
 
 Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
 
-They are statefull. The progress is not lost when VM is restarting. It is one of the key features of Durable functions that they are 100% reliable.
+One of the key features of Durable functions is that they are 100% reliable. The progress is not lost when VM is restarting.
 
-There are some patterns where Durable Functions fit well.
+Durable Functions fit well (next slide)
 
 ---
 <span class="menu-title" style="display: none">Patterns. Chaining</span>
@@ -146,7 +148,15 @@ There are some patterns where Durable Functions fit well.
 <img src="./assets/md/assets/function-chaining.png"  width="800" />
 
 Note:
-call one function after another passing results into the next one
+// TODO: update image
+
+When we need to chain functions.
+
+1. We can call one function within our orchestrator
+2. save the results in a local variable
+3. call another function passing the result 
+
+Or another pattern called (next side)
 
 ---
 <span class="menu-title" style="display: none">Patterns. Fan-out/fan-in</span>
@@ -156,11 +166,13 @@ call one function after another passing results into the next one
 <img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
 
 Note:
-We can call functions in parallel, gather result and do something else.
+// TODO: update image
 
-There are 3 more patterns on official documentation.
+Fan-out/fan-in
 
-Let's jump into coding trying to apply it to the problem and see how does it work in practice
+allows to call functions in parallel, gather result and do something else.
+
+Sounds cool, right? Let's jump into coding so that you'll really appriciate the simplicity
 
 ---
 <span class="menu-title" style="display: none">Demo coding I</span>
@@ -169,12 +181,9 @@ Let's jump into coding trying to apply it to the problem and see how does it wor
 
 Note:
 
-The Azure Durable Function library adds two function bindings that are used by the system to find which functions should be treated as Durable:
+For the coding excercise, I'd like to implement the following scenario.
 
-- OrchestrationTrigger – All orchestrator functions must use this trigger type. This input binding is connected to the
-  - DurableOrchestrationContext class that is used by the orchestrator to call durable-activities and create durable control flow
-- ActivityTrigger – marks a function as activity, which allows it to be called by an orchestrator function. 
-This input binding is connected to the DurableActivityContext class which allows the activity function to get the input and set the output.
+// TODO: describe what you are going to do
 
 ---
 <span class="menu-title" style="display: none">Easy</span>
@@ -191,12 +200,14 @@ This was an example almost identical to one that Microsoft provides - so it shou
 but usually your case is a bit different and when you go a bit different direction you experiance some issues. 
 
 ---
-<span class="menu-title" style="display: none">Patterns</span>
-
----
 <span class="menu-title" style="display: none">Demo coding II</span>
 
 ## Demo coding 2
+
+Note:
+So let's go further and 
+
+// TODO: describe what you are going to do
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -238,6 +249,8 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process01.png"  width="800" />
 
 Note:
+
+// TODO: describe the example how the orchestrator interacts with activities
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -335,11 +348,9 @@ Now we can answer some of our questions
 
 <span class="menu-title" style="display: none">Clarifications</span>
 
-<img src="./assets/md/assets/confusion.gif"  width="400" />
-
-- Storage account
-- Serialization <!-- .element: class="fragment" -->
-- Not supported async calls <!-- .element: class="fragment" -->
+- Creates queues 
+- Pass result serialized <!-- .element: class="fragment" -->
+- Why doesn't support async calls?! <!-- .element: class="fragment" -->
 
 Note:
 As we saw Azure Durable Functions will create Queues under our storage account, that is why it is required(next bullet)
