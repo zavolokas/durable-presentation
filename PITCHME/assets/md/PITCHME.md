@@ -226,20 +226,20 @@ Don't know how about you, but I've got a lot of questions.
 
 <span class="menu-title" style="display: none">Unclear moments</span>
 
-### What?!
+### Why?!
 
 <img src="./assets/md/assets/confusion.gif"  width="400" />
 
-- Storage account
-- Serialization <!-- .element: class="fragment" -->
-- Not supported async calls <!-- .element: class="fragment" -->
+- Requires storage account
+- Requires serialization <!-- .element: class="fragment" -->
+- Doesn't allow async calls <!-- .element: class="fragment" -->
 
 Note:
 - Why does it requires storage account for orchestrator and activity functions? (next bullet)
 - Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
 - Why it complains about async calls that done without using context? (next bullet)
-- It used to have another issue - it didn't allow payload more than is 60K?
-- We need to learn how durable functions work under the hood. What makes them durable?
+
+We need to learn how durable functions work under the hood?
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -250,7 +250,7 @@ Note:
 
 Note:
 
-// TODO: describe the example how the orchestrator interacts with activities
+Suppose we have our orchestrator function. When it comes to an execution of an activity function
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -260,6 +260,7 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process02.png"  width="800" />
 
 Note:
+It sends a message to a WorkItems queue and after that
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -269,6 +270,7 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process03.png"  width="800" />
 
 Note:
+it's execution stops. At the same time 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -278,6 +280,8 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process04.png"  width="800" />
 
 Note:
+An activity function listens to the WorkItem queue and once a message appears there
+the activity is got triggered.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -288,6 +292,9 @@ Note:
 
 Note:
 
+
+After it's job is done it sends a message to Control queue
+
 ---
 <!-- .slide: data-transition="none" -->
 
@@ -296,6 +303,7 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process06.png"  width="800" />
 
 Note:
+It triggers an execution of orchestrator function again
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -305,6 +313,7 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process07.png"  width="800" />
 
 Note:
+And after the process is repeated 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -314,6 +323,7 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process08.png"  width="800" />
 
 Note:
+until the orchestrator function
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -323,6 +333,7 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process09.png"  width="800" />
 
 Note:
+comes to it's end
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -341,23 +352,15 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process11.png"  width="800" />
 
 Note:
-Now we can answer some of our questions
+The question now is. If the orchestrator function stops after calling 
+an activity how does it restore its state to go next peace of code?
 
 ---
-<!-- .slide: data-transition="none" -->
 
-<span class="menu-title" style="display: none">Clarifications</span>
-
-- Creates queues 
-- Pass result serialized <!-- .element: class="fragment" -->
-- Why doesn't support async calls?! <!-- .element: class="fragment" -->
+### How orchestrator's state is restored?
 
 Note:
-As we saw Azure Durable Functions will create Queues under our storage account, that is why it is required(next bullet)
-
-It is indeed serializes/deserializes objects to send them between functions
-
-The last one is still not that clear. But we saw that function should somehow restore it's execution. 
+how does orchestrator restore it's execution. 
 Let's run our code again(next slide)
 
 ---
@@ -694,6 +697,25 @@ We have some code in the Orchestrator that is kind of heavy. This code will be e
 That leads us to another topic - optimizations
 
 ---
+<span class="menu-title" style="display: none">Clarifications</span>
+
+### How it works 
+- Creates queues <!-- .element: class="fragment" -->
+- Passes result serialized <!-- .element: class="fragment" -->
+- Checkpoints and replays state <!-- .element: class="fragment" -->
+- Should be deterministic <!-- .element: class="fragment" -->
+
+Note:
+Now we can answer some of our questions
+
+As we saw Azure Durable Functions will create Queues under our storage account, that is why it is required(next bullet)
+
+It is indeed serializes/deserializes objects to send them between functions
+
+Why doesn't support async calls?!
+
+---
+
 <span class="menu-title" style="display: none">Optimizations</span>
 
 ### Possible optimizations
