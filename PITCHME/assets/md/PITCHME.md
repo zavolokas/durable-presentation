@@ -237,9 +237,9 @@ Don't know how about you, but I've got a lot of questions.
 Note:
 - Why does it requires storage account for orchestrator and activity functions? (next bullet)
 - Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
-- Why it complains about async calls that done without using context? (next bullet)
+- Why it complains about async calls that done without using context?
 
-We need to learn how durable functions work under the hood?
+We need to learn how durable functions work under the hood
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -270,7 +270,7 @@ It sends a message to a WorkItems queue and after that
 <img src="./assets/md/assets/durable/duarable-process03.png"  width="800" />
 
 Note:
-it's execution stops. At the same time 
+it's execution stops, it can be unloaded from memory (so you stop paying for it) . At the same time 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -280,7 +280,7 @@ it's execution stops. At the same time
 <img src="./assets/md/assets/durable/duarable-process04.png"  width="800" />
 
 Note:
-An activity function listens to the WorkItem queue and once a message appears there
+An activity function listens to the WorkItem queue and once a message appears there,
 the activity is got triggered.
 
 ---
@@ -352,38 +352,24 @@ Note:
 <img src="./assets/md/assets/durable/duarable-process11.png"  width="800" />
 
 Note:
-The question now is. If the orchestrator function stops after calling 
-an activity how does it restore its state to go next peace of code?
-
----
-
-### How orchestrator's state is restored?
-
-Note:
-how does orchestrator restore it's execution. 
-Let's run our code again(next slide)
-
----
-
-<span class="menu-title" style="display: none">Demo coding 3</span>
-
-### Demo coding 3
-
-Note:
-and check the execution flow, how it gets reconstructed after calling an activity?
+You may ask here - If the orchestrator function stops after calling 
+an activity and even is unloaded from the memory
 
 ---
 <span class="menu-title" style="display: none">Checkpoint replay</span>
 
-### Execution flow
+How state is restored?
 - Checkpoint/Replay <!-- .element: class="fragment" -->
 
 Note:
-The thing is that orchestrator functions use one of the Event Sourcing technique - Chckpoint/Replay
+how does it restore its state and proceed the execution from the right place? 
 
-That ensures reliable execution of orchestrations by checkpointing execution history into a storage table.
+For that purpose durable functions use one of the Event Sourcing technique (next bullet)
 
-You can find all the checkpoints in your storage account (next slide)
+Chckpoint/Replay
+
+Every time orchestrator function calls an Activity - it's state is checkpointed into a
+History table  (next slide)
 
 ---
 <span class="menu-title" style="display: none">History table</span>
@@ -393,13 +379,13 @@ You can find all the checkpoints in your storage account (next slide)
 <img src="./assets/md/assets/history_table.png" width="800" />
 
 Note:
-in the DurableFunctionHubHistory table
+under your storage account. When Activity function is finished, the history is replayed 
+to rebuild the state of the orchestrator function.
 
-That history is replayed to rebuild the state of orchestrator function.
+Since Orchestrator and Activities may be run on different VMs in some environment that is not 100% reliable,
+this approach guaranties reliability - because in a case of a failure the state will be resored and continued.
 
-This is one of the key attributes of Durable Functions - reliable execution. Orchestrator and Activities may be run on different VMs in some environment that is not 100% reliable.
-
-This repay process leads to an interesting execution behaviour. Let me show it on an example(next excample)
+However this repay process leads to an interesting execution behaviour. Let me show it on an example(next example)
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -451,6 +437,8 @@ This instructions are executed by the orchestrator and all the folding operation
 <img src="./assets/md/assets/minions/checkpoint-replay-step0.png"  height="600" />
 
 Note:
+So, the ochestrator encounters first folding action and it calls an activity
+to perform this step.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -460,6 +448,7 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
 
 Note:
+Activity agrees. Orchestrator kind of sleeps. Then activity
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -469,6 +458,9 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
 
 Note:
+finishes it's task and returns the results to the orchestrator (via a message in a queue)
+
+Then orchestrator wakes up and replays the history to restore it's state.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -478,6 +470,7 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
 
 Note:
+So it looks like it asks an activity to perform the first step again. 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -487,6 +480,8 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
+But since it was already done and results are captured, the activity is 
+not called again. The orchestrator moves 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -496,6 +491,8 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
 
 Note:
+forward
+with the execution and asks the activity to perform the second step.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -505,6 +502,7 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
 
 Note:
+Activity agrees. Orchestrator kind of sleeps. Then activity
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -514,6 +512,9 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
 
 Note:
+finishes it's task and returns the results to the orchestrator (via a message in a queue)
+
+Then orchestrator wakes up and replays the history to restore it's state.
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -523,6 +524,8 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
 
 Note:
+So it looks like it asks an activity to perform the first step again. But since it was 
+already done and 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -532,6 +535,8 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
+results are captured, the activity is not called again. The orchestrator moves forward
+with the execution 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -541,6 +546,8 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
 
 Note:
+and asks the activity to perform the second step again. But since it was 
+already done and 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -550,6 +557,8 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
+results are captured, the activity is not called again. The orchestrator moves forward
+with the execution and asks the activity to perform the third step
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -657,7 +666,7 @@ This is a triangular number that(next slide)
 ---
 <span class="menu-title" style="display: none">Triangular Number</span>
 
-(N \* (N-1)) / 2 = 6 \* 5 / 2 = 15
+(N \* (N+1)) / 2 = 6 \* 7 / 2 = 21
 
 Note:
 TODO: put propper formula
@@ -670,13 +679,13 @@ can be calculated as follows.
 ### Calls to Activity
 <img src="./assets/md/assets/triangle_number.png"  height="200" />
 
-- 7 - 21
-- 10 - 45
-- 20 - 190
-- 100 - 4950
+- 7 - 28
+- 10 - 55
+- 20 - 210
+- 100 - 5050
 
 Note:
-that means that if we have a loop with 20 iterations -  190
+that means that if we have a loop with 20 iterations -  210
 
 It becomes really noticable when 
 ---
