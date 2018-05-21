@@ -13,7 +13,7 @@ Many of you already used Azure Functions, right?
 
 
 Note:
-Those of you who already have heard about the Durable Extensions already know that they are very powerful and at the same time they are quite intuitive and simple to use.
+Those of you who already have heard about the Durable Functions already, know that they are very powerful and at the same time they are quite intuitive and simple to use. Those who haven't - don't warry you will see it today.
 
 However this simplicity may give you an **illusion of understanding** how it actually works. But in the reality **there are** some constraints that are not obvious at all and violation of these constraints leads to a poor performance and confustion.
 
@@ -27,10 +27,15 @@ help to avoid spending many hours hitting walls (like I did) when you start to d
 ---
 <span class="menu-title" style="display: none">Serverless refresher</span>
 
-// TODO: serverless refresher
+## What is serverless?
+- Abstraction of servers
+- Event-driven
+- Micro-billing
 
 Note:
+The serverless doesn't mean that we stop using servers. It is a confusing term that implies that we stop bother about them in a way that we don't need to manage them, update, keep up running and even scale.
 
+It's also event-driven. If we're not getting any events we don't use any resources. And we pay only for the resources that we actually use.
 
 ---
 <span class="menu-title" style="display: none">Azure functions</span>
