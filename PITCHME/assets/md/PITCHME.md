@@ -13,7 +13,7 @@ Many of you already used Azure Functions, right?
 
 
 Note:
-Those of you who already have heard about the Durable Extensions are already knows that they are very powerful and at the same time they are quite intuitive and simple to use.
+Those of you who already have heard about the Durable Extensions already know that they are very powerful and at the same time they are quite intuitive and simple to use.
 
 However this simplicity may give you an **illusion of understanding** how it actually works. But in the reality **there are** some constraints that are not obvious at all and violation of these constraints leads to a poor performance and confustion.
 
@@ -76,7 +76,7 @@ Note:
 
 As a coding excersice I took one of my open source image processing projects that implements a content aware fill. In simple words it allows to remove somebody or something from a photo as if it never was there.
 
-In the very beginning what we need to do is to prepare an image pyramid by scaling the image down several times. After the scaling we need to reduce the noise on each of them by applying a blur filter. That can be done in parallel. So let's do it.
+Firs of all what we need to do is to prepare a so-called image pyramid by scaling the image down several times. After the scaling we need to reduce the noise on each of them by applying a blur filter. That can be done in parallel. So let's do it.
 
 // TODO: explain the code
 
@@ -554,7 +554,7 @@ If you wonder how can it affect performance, let me convert this example with 6 
 <span class="menu-title" style="display: none">Folding code</span>
 
 ```CSharp
-for (var stepIndex = 0; stepIndex< 6; stepIndex++)
+for (var i = 0; i< 6; i++)
 {
   await ctx.CallActivityAsync("Fold", input);
 }
@@ -598,7 +598,7 @@ It becomes really noticable when
 <span class="menu-title" style="display: none">Heavy code</span>
 
 ```CSharp
-for (var stepIndex = 0; stepIndex< 6; stepIndex++)
+for (var i = 0; i< 6; i++)
 {
   DoSomethingHeavy();
   await ctx.CallActivityAsync("Fold", input);
@@ -613,7 +613,7 @@ We have some code in the Orchestrator that is kind of heavy. This code will be e
 <span class="menu-title" style="display: none">Heavy code</span>
 
 ```CSharp
-for (var stepIndex = 0; stepIndex< 6; stepIndex++)
+for (var i = 0; i< 6; i++)
 {
   await ctx.CallActivityAsync("DoSomethingHeavy", null);
   await ctx.CallActivityAsync("Fold", input);
@@ -624,13 +624,23 @@ Note:
 Perform all the heavy code within activity functions.
 
 ---
+<span class="menu-title" style="display: none">Back to code</span>
+
+Note:
+Now we can see that what used to look alright turns out to be completely wrong. 
+
+Basically during the each replay we load different bitmap that is twice smaller in size. Also properly cropped. That makes the code indeed non-determenistic.
+
+Let's reiterate the constrains of the Orchestrator function.
+
+---
 <span class="menu-title" style="display: none">Restrictions</span>
 
-### Restrictions
+### Constrains
 
-- Avoid non-determenstic <!-- .element: class="fragment" -->
-- Avoid async calls <!-- .element: class="fragment" -->
-- Avoid infinite loops <!-- .element: class="fragment" -->
+- Determenstic <!-- .element: class="fragment" -->
+- No async calls <!-- .element: class="fragment" -->
+- No infinite loops <!-- .element: class="fragment" -->
 
 Note:
 It will be replayed multiple times and must produce the same result each time. For example, no direct calls to get the current date/time, get random numbers, generate random GUIDs, or call into remote endpoints. (next bullet)
@@ -639,24 +649,21 @@ The Durable Task Framework executes orchestrator code on a single thread and can
 
 saves execution history as the orchestration function progresses, an infinite loop could cause an orchestrator instance to run out of memory.
 
-But still problems can happen and you might be stuck (next slide)
-
 ---
-<span class="menu-title" style="display: none">Support</span>
+<span class="menu-title" style="display: none">Inpaint demo</span>
 
-### Support
-- GitHub
-- StackOverflow
-- Twitter
+### Demo
 
 Note:
-then Post the issue on stack overflow also tweet about it, put hash tag Azure, Azure Functions and usually you get help quite fast
+
+I have a proper implementation of the inpainting on GitHub. For those who are interested in here is a link.
+
+Let's run it.
 
 ---
 <span class="menu-title" style="display: none">Recap</span>
 
 ### Recap
-
 - State is checkpointed in Starage Table
 - State is replayed multiple times
 - No heavy code in Orchestrator
