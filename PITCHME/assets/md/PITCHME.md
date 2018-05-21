@@ -36,35 +36,36 @@ As I already mentioned the functions are easy to use. If we take a look at the A
 website we will see that (next slide)
 
 ---
+<span class="menu-title" style="display: none">No functions chaining</span>
+
 <img src="./assets/md/assets/scenarios/function_use_case.png"  width="900" />
 
 Note:
-in the examples it provides functions don't call another function.
+in the examples it provides - functions don't call another function.
 
 +++
+<span class="menu-title" style="display: none">Sample 1</span>
 <img src="./assets/md/assets/scenarios/file-processing_scenario.png"  width="900" />
 
 Note:
 
-
-
 +++
+<span class="menu-title" style="display: none">Sample 2</span>
+
 <img src="./assets/md/assets/scenarios/stream-processing_scenario.png"  width="900" />
 
 Note:
 
-
-
 +++
+<span class="menu-title" style="display: none">Sample 3</span>
+
 <img src="./assets/md/assets/scenarios/web-app_scenario.png"  width="900" />
 
 Note:
 
-
-
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Function for every step</span>
+<span class="menu-title" style="display: none">Function chaining 1</span>
 
 <img src="./assets/md/assets/image-processing_scenario00.png"  width="900" />
 
@@ -75,7 +76,7 @@ Suppose our function takes an image from BlobStorage, extract some features
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Function for every step</span>
+<span class="menu-title" style="display: none">Function chaining 2</span>
 
 <img src="./assets/md/assets/image-processing_scenario01.png"  width="900" />
 
@@ -84,7 +85,7 @@ Then process them
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Function for every step</span>
+<span class="menu-title" style="display: none">Function chaining 3</span>
 
 <img src="./assets/md/assets/image-processing_scenario02.png"  width="900" />
 
@@ -93,7 +94,7 @@ Then process features in parallel
 
 ---
 <!-- .slide: data-transition="none" -->
-<span class="menu-title" style="display: none">Function for every step</span>
+<span class="menu-title" style="display: none">Function chaining 4</span>
 
 <img src="./assets/md/assets/image-processing_scenario03.png"  width="900" />
 
@@ -110,7 +111,7 @@ Or what if you want to process results in parallel and then act on them?
 You end up 
 
 ---
-<span class="menu-title" style="display: none">Function for every step</span>
+<span class="menu-title" style="display: none">Boilerplate</span>
 
 <img src="./assets/md/assets/write_code.gif"  height="500" />
 
@@ -233,6 +234,7 @@ Don't know how about you, but I've got a lot of questions.
 - Requires storage account
 - Requires serialization <!-- .element: class="fragment" -->
 - Doesn't allow async calls <!-- .element: class="fragment" -->
+- Requires determinism <!-- .element: class="fragment" -->
 
 Note:
 - Why does it requires storage account for orchestrator and activity functions? (next bullet)
@@ -661,12 +663,13 @@ be respresented in code like this (next bullet)
 
 How many times the call activity async method will be called?
 
-This is a triangular number that(next slide)
+It is an arithmetic progression
+We can calculate it (next slide)
 
 ---
-<span class="menu-title" style="display: none">Triangular Number</span>
+<span class="menu-title" style="display: none">Number of calls</span>
 
-(N \* (N+1)) / 2 = 6 \* 7 / 2 = 21
+((a1 + an) * N) / 2 = ((1 + 6) * 6) / 2 = 21
 
 Note:
 TODO: put propper formula
