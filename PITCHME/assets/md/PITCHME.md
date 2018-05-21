@@ -4,9 +4,9 @@
 # Complexity behind Simplicity
 
 Note:
-Thank you for comming.
+Hello everyone!
 
-Many of you already used Azure Functions, right?
+Thank you for comming.
 
 ---
 <span class="menu-title" style="display: none">Motivation</span>
@@ -40,14 +40,15 @@ It's also event-driven. If we're not getting any events we don't use any resourc
 ---
 <span class="menu-title" style="display: none">Azure functions</span>
 
-// TODO: azure functions
+<img src="./assets/md/assets/azurefunction.png"  />
 
 Note:
-- Event (Triggered)
-  - timers
-  - HTTP
-- Code
-- Outputs
+When we talk about Azure functions specifically, we're talking about taking a set of events that can be anything: 
+- HTTP, 
+- uploading something to a blob store
+- a timer or an
+- event from the Microsoft graph
+We run a piece of code. We don't just react to event we're also able to influence other parts of our system. We can send a notification, store smth in DB.
 
 ---
 <span class="menu-title" style="display: none">What is still hard?</span>
