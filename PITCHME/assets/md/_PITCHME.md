@@ -1,7 +1,6 @@
 <span class="menu-title" style="display: none">Title</span>
 
-## Durable Functions
-# Complexity behind Simplicity
+# Azure Durable Functions
 
 Note:
 Thank you for comming.
@@ -11,40 +10,115 @@ Many of you already used Azure Functions, right?
 ---
 <span class="menu-title" style="display: none">Motivation</span>
 
+- Simple to use
+- Difficult to orchestrate <!-- .element: class="fragment" -->
 
 Note:
-Those of you who already have heard about the Durable Extensions are already knows that they are very powerful and at the same time they are quite intuitive and simple to use.
+I'm sure you like the simplicity they provide.
+They are really nice!
 
-However this simplicity may give you an **illusion of understanding** how it actually works. But in the reality **there are** some constraints that are not obvious at all and violation of these constraints leads to a poor performance and confustion.
+However it becomes painful (next bullet)
 
-Today I will show you how durable functions actually work. That will 
+when you want functions to interact with each other:
+- Pass results as an input to another function, 
+- Call functions in a loop
+- Call them in parallel, accumulate the resultsand act on them
 
-// TODO: **SAVE YOUR TIME**
+Today we will talk about Durable functions that will help you to simplify the orchestration.
 
-e.g:
-help to avoid spending many hours hitting walls (like I did) when you start to do something more advanced than running the sample code that is provided with the durable functions.
+I'll also share my expeciance so that you don't spend many hours hitting walls (like I did)
+because there is not that much information is available yet.
+
+You'll leave this meetup with one more tool at your disposal that you are comfortable with 
+and that will help you to takle your challanges.
+
+As I already mentioned the functions are easy to use. If we take a look at the Azure functions 
+website we will see that (next slide)
 
 ---
-<span class="menu-title" style="display: none">Serverless refresher</span>
+<span class="menu-title" style="display: none">No functions chaining</span>
 
-// TODO: serverless refresher
-
----
-<span class="menu-title" style="display: none">Azure functions</span>
-
-// TODO: azure functions
+<img src="./assets/md/assets/scenarios/function_use_case.png"  width="900" />
 
 Note:
-- Event (Triggered)
-  - timers
-  - HTTP
-- Code
-- Outputs
+in the examples it provides - functions don't call another function.
+
++++
+<span class="menu-title" style="display: none">Sample 1</span>
+<img src="./assets/md/assets/scenarios/file-processing_scenario.png"  width="900" />
+
+Note:
+
++++
+<span class="menu-title" style="display: none">Sample 2</span>
+
+<img src="./assets/md/assets/scenarios/stream-processing_scenario.png"  width="900" />
+
+Note:
+
++++
+<span class="menu-title" style="display: none">Sample 3</span>
+
+<img src="./assets/md/assets/scenarios/web-app_scenario.png"  width="900" />
+
+Note:
 
 ---
-<span class="menu-title" style="display: none">What is still hard?</span>
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Function chaining 1</span>
 
-// TODO: chain functions
+<img src="./assets/md/assets/image-processing_scenario00.png"  width="900" />
+
+Note:
+What should we do in the following scenario? 
+
+Suppose our function takes an image from BlobStorage, extract some features 
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Function chaining 2</span>
+
+<img src="./assets/md/assets/image-processing_scenario01.png"  width="900" />
+
+Note:
+Then process them
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Function chaining 3</span>
+
+<img src="./assets/md/assets/image-processing_scenario02.png"  width="900" />
+
+Note:
+Then process features in parallel
+
+---
+<!-- .slide: data-transition="none" -->
+<span class="menu-title" style="display: none">Function chaining 4</span>
+
+<img src="./assets/md/assets/image-processing_scenario03.png"  width="900" />
+
+Note:
+Then accumulates the results and perform something
+
+You can achieve it by putting a queues in between, so that one function puts results there
+another gets them and process.
+
+That is a valid solution, but what if you need to chain many functions? How many additional 
+queues you have to maintain? 
+
+Or what if you want to process results in parallel and then act on them?
+You end up 
+
+---
+<span class="menu-title" style="display: none">Boilerplate</span>
+
+<img src="./assets/md/assets/write_code.gif"  height="500" />
+
+Note:
+writing some boilerplate code and maintain lots of queues
+
+How could we simplify such complex orchestration problems? The answer is (Next slide)
 
 ---
 <span class="menu-title" style="display: none">Durable functions intro</span>
@@ -61,24 +135,56 @@ Durable Functions! (Next bullet)
 They help to orchestrate functions in a way that all the parts play nicely together in a synchronized and consistent way.
  (Next bullet)
 
-Workflow is now can be defined in code. No JSON schemas or designers. Easier to understand since everything is defined in one place.(Next bullet)
+Workflow is now can be defined in code. No JSON schemas or designers. (Next bullet)
 
 One of the key features of Durable functions is that they are 100% reliable. The progress is not lost when VM is restarting.
 
-Let's jump into code and see how cool durable functoins are.
+Durable Functions fit well (next slide)
 
 ---
-<span class="menu-title" style="display: none">Coding. Demonstration of simplicity</span>
+<span class="menu-title" style="display: none">Patterns. Chaining</span>
 
-## Demo coding I
+### Function chaining
+
+<img src="./assets/md/assets/function-chaining.png"  width="800" />
+
+Note:
+// TODO: update image
+
+When we need to chain functions.
+
+1. We can call one function within our orchestrator
+2. save the results in a local variable
+3. call another function passing the result 
+
+Or another pattern called (next side)
+
+---
+<span class="menu-title" style="display: none">Patterns. Fan-out/fan-in</span>
+
+### Fan-out/fan-in
+
+<img src="./assets/md/assets/fan-out-fan-in.png"  width="800" />
+
+Note:
+// TODO: update image
+
+Fan-out/fan-in
+
+allows to call functions in parallel, gather result and do something else.
+
+Sounds cool, right? Let's jump into coding so that you'll really appriciate the simplicity
+
+---
+<span class="menu-title" style="display: none">Demo coding I</span>
+
+## Demo coding
 
 Note:
 
-As a coding excersice I took one of my open source image processing projects that implements a content aware fill. In simple words it allows to remove somebody or something from a photo as if it never was there.
+For the coding excercise, I'd like to implement the following scenario.
 
-In the very beginning what we need to do is to prepare an image pyramid by scaling the image down several times. After the scaling we need to reduce the noise on each of them by applying a blur filter. That can be done in parallel. So let's do it.
-
-// TODO: explain the code
+// TODO: describe what you are going to do
 
 ---
 <span class="menu-title" style="display: none">Easy</span>
@@ -90,28 +196,19 @@ In the very beginning what we need to do is to prepare an image pyramid by scali
 Note:
 That was pritty easy!
 
-You just call your function like you usually call any other method pass parameters, save results in some local variables and then process it further.
+This was an example almost identical to one that Microsoft provides - so it should work
 
-Who would agree that it fills like a usual coding experiance?
-
-When this is familiar we just extrapolate our previous experiance to this new circumstances. That is the way how the illusion of understanding arises.
-
-By the way. This was an example almost identical to one that Microsoft provides. 
-
-After that you say - aha! I got it! And you try to apply this new powerful tool in your project.
-
-What can go wrong?
+but usually your case is a bit different and when you go a bit different direction you experiance some issues. 
 
 ---
-<span class="menu-title" style="display: none">Coding. Violating the constraints</span>
+<span class="menu-title" style="display: none">Demo coding II</span>
 
-Demo coding II
+## Demo coding 2
 
 Note:
-What we will do - is actually build the pyramid. 
-1. Take a bitmap from a blob storage. 
-2. Determine how many times we need to scale it down
-3. Scale it down and Blur
+So let's go further and 
+
+// TODO: describe what you are going to do
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -143,7 +240,6 @@ Note:
 - Why does it requires storage account for orchestrator and activity functions? (next bullet)
 - Serialization is the simplest one - we can assume that it transfer object between functions that way (next bullet)
 - Why it complains about async calls that done without using context?
-- Why it complains about non-determenistic code?
 
 We need to learn how durable functions work under the hood
 
@@ -301,7 +397,7 @@ However this repay process leads to an interesting execution behaviour. Let me s
 <img src="./assets/md/assets/minions/pre_giphy.png"  width="540" />
 
 Note:
-with the help of this guys. Let them practice in origami and ask them to make a plane in a way how a durable function would do this.
+with the help of this guys. Let them practice in origami and ask them to make a plane 
 
 one of the them will be orchestrator and another one activity
 
@@ -546,9 +642,9 @@ Note:
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
-Realizing the fact that the state is always replayed in that way is very important to avoid some stupid performance issues.
+You should keep in mind that kind of behaviour because it really can lead to a poor performance. Simply because of serialization/deserialization.
 
-If you wonder how can it affect performance, let me convert this example with 6 chained Fold actions into (next slide)
+This example with 6 chained Fold actions can(next slide)
 
 ---
 <span class="menu-title" style="display: none">Folding code</span>
@@ -563,11 +659,12 @@ for (var stepIndex = 0; stepIndex< 6; stepIndex++)
 How many ctx.CallActivityAsync() calls? <!-- .element: class="fragment" -->
 
 Note:
-the following code(next bullet)
+be respresented in code like this (next bullet)
 
-What do you think - given that the state is alwas replayed - how many times the method call activity async method will be called?
+How many times the call activity async method will be called?
 
-It is an arithmetic progression (next slide)
+It is an arithmetic progression
+We can calculate it (next slide)
 
 ---
 <span class="menu-title" style="display: none">Number of calls</span>
@@ -577,7 +674,7 @@ It is an arithmetic progression (next slide)
 Note:
 TODO: put propper formula
 
-and can be calculated as follows.
+can be calculated as follows.
 
 ---
 <span class="menu-title" style="display: none">Amount of calls</span>
@@ -607,21 +704,36 @@ for (var stepIndex = 0; stepIndex< 6; stepIndex++)
 
 Note:
 
-We have some code in the Orchestrator that is kind of heavy. This code will be executed 21 times while Fold only 6.
+We have some code in the Orchestrator that is kind of heavy. This code will be executed 15 times while Fold only 6.
+
+That leads us to another topic - optimizations
 
 ---
-<span class="menu-title" style="display: none">Heavy code</span>
+<span class="menu-title" style="display: none">Clarifications</span>
 
-```CSharp
-for (var stepIndex = 0; stepIndex< 6; stepIndex++)
-{
-  await ctx.CallActivityAsync("DoSomethingHeavy", null);
-  await ctx.CallActivityAsync("Fold", input);
-}
-```
+### How it works 
+- Creates queues <!-- .element: class="fragment" -->
+- Passes result serialized <!-- .element: class="fragment" -->
+- Checkpoints and replays state <!-- .element: class="fragment" -->
+- Should be deterministic <!-- .element: class="fragment" -->
 
 Note:
-Perform all the heavy code within activity functions.
+Now we can answer some of our questions
+
+As we saw Azure Durable Functions will create Queues under our storage account, that is why it is required(next bullet)
+
+It is indeed serializes/deserializes objects to send them between functions
+
+Why doesn't support async calls?!
+
+---
+
+<span class="menu-title" style="display: none">Optimizations</span>
+
+### Possible optimizations
+- Avoid heavy code in Orchestrator <!-- .element: class="fragment" -->
+- Use sub Orchestrations  <!-- .element: class="fragment" -->
+- Minimize reads from storage  <!-- .element: class="fragment" -->
 
 ---
 <span class="menu-title" style="display: none">Restrictions</span>
@@ -653,12 +765,36 @@ Note:
 then Post the issue on stack overflow also tweet about it, put hash tag Azure, Azure Functions and usually you get help quite fast
 
 ---
-<span class="menu-title" style="display: none">Recap</span>
+<span class="menu-title" style="display: none">Summary</span>
 
-### Recap
+## Key take aways
+- Statefull orchestration <!-- .element: class="fragment" -->
+- 100% reliable <!-- .element: class="fragment" -->
+- Orchestrator restrictions <!-- .element: class="fragment" -->
+- Checkpoint/Replay <!-- .element: class="fragment" -->
+- Sub Orchestrators <!-- .element: class="fragment" -->
+- Prerelease <!-- .element: class="fragment" -->
+- Heavy computations? <!-- .element: class="fragment" -->
 
-- State is checkpointed in Starage Table
-- State is replayed multiple times
-- No heavy code in Orchestrator
-- Orchestrator should be determenistic
+Note:
+- What are the key take aways? (next bullet)
+- Durable extension allows to orchestrate azure functions (next bullet)
+- It is 100% reliable. You need to remember (next bullet)
+- about the restrictions, that the orchestrator code should be detemenistic, you cannot use async calls other than via durable context (next bullet)
+- Keep in mind the Checkpoint/Replay technique that is used by Orchestrator and use (next bullet)
+- sub orchestors in order to improve performance
+- It is still pre release, many things can go wrong, many things can change. Don't hesitate to ask for advice on SO etc.
+- If you want to port some performance critical computations think twice as you'll spend a lot of time to serialization and desirialization
 
+---
+<span class="menu-title" style="display: none">Questions</span>
+
+# Questions
+
+Note:
+- Pricing
+  - GB-s $0.000016
+  - Cost of one mln exec $0.20
+  - Cost of one minute => 0.128GB * 60000ms = 7680 Gs
+  - Free GB-s per month => 400,000 free ~ 52 min 
+  - Free executions => 1,000,000 
