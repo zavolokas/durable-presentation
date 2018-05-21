@@ -29,6 +29,9 @@ help to avoid spending many hours hitting walls (like I did) when you start to d
 
 // TODO: serverless refresher
 
+Note:
+
+
 ---
 <span class="menu-title" style="display: none">Azure functions</span>
 
