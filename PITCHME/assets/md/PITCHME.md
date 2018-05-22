@@ -8,11 +8,6 @@ Hello everyone!
 
 Thank you for comming.
 
----
-<span class="menu-title" style="display: none">Motivation</span>
-
-
-Note:
 Those of you who already have heard about the Durable Functions already, know that they are very powerful and at the same time they are quite intuitive and simple to use. Those who haven't - don't warry you will see it today.
 
 However this simplicity may give you an **illusion of understanding** how it actually works. But in the reality **there are** some constraints that are not obvious at all and violation of these constraints leads to a poor performance and confustion.
@@ -48,12 +43,39 @@ When we talk about Azure functions specifically, we're talking about taking a se
 - uploading something to a blob store
 - a timer or an
 - event from the Microsoft graph
+
 We run a piece of code. We don't just react to event we're also able to influence other parts of our system. We can send a notification, store smth in DB.
 
+However there are still some challanges in architecturing serverless solutions using Azure functions
+
 ---
+<!-- .slide: data-transition="none" -->
+
 <span class="menu-title" style="display: none">What is still hard?</span>
 
-// TODO: chain functions
+<img src="./assets/md/assets/durable_function_problem1.png"  />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">What is still hard?</span>
+
+<img src="./assets/md/assets/durable_function_problem2.png"  />
+
+Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">What is still hard?</span>
+
+<img src="./assets/md/assets/durable_function_problem3.png"  />
+
+Note:
+
+
 
 ---
 <span class="menu-title" style="display: none">Durable functions intro</span>
@@ -75,6 +97,13 @@ Workflow is now can be defined in code. No JSON schemas or designers. Easier to 
 One of the key features of Durable functions is that they are 100% reliable. The progress is not lost when VM is restarting.
 
 Let's jump into code and see how cool durable functoins are.
+
+---
+<span class="menu-title" style="display: none">Durable functions intro</span>
+
+<img src="./assets/md/assets/durable_function.png"  />
+
+Note:
 
 ---
 <span class="menu-title" style="display: none">Coding. Demonstration of simplicity</span>
