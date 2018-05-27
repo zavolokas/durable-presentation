@@ -44,7 +44,7 @@ When we talk about Azure functions specifically, we're talking about taking a se
 - a timer or an
 - event from the Microsoft graph
 
-We run a piece of code. We don't just react to event we're also able to influence other parts of our system. We can send a notification, store smth in DB.
+Piece of code gets triggered by the event. We don't just react to event we're also able to influence other parts of our system. We can send a notification, store smth in DB.
 
 However there are still some challanges in architecturing serverless solutions using Azure functions
 
@@ -56,6 +56,11 @@ However there are still some challanges in architecturing serverless solutions u
 <img src="./assets/md/assets/durable_function_problem1.png"  />
 
 Note:
+Suppose we would like to pass results of our function to other functions. But there is no such triggers that would fire another function with our parameters.
+
+What we most likely should do is to use an HTTP trigger or put the results in a queue and the new message in the queue will trigger another function. 
+
+But what if we want 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -65,6 +70,7 @@ Note:
 <img src="./assets/md/assets/durable_function_problem2.png"  />
 
 Note:
+to accumulate the results from different functions and process them in one function?
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -74,8 +80,38 @@ Note:
 <img src="./assets/md/assets/durable_function_problem3.png"  />
 
 Note:
+Triggers:
+  Blob          CosmosDB      Http
+  EventGrid     EventHub
+  Http          Queue
+  ServiceBus    Timer   
+
+How to achieve it?
+
+It is not trivial to solve it using a set of available triggers and most likely you end up managing a lot of additional storages/queues 
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">What is still hard?</span>
+
+<img src="./assets/md/assets/durable_function_problem4.png" />
+
+Note:
+How to achieve it?
+
+It is not trivial to solve it using a set of available triggers and most likely you end up managing a lot of additional storages/queues 
 
 
+---
+<span class="menu-title" style="display: none">Overhead</span>
+
+<img src="./assets/md/assets/write_code.gif"  />
+
+Note:
+and writing some boilerplate code.
+
+Likely, we can easily solve it using
 
 ---
 <span class="menu-title" style="display: none">Durable functions intro</span>
@@ -96,14 +132,25 @@ Workflow is now can be defined in code. No JSON schemas or designers. Easier to 
 
 One of the key features of Durable functions is that they are 100% reliable. The progress is not lost when VM is restarting.
 
-Let's jump into code and see how cool durable functoins are.
-
 ---
-<span class="menu-title" style="display: none">Durable functions intro</span>
+<!-- .slide: data-transition="none" -->
 
-<img src="./assets/md/assets/durable_function.png"  />
+<span class="menu-title" style="display: none">New triggers</span>
+
+<img src="./assets/md/assets/durable_function_solution1.png" />
 
 Note:
+
+---
+<!-- .slide: data-transition="none" -->
+
+<span class="menu-title" style="display: none">New triggers</span>
+
+<img src="./assets/md/assets/durable_function_solution2.png" />
+
+Note:
+
+Let's jump into code and see how cool durable functoins are.
 
 ---
 <span class="menu-title" style="display: none">Coding. Demonstration of simplicity</span>
@@ -143,7 +190,7 @@ What can go wrong?
 ---
 <span class="menu-title" style="display: none">Coding. Violating the constraints</span>
 
-Demo coding II
+## Demo coding II
 
 Note:
 What we will do - is actually build the pyramid. 
@@ -156,7 +203,7 @@ What we will do - is actually build the pyramid.
 
 <span class="menu-title" style="display: none">What?!</span>
 
-### What?!
+### Why?!
 
 <img src="./assets/md/assets/confusion.gif"  width="800" />
 
