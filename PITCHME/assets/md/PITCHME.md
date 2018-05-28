@@ -44,7 +44,7 @@ When we talk about Azure functions specifically, we're talking about taking a se
 - a timer or an
 - event from the Microsoft graph
 
-Piece of code gets triggered by the event. We don't just react to event we're also able to influence other parts of our system. We can send a notification, store smth in DB.
+These events trigger a piece of code. We don't just react to event we're also able to influence other parts of our system. We can send a notification, store smth in DB.
 
 However there are still some challanges in architecturing serverless solutions using Azure functions
 
@@ -72,6 +72,8 @@ But what if we want
 Note:
 to accumulate the results from different functions and process them in one function?
 
+What can we do with
+
 ---
 <!-- .slide: data-transition="none" -->
 
@@ -80,15 +82,9 @@ to accumulate the results from different functions and process them in one funct
 <img src="./assets/md/assets/durable_function_problem3.png"  />
 
 Note:
-Triggers:
-  Blob          CosmosDB      Http
-  EventGrid     EventHub
-  Http          Queue
-  ServiceBus    Timer   
+The set of available triggers?
 
-How to achieve it?
-
-It is not trivial to solve it using a set of available triggers and most likely you end up managing a lot of additional storages/queues 
+It is not trivial to solve it and most likely you end up managing a lot of additional storages/queues 
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -132,6 +128,8 @@ Workflow is now can be defined in code. No JSON schemas or designers. Easier to 
 
 One of the key features of Durable functions is that they are 100% reliable. The progress is not lost when VM is restarting.
 
+Let's see how it would solve our problem.
+
 ---
 <!-- .slide: data-transition="none" -->
 
@@ -140,6 +138,13 @@ One of the key features of Durable functions is that they are 100% reliable. The
 <img src="./assets/md/assets/durable_function_solution1.png" />
 
 Note:
+Now we get two new triggers:
+- Orchestration trigger and
+- Activity trigger
+
+We will name all these functions now Activities and they are got triggered by the activity triggers.
+
+And next to them we add another function
 
 ---
 <!-- .slide: data-transition="none" -->
@@ -149,6 +154,8 @@ Note:
 <img src="./assets/md/assets/durable_function_solution2.png" />
 
 Note:
+That is called Orchestrator. Orchestrator basically fires acrivity events in programmed order with required parameters and collects the results.
+
 
 Let's jump into code and see how cool durable functoins are.
 
