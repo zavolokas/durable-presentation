@@ -13,22 +13,14 @@
 ---
 @title[Azure functions]
 
-<img src="./assets/md/assets/azurefunction.png"  />
+<img src="./assets/azurefunction.png"  />
 
 ---
 <!-- .slide: data-transition="none" -->
 
 @title[What is still hard?]
 
-<img src="./assets/md/assets/durable_function_problem1.png"  />
-
-
----
-<!-- .slide: data-transition="none" -->
-
-@title[What is still hard?]
-
-<img src="./assets/md/assets/durable_function_problem2.png"  />
+<img src="./assets/durable_function_problem1.png"  />
 
 
 ---
@@ -36,19 +28,27 @@
 
 @title[What is still hard?]
 
-<img src="./assets/md/assets/durable_function_problem3.png"  />
+<img src="./assets/durable_function_problem2.png"  />
+
 
 ---
 <!-- .slide: data-transition="none" -->
 
 @title[What is still hard?]
 
-<img src="./assets/md/assets/durable_function_problem4.png" />
+<img src="./assets/durable_function_problem3.png"  />
+
+---
+<!-- .slide: data-transition="none" -->
+
+@title[What is still hard?]
+
+<img src="./assets/durable_function_problem4.png" />
 
 ---
 @title[Overhead]
 
-<img src="./assets/md/assets/write_code.gif"  />
+<img src="./assets/write_code.gif"  />
 
 ---
 @title[Durable functions intro]
@@ -63,7 +63,7 @@
 
 @title[New triggers]
 
-<img src="./assets/md/assets/durable_function_solution1.png" />
+<img src="./assets/durable_function_solution1.png" />
 
 Note:
 Now we get two new triggers:
@@ -79,7 +79,7 @@ And next to them we add another function
 
 @title[New triggers]
 
-<img src="./assets/md/assets/durable_function_solution2.png" />
+<img src="./assets/durable_function_solution2.png" />
 
 Note:
 That is called Orchestrator. Orchestrator basically fires acrivity events in programmed order with required parameters and collects the results.
@@ -105,7 +105,7 @@ Firs of all what we need to do is to prepare a so-called image pyramid by scalin
 
 # Easy!
 
-<img src="./assets/md/assets/wow.gif"  width="800" />
+<img src="./assets/wow.gif"  width="800" />
 
 Note:
 That was pritty easy!
@@ -140,7 +140,7 @@ What we will do - is actually build the pyramid.
 
 ### Why?!
 
-<img src="./assets/md/assets/confusion.gif"  width="800" />
+<img src="./assets/confusion.gif"  width="800" />
 
 Note:
 Don't know how about you, but I've got a lot of questions.
@@ -152,7 +152,7 @@ Don't know how about you, but I've got a lot of questions.
 
 ### Why?!
 
-<img src="./assets/md/assets/confusion.gif"  width="400" />
+<img src="./assets/confusion.gif"  width="400" />
 
 - Requires storage account
 - Requires serialization <!-- .element: class="fragment" -->
@@ -172,7 +172,7 @@ We need to learn how durable functions work under the hood
 
 @title[How it works. 1]
 
-<img src="./assets/md/assets/durable/duarable-process01.png"  width="800" />
+<img src="./assets/durable/duarable-process01.png"  width="800" />
 
 Note:
 
@@ -183,7 +183,7 @@ Suppose we have our orchestrator function. When it comes to an execution of an a
 
 @title[How it works. 2]
 
-<img src="./assets/md/assets/durable/duarable-process02.png"  width="800" />
+<img src="./assets/durable/duarable-process02.png"  width="800" />
 
 Note:
 It sends a message to a WorkItems queue and after that
@@ -193,7 +193,7 @@ It sends a message to a WorkItems queue and after that
 
 @title[How it works. 3]
 
-<img src="./assets/md/assets/durable/duarable-process03.png"  width="800" />
+<img src="./assets/durable/duarable-process03.png"  width="800" />
 
 Note:
 it's execution stops, it can be unloaded from memory (so you stop paying for it) . At the same time 
@@ -203,7 +203,7 @@ it's execution stops, it can be unloaded from memory (so you stop paying for it)
 
 @title[How it works. 4]
 
-<img src="./assets/md/assets/durable/duarable-process04.png"  width="800" />
+<img src="./assets/durable/duarable-process04.png"  width="800" />
 
 Note:
 An activity function listens to the WorkItem queue and once a message appears there,
@@ -214,7 +214,7 @@ the activity is got triggered.
 
 @title[How it works. 5]
 
-<img src="./assets/md/assets/durable/duarable-process05.png"  width="800" />
+<img src="./assets/durable/duarable-process05.png"  width="800" />
 
 Note:
 
@@ -226,7 +226,7 @@ After it's job is done it sends a message to Control queue
 
 @title[How it works. 6]
 
-<img src="./assets/md/assets/durable/duarable-process06.png"  width="800" />
+<img src="./assets/durable/duarable-process06.png"  width="800" />
 
 Note:
 It triggers an execution of orchestrator function again
@@ -236,7 +236,7 @@ It triggers an execution of orchestrator function again
 
 @title[How it works. 7]
 
-<img src="./assets/md/assets/durable/duarable-process07.png"  width="800" />
+<img src="./assets/durable/duarable-process07.png"  width="800" />
 
 Note:
 And after the process is repeated 
@@ -246,7 +246,7 @@ And after the process is repeated
 
 @title[How it works. 8]
 
-<img src="./assets/md/assets/durable/duarable-process08.png"  width="800" />
+<img src="./assets/durable/duarable-process08.png"  width="800" />
 
 Note:
 until the orchestrator function
@@ -256,7 +256,7 @@ until the orchestrator function
 
 @title[How it works. 9]
 
-<img src="./assets/md/assets/durable/duarable-process09.png"  width="800" />
+<img src="./assets/durable/duarable-process09.png"  width="800" />
 
 Note:
 comes to it's end
@@ -266,7 +266,7 @@ comes to it's end
 
 @title[How it works. 10]
 
-<img src="./assets/md/assets/durable/duarable-process10.png"  width="800" />
+<img src="./assets/durable/duarable-process10.png"  width="800" />
 
 Note:
 
@@ -275,7 +275,7 @@ Note:
 
 @title[How it works. 11]
 
-<img src="./assets/md/assets/durable/duarable-process11.png"  width="800" />
+<img src="./assets/durable/duarable-process11.png"  width="800" />
 
 Note:
 You may ask here - If the orchestrator function stops after calling 
@@ -302,7 +302,7 @@ History table  (next slide)
 
 #### History table
 
-<img src="./assets/md/assets/history_table.png" width="800" />
+<img src="./assets/history_table.png" width="800" />
 
 Note:
 under your storage account. When Activity function is finished, the history is replayed 
@@ -318,7 +318,7 @@ However this repay process leads to an interesting execution behaviour. Let me s
 
 @title[Replay. Minions intro]
 
-<img src="./assets/md/assets/minions/pre_giphy.png"  width="540" />
+<img src="./assets/minions/pre_giphy.png"  width="540" />
 
 Note:
 with the help of this guys. Let them practice in origami and ask them to make a plane in a way how a durable function would do this.
@@ -330,7 +330,7 @@ one of the them will be orchestrator and another one activity
 
 @title[Replay. Who Orchestrate?]
 
-<img src="./assets/md/assets/minions/pre_giphy02.png"  width="540" />
+<img src="./assets/minions/pre_giphy02.png"  width="540" />
 
 Note:
 Like this
@@ -340,7 +340,7 @@ Like this
 
 @title[Replay. Minions reaction]
 
-<img src="./assets/md/assets/minions/giphy.gif"  width="540" />
+<img src="./assets/minions/giphy.gif"  width="540" />
 
 Note:
 The reaction is strange.
@@ -350,7 +350,7 @@ The reaction is strange.
 
 @title[Replay. Plan]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-start.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-start.png"  height="600" />
 
 Note:
 This instructions are executed by the orchestrator and all the folding operations are done by the activity.
@@ -360,7 +360,7 @@ This instructions are executed by the orchestrator and all the folding operation
 
 @title[Replay. Step 1]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step0.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step0.png"  height="600" />
 
 Note:
 So, the ochestrator encounters first folding action and it calls an activity
@@ -371,7 +371,7 @@ to perform this step.
 
 @title[Replay. Step 1. Ok]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-ok.png"  height="600" />
 
 Note:
 Activity agrees. Orchestrator kind of sleeps. Then activity
@@ -381,7 +381,7 @@ Activity agrees. Orchestrator kind of sleeps. Then activity
 
 @title[Replay. Step 1. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-finished.png"  height="600" />
 
 Note:
 finishes it's task and returns the results to the orchestrator (via a message in a queue)
@@ -393,7 +393,7 @@ Then orchestrator wakes up and replays the history to restore it's state.
 
 @title[Replay. Step 1]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step1.png"  height="600" />
 
 Note:
 So it looks like it asks an activity to perform the first step again. 
@@ -403,7 +403,7 @@ So it looks like it asks an activity to perform the first step again.
 
 @title[Replay. Step 1. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 But since it was already done and results are captured, the activity is 
@@ -414,7 +414,7 @@ not called again. The orchestrator moves
 
 @title[Replay. Step 2]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step2.png"  height="600" />
 
 Note:
 forward
@@ -425,7 +425,7 @@ with the execution and asks the activity to perform the second step.
 
 @title[Replay. Step 2. Ok]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-ok.png"  height="600" />
 
 Note:
 Activity agrees. Orchestrator kind of sleeps. Then activity
@@ -435,7 +435,7 @@ Activity agrees. Orchestrator kind of sleeps. Then activity
 
 @title[Replay. Step 2. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-finished.png"  height="600" />
 
 Note:
 finishes it's task and returns the results to the orchestrator (via a message in a queue)
@@ -447,7 +447,7 @@ Then orchestrator wakes up and replays the history to restore it's state.
 
 @title[Replay. Step 1]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step1.png"  height="600" />
 
 Note:
 So it looks like it asks an activity to perform the first step again. But since it was 
@@ -458,7 +458,7 @@ already done and
 
 @title[Replay. Step 1. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 results are captured, the activity is not called again. The orchestrator moves forward
@@ -469,7 +469,7 @@ with the execution
 
 @title[Replay. Step 2]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step2.png"  height="600" />
 
 Note:
 and asks the activity to perform the second step again. But since it was 
@@ -480,7 +480,7 @@ already done and
 
 @title[Replay. Step 2. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 results are captured, the activity is not called again. The orchestrator moves forward
@@ -491,7 +491,7 @@ with the execution and asks the activity to perform the third step
 
 @title[Replay. Step 3]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step3.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step3.png"  height="600" />
 
 Note:
 
@@ -500,7 +500,7 @@ Note:
 
 @title[Replay. Step 3. Ok]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-ok.png"  height="600" />
 
 Note:
 
@@ -509,7 +509,7 @@ Note:
 
 @title[Replay. Step 3. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-finished.png"  height="600" />
 
 Note:
 
@@ -518,7 +518,7 @@ Note:
 
 @title[Replay. Step 1]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step1.png"  height="600" />
 
 Note:
 
@@ -527,7 +527,7 @@ Note:
 
 @title[Replay. Step 1. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 
@@ -536,7 +536,7 @@ Note:
 
 @title[Replay. Step 2]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step2.png"  height="600" />
 
 Note:
 
@@ -545,7 +545,7 @@ Note:
 
 @title[Replay. Step 2. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 
@@ -554,7 +554,7 @@ Note:
 
 @title[Replay. Step 3]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-step3.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-step3.png"  height="600" />
 
 Note:
 
@@ -563,7 +563,7 @@ Note:
 
 @title[Replay. Step 3. Done]
 
-<img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
+<img src="./assets/minions/checkpoint-replay-done.png"  height="600" />
 
 Note:
 Realizing the fact that the state is always replayed in that way is very important to avoid some stupid performance issues.
@@ -603,7 +603,7 @@ and can be calculated as follows.
 @title[Amount of calls]
 
 ### Calls to Activity
-<img src="./assets/md/assets/triangle_number.png"  height="200" />
+<img src="./assets/triangle_number.png"  height="200" />
 
 - 7 - 28
 - 10 - 55
