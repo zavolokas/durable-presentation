@@ -1,67 +1,139 @@
-@title[Title]
+<span class="menu-title" style="display: none">Title</span>
 
 ## Durable Functions
 # Complexity behind Simplicity
 
+Note:
+Hello everyone!
+
+Thank you for comming.
+
+Those of you who already have heard about the Durable Functions already, know that they are very powerful and at the same time they are quite intuitive and simple to use. Those who haven't - don't warry you will see it today.
+
+However this simplicity may give you an **illusion of understanding** how it actually works. But in the reality **there are** some constraints that are not obvious at all and violation of these constraints leads to a poor performance and confustion.
+
+Today I will show you how durable functions actually work. That will 
+
+// TODO: **SAVE YOUR TIME**
+
+e.g:
+help to avoid spending many hours hitting walls (like I did) when you start to do something more advanced than running the sample code that is provided with the durable functions.
+
 ---
-@title[Serverless refresher]
+<span class="menu-title" style="display: none">Serverless refresher</span>
 
 ## What is serverless?
 - Abstraction of servers
 - Event-driven
 - Micro-billing
+
+Note:
+The serverless doesn't mean that we stop using servers. It is a confusing term that implies that we stop bother about them in a way that we don't need to manage them, update, keep up running and even scale.
+
+It's also event-driven. If we're not getting any events we don't use any resources. And we pay only for the resources that we actually use.
+
 ---
-@title[Azure functions]
+<span class="menu-title" style="display: none">Azure functions</span>
 
 <img src="./assets/md/assets/azurefunction.png"  />
 
+Note:
+When we talk about Azure functions specifically, we're talking about taking a set of events that can be anything: 
+- HTTP, 
+- uploading something to a blob store
+- a timer or an
+- event from the Microsoft graph
+
+These events trigger a piece of code. We don't just react to event we're also able to influence other parts of our system. We can send a notification, store smth in DB.
+
+However there are still some challanges in architecturing serverless solutions using Azure functions
+
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[What is still hard?]
+<span class="menu-title" style="display: none">What is still hard?</span>
 
 <img src="./assets/md/assets/durable_function_problem1.png"  />
 
+Note:
+Suppose we would like to pass results of our function to other functions. But there is no such triggers that would fire another function with our parameters.
+
+What we most likely should do is to use an HTTP trigger or put the results in a queue and the new message in the queue will trigger another function. 
+
+But what if we want 
 
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[What is still hard?]
+<span class="menu-title" style="display: none">What is still hard?</span>
 
 <img src="./assets/md/assets/durable_function_problem2.png"  />
 
+Note:
+to accumulate the results from different functions and process them in one function?
+
+What can we do with
 
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[What is still hard?]
+<span class="menu-title" style="display: none">What is still hard?</span>
 
 <img src="./assets/md/assets/durable_function_problem3.png"  />
 
+Note:
+The set of available triggers?
+
+It is not trivial to solve it and most likely you end up managing a lot of additional storages/queues 
+
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[What is still hard?]
+<span class="menu-title" style="display: none">What is still hard?</span>
 
 <img src="./assets/md/assets/durable_function_problem4.png" />
 
+Note:
+How to achieve it?
+
+It is not trivial to solve it using a set of available triggers and most likely you end up managing a lot of additional storages/queues 
+
+
 ---
-@title[Overhead]
+<span class="menu-title" style="display: none">Overhead</span>
 
 <img src="./assets/md/assets/write_code.gif"  />
 
+Note:
+and writing some boilerplate code.
+
+Likely, we can easily solve it using
+
 ---
-@title[Durable functions intro]
+<span class="menu-title" style="display: none">Durable functions intro</span>
 
 ## Durable Functions
 - Simplify orchestration <!-- .element: class="fragment" -->
 - Code your workflow  <!-- .element: class="fragment" -->
 - 100% reliability  <!-- .element: class="fragment" -->
 
+Note:
+
+Durable Functions! (Next bullet)
+
+They help to orchestrate functions in a way that all the parts play nicely together in a synchronized and consistent way.
+ (Next bullet)
+
+Workflow is now can be defined in code. No JSON schemas or designers. Easier to understand since everything is defined in one place.(Next bullet)
+
+One of the key features of Durable functions is that they are 100% reliable. The progress is not lost when VM is restarting.
+
+Let's see how it would solve our problem.
+
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[New triggers]
+<span class="menu-title" style="display: none">New triggers</span>
 
 <img src="./assets/md/assets/durable_function_solution1.png" />
 
@@ -77,7 +149,7 @@ And next to them we add another function
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[New triggers]
+<span class="menu-title" style="display: none">New triggers</span>
 
 <img src="./assets/md/assets/durable_function_solution2.png" />
 
@@ -88,7 +160,7 @@ That is called Orchestrator. Orchestrator basically fires acrivity events in pro
 Let's jump into code and see how cool durable functoins are.
 
 ---
-@title[Coding. Demonstration of simplicity]
+<span class="menu-title" style="display: none">Coding. Demonstration of simplicity</span>
 
 ## Demo coding I
 
@@ -101,7 +173,7 @@ Firs of all what we need to do is to prepare a so-called image pyramid by scalin
 // TODO: explain the code
 
 ---
-@title[Easy]
+<span class="menu-title" style="display: none">Easy</span>
 
 # Easy!
 
@@ -123,7 +195,7 @@ After that you say - aha! I got it! And you try to apply this new powerful tool 
 What can go wrong?
 
 ---
-@title[Coding. Violating the constraints]
+<span class="menu-title" style="display: none">Coding. Violating the constraints</span>
 
 ## Demo coding II
 
@@ -136,7 +208,7 @@ What we will do - is actually build the pyramid.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[What?!]
+<span class="menu-title" style="display: none">What?!</span>
 
 ### Why?!
 
@@ -148,7 +220,7 @@ Don't know how about you, but I've got a lot of questions.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Unclear moments]
+<span class="menu-title" style="display: none">Unclear moments</span>
 
 ### Why?!
 
@@ -170,7 +242,7 @@ We need to learn how durable functions work under the hood
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 1]
+<span class="menu-title" style="display: none">How it works. 1</span>
 
 <img src="./assets/md/assets/durable/duarable-process01.png"  width="800" />
 
@@ -181,7 +253,7 @@ Suppose we have our orchestrator function. When it comes to an execution of an a
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 2]
+<span class="menu-title" style="display: none">How it works. 2</span>
 
 <img src="./assets/md/assets/durable/duarable-process02.png"  width="800" />
 
@@ -191,7 +263,7 @@ It sends a message to a WorkItems queue and after that
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 3]
+<span class="menu-title" style="display: none">How it works. 3</span>
 
 <img src="./assets/md/assets/durable/duarable-process03.png"  width="800" />
 
@@ -201,7 +273,7 @@ it's execution stops, it can be unloaded from memory (so you stop paying for it)
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 4]
+<span class="menu-title" style="display: none">How it works. 4</span>
 
 <img src="./assets/md/assets/durable/duarable-process04.png"  width="800" />
 
@@ -212,7 +284,7 @@ the activity is got triggered.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 5]
+<span class="menu-title" style="display: none">How it works. 5</span>
 
 <img src="./assets/md/assets/durable/duarable-process05.png"  width="800" />
 
@@ -224,7 +296,7 @@ After it's job is done it sends a message to Control queue
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 6]
+<span class="menu-title" style="display: none">How it works. 6</span>
 
 <img src="./assets/md/assets/durable/duarable-process06.png"  width="800" />
 
@@ -234,7 +306,7 @@ It triggers an execution of orchestrator function again
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 7]
+<span class="menu-title" style="display: none">How it works. 7</span>
 
 <img src="./assets/md/assets/durable/duarable-process07.png"  width="800" />
 
@@ -244,7 +316,7 @@ And after the process is repeated
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 8]
+<span class="menu-title" style="display: none">How it works. 8</span>
 
 <img src="./assets/md/assets/durable/duarable-process08.png"  width="800" />
 
@@ -254,7 +326,7 @@ until the orchestrator function
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 9]
+<span class="menu-title" style="display: none">How it works. 9</span>
 
 <img src="./assets/md/assets/durable/duarable-process09.png"  width="800" />
 
@@ -264,7 +336,7 @@ comes to it's end
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 10]
+<span class="menu-title" style="display: none">How it works. 10</span>
 
 <img src="./assets/md/assets/durable/duarable-process10.png"  width="800" />
 
@@ -273,7 +345,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[How it works. 11]
+<span class="menu-title" style="display: none">How it works. 11</span>
 
 <img src="./assets/md/assets/durable/duarable-process11.png"  width="800" />
 
@@ -282,7 +354,7 @@ You may ask here - If the orchestrator function stops after calling
 an activity and even is unloaded from the memory
 
 ---
-@title[Checkpoint replay]
+<span class="menu-title" style="display: none">Checkpoint replay</span>
 
 How state is restored?
 - Checkpoint/Replay <!-- .element: class="fragment" -->
@@ -298,7 +370,7 @@ Every time orchestrator function calls an Activity - it's state is checkpointed 
 History table  (next slide)
 
 ---
-@title[History table]
+<span class="menu-title" style="display: none">History table</span>
 
 #### History table
 
@@ -316,7 +388,7 @@ However this repay process leads to an interesting execution behaviour. Let me s
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Minions intro]
+<span class="menu-title" style="display: none">Replay. Minions intro</span>
 
 <img src="./assets/md/assets/minions/pre_giphy.png"  width="540" />
 
@@ -328,7 +400,7 @@ one of the them will be orchestrator and another one activity
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Who Orchestrate?]
+<span class="menu-title" style="display: none">Replay. Who Orchestrate?</span>
 
 <img src="./assets/md/assets/minions/pre_giphy02.png"  width="540" />
 
@@ -338,7 +410,7 @@ Like this
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Minions reaction]
+<span class="menu-title" style="display: none">Replay. Minions reaction</span>
 
 <img src="./assets/md/assets/minions/giphy.gif"  width="540" />
 
@@ -348,7 +420,7 @@ The reaction is strange.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Plan]
+<span class="menu-title" style="display: none">Replay. Plan</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-start.png"  height="600" />
 
@@ -358,7 +430,7 @@ This instructions are executed by the orchestrator and all the folding operation
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1]
+<span class="menu-title" style="display: none">Replay. Step 1</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step0.png"  height="600" />
 
@@ -369,7 +441,7 @@ to perform this step.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1. Ok]
+<span class="menu-title" style="display: none">Replay. Step 1. Ok</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
 
@@ -379,7 +451,7 @@ Activity agrees. Orchestrator kind of sleeps. Then activity
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1. Done]
+<span class="menu-title" style="display: none">Replay. Step 1. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
 
@@ -391,7 +463,7 @@ Then orchestrator wakes up and replays the history to restore it's state.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1]
+<span class="menu-title" style="display: none">Replay. Step 1</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
 
@@ -401,7 +473,7 @@ So it looks like it asks an activity to perform the first step again.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1. Done]
+<span class="menu-title" style="display: none">Replay. Step 1. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
@@ -412,7 +484,7 @@ not called again. The orchestrator moves
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 2]
+<span class="menu-title" style="display: none">Replay. Step 2</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
 
@@ -423,7 +495,7 @@ with the execution and asks the activity to perform the second step.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 2. Ok]
+<span class="menu-title" style="display: none">Replay. Step 2. Ok</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
 
@@ -433,7 +505,7 @@ Activity agrees. Orchestrator kind of sleeps. Then activity
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 2. Done]
+<span class="menu-title" style="display: none">Replay. Step 2. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
 
@@ -445,7 +517,7 @@ Then orchestrator wakes up and replays the history to restore it's state.
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1]
+<span class="menu-title" style="display: none">Replay. Step 1</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
 
@@ -456,7 +528,7 @@ already done and
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1. Done]
+<span class="menu-title" style="display: none">Replay. Step 1. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
@@ -467,7 +539,7 @@ with the execution
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 2]
+<span class="menu-title" style="display: none">Replay. Step 2</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
 
@@ -478,7 +550,7 @@ already done and
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 2. Done]
+<span class="menu-title" style="display: none">Replay. Step 2. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
@@ -489,7 +561,7 @@ with the execution and asks the activity to perform the third step
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 3]
+<span class="menu-title" style="display: none">Replay. Step 3</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step3.png"  height="600" />
 
@@ -498,7 +570,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 3. Ok]
+<span class="menu-title" style="display: none">Replay. Step 3. Ok</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-ok.png"  height="600" />
 
@@ -507,7 +579,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 3. Done]
+<span class="menu-title" style="display: none">Replay. Step 3. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-finished.png"  height="600" />
 
@@ -516,7 +588,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1]
+<span class="menu-title" style="display: none">Replay. Step 1</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step1.png"  height="600" />
 
@@ -525,7 +597,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 1. Done]
+<span class="menu-title" style="display: none">Replay. Step 1. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
@@ -534,7 +606,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 2]
+<span class="menu-title" style="display: none">Replay. Step 2</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step2.png"  height="600" />
 
@@ -543,7 +615,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 2. Done]
+<span class="menu-title" style="display: none">Replay. Step 2. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
@@ -552,7 +624,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 3]
+<span class="menu-title" style="display: none">Replay. Step 3</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-step3.png"  height="600" />
 
@@ -561,7 +633,7 @@ Note:
 ---
 <!-- .slide: data-transition="none" -->
 
-@title[Replay. Step 3. Done]
+<span class="menu-title" style="display: none">Replay. Step 3. Done</span>
 
 <img src="./assets/md/assets/minions/checkpoint-replay-done.png"  height="600" />
 
@@ -571,7 +643,7 @@ Realizing the fact that the state is always replayed in that way is very importa
 If you wonder how can it affect performance, let me convert this example with 6 chained Fold actions into (next slide)
 
 ---
-@title[Folding code]
+<span class="menu-title" style="display: none">Folding code</span>
 
 ```CSharp
 for (var i = 0; i< 6; i++)
@@ -590,7 +662,7 @@ What do you think - given that the state is alwas replayed - how many times the 
 It is an arithmetic progression (next slide)
 
 ---
-@title[Number of calls]
+<span class="menu-title" style="display: none">Number of calls</span>
 
 ((a1 + an) * N) / 2 = ((1 + 6) * 6) / 2 = 21
 
@@ -600,7 +672,7 @@ TODO: put propper formula
 and can be calculated as follows.
 
 ---
-@title[Amount of calls]
+<span class="menu-title" style="display: none">Amount of calls</span>
 
 ### Calls to Activity
 <img src="./assets/md/assets/triangle_number.png"  height="200" />
@@ -615,7 +687,7 @@ that means that if we have a loop with 20 iterations -  210
 
 It becomes really noticable when 
 ---
-@title[Heavy code]
+<span class="menu-title" style="display: none">Heavy code</span>
 
 ```CSharp
 for (var i = 0; i< 6; i++)
@@ -630,7 +702,7 @@ Note:
 We have some code in the Orchestrator that is kind of heavy. This code will be executed 21 times while Fold only 6.
 
 ---
-@title[Heavy code]
+<span class="menu-title" style="display: none">Heavy code</span>
 
 ```CSharp
 for (var i = 0; i< 6; i++)
@@ -644,7 +716,7 @@ Note:
 Perform all the heavy code within activity functions.
 
 ---
-@title[Back to code]
+<span class="menu-title" style="display: none">Back to code</span>
 
 Note:
 Now we can see that what used to look alright turns out to be completely wrong. 
@@ -654,7 +726,7 @@ Basically during the each replay we load different bitmap that is twice smaller 
 Let's reiterate the constrains of the Orchestrator function.
 
 ---
-@title[Restrictions]
+<span class="menu-title" style="display: none">Restrictions</span>
 
 ### Constrains
 
@@ -670,7 +742,7 @@ The Durable Task Framework executes orchestrator code on a single thread and can
 saves execution history as the orchestration function progresses, an infinite loop could cause an orchestrator instance to run out of memory.
 
 ---
-@title[Inpaint demo]
+<span class="menu-title" style="display: none">Inpaint demo</span>
 
 ### Demo
 
@@ -681,7 +753,7 @@ I have a proper implementation of the inpainting on GitHub. For those who are in
 Let's run it.
 
 ---
-@title[Recap]
+<span class="menu-title" style="display: none">Recap</span>
 
 ### Recap
 - State is checkpointed in Starage Table
